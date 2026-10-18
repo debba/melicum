@@ -88,7 +88,8 @@ p { margin: 0; }
 .muted { color: var(--muted); }
 
 /* Navigation */
-nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+header { position: sticky; top: 0; z-index: 10; }
+nav { position: relative; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
 nav .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--cream); text-decoration: none; font: 600 19px var(--display); }
 .brand img { width: 28px; height: 28px; }
@@ -212,6 +213,22 @@ pre .c { color: var(--muted); }
 .word { font: 500 clamp(38px, 5vw, 60px)/1 var(--display); font-style: italic; letter-spacing: 0; }
 .word small { font: 400 14px var(--mono); font-style: normal; color: var(--muted); margin-left: 12px; letter-spacing: .04em; }
 
+/* Other products: whole cards are clickable through the title link. */
+.products { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.product { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px 20px; align-content: start; padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; transition: border-color .15s ease; }
+.product:hover { border-color: var(--line-strong); }
+.product > :not(img) { grid-column: 2; }
+.product img { grid-row: 1 / span 4; width: 64px; height: 64px; border-radius: 15px; box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+.product h3 { font: 600 22px/1.2 var(--display); }
+.product h3 a { color: var(--cream); text-decoration: none; }
+.product h3 a::after { content: ""; position: absolute; inset: 0; border-radius: 16px; }
+.product h3 a:focus-visible { outline: none; }
+.product:has(h3 a:focus-visible) { outline: 2px solid var(--red); outline-offset: 3px; }
+.product p { color: var(--muted); font-size: 15px; }
+.product .spec { font: 400 12px var(--mono); color: var(--cream); opacity: .75; }
+.product .links { position: relative; display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 4px; font-size: 14px; }
+.product .links a { display: inline-block; padding-block: 4px; }
+
 footer { padding-block: 48px; color: var(--muted); font-size: 14px; }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; }
 footer a { color: var(--cream); }
@@ -240,7 +257,7 @@ footer ul a { display: inline-block; padding: 6px 0; }
 }
 @media (min-width: 721px) { .flow-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 @media (max-width: 620px) {
-  html:not(.js) nav { position: static; }
+  html:not(.js) header { position: static; }
   html:not(.js) nav .wrap { height: auto; flex-wrap: wrap; padding-block: 10px; gap: 6px; }
   html:not(.js) nav ul { margin-left: -6px; font-size: 15px; }
   .grid, .notes { grid-template-columns: minmax(0, 1fr); }
@@ -268,6 +285,11 @@ footer ul a { display: inline-block; padding: 6px 0; }
   .steps li::before { width: 36px; height: 36px; font-size: 19px; }
   pre { padding: 16px 18px; font-size: 13px; }
   .name img { max-width: 200px; }
+  .products { grid-template-columns: minmax(0, 1fr); }
+  .product { grid-template-columns: 52px minmax(0, 1fr); gap: 8px 16px; padding: 20px; }
+  .product img { grid-row: 1; width: 52px; height: 52px; border-radius: 12px; margin-bottom: 6px; }
+  .product h3 { align-self: center; margin-bottom: 6px; }
+  .product > :not(img, h3) { grid-column: 1 / -1; }
   .word small { display: block; margin: 12px 0 0; }
   footer ul a { padding: 10px 0; }
 
@@ -289,7 +311,7 @@ footer ul a { display: inline-block; padding: 6px 0; }
   .card p, .notes p, .steps p { color: var(--cream); }
 }
 @media (forced-colors: active) {
-  .btn, .card, .steps li, .vs div, .flow, pre { border: 1px solid CanvasText; }
+  .btn, .card, .product, .steps li, .vs div, .flow, pre { border: 1px solid CanvasText; }
   .steps li::before { border-color: CanvasText; color: CanvasText; }
   .facts li::before { background: CanvasText; }
 }
@@ -551,6 +573,31 @@ open build/Melicum.app</pre>
       <div class="eyebrow">The name</div>
       <h2 class="word" id="name-title"><span lang="la">melicus</span><small>Latin · "lyrical, for singing"</small></h2>
       <p>Melic poetry was sung to the lyre. The icon draws one as an equalizer: the yoke is an EQ curve with three hollow nodes, each string ends on that curve like a frequency band, and the sound box has the profile of an HDMI receptacle.</p>
+    </div>
+  </div>
+</section>
+
+<section id="more" aria-labelledby="more-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Other products</div>
+      <h2 id="more-title">More from the same workbench.</h2>
+    </div>
+    <div class="products">
+      <article class="product">
+        <img src="images/tabularis-icon.png" width="64" height="64" alt="">
+        <h3><a href="https://tabularis.dev">Tabularis</a></h3>
+        <p>An open-source desktop SQL workspace for PostgreSQL, MySQL, MariaDB and SQLite, with plugins such as DuckDB and ClickHouse and a built-in MCP server for AI assistants.</p>
+        <span class="spec">macOS · Windows · Linux · Apache-2.0</span>
+        <p class="links"><a href="https://tabularis.dev">tabularis.dev</a><a href="https://github.com/TabularisDB/tabularis">GitHub</a></p>
+      </article>
+      <article class="product">
+        <img src="images/gitdeck-icon.png" width="64" height="64" alt="">
+        <h3><a href="https://gitdeck.debbaweb.it/en/">Gitdeck</a></h3>
+        <p>GitHub, GitLab and Forgejo in a native app for iPhone and iPad: issues, pull requests and priorities at a glance. An open-source web dashboard is also available.</p>
+        <span class="spec">iPhone &amp; iPad · iOS 17+ · Free</span>
+        <p class="links"><a href="https://gitdeck.debbaweb.it/en/">gitdeck.debbaweb.it</a><a href="https://github.com/debba/gitdeck">Dashboard on GitHub</a></p>
+      </article>
     </div>
   </div>
 </section>

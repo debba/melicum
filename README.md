@@ -62,9 +62,9 @@ git clone --recurse-submodules https://github.com/debba/melicum.git
 
 ```sh
 swift test
-zsh scripts/make-brand-icon.sh
-zsh scripts/build-system-volume.sh
-zsh scripts/build.sh
+./scripts/make-brand-icon.sh
+./scripts/build-system-volume.sh
+./scripts/build.sh
 .build/release/Melicum --list-devices
 ```
 
@@ -79,7 +79,7 @@ xcrun clang -std=c11 -fblocks Driver/Tests.c -framework CoreAudio -framework Cor
 The app bundle is written to `build/Melicum.app` and signed locally with an ad hoc signature. To install it without administrator privileges, close the running app and use:
 
 ```sh
-zsh scripts/install.sh
+./scripts/install.sh
 ```
 
 ## Releases

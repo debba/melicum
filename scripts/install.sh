@@ -5,7 +5,7 @@ if pgrep -f 'Melicum.app/Contents/MacOS/' >/dev/null; then
     echo 'Close Melicum before updating the installed bundle.' >&2
     exit 1
 fi
-zsh scripts/build.sh
+./scripts/build.sh
 mkdir -p "$HOME/Applications"
 ditto 'build/Melicum.app' "$HOME/Applications/Melicum.app"
 codesign --verify --deep --strict "$HOME/Applications/Melicum.app"

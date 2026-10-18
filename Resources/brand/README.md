@@ -36,7 +36,7 @@ The artwork is drawn from shared vector geometry in `scripts/make-icon.swift`.
 Rebuild the SVG, PNG and ICNS assets from the project root:
 
 ```sh
-zsh scripts/make-brand-icon.sh
+./scripts/make-brand-icon.sh
 ```
 
 This version is code-drawn vector artwork. It supersedes the earlier M-curve mark,

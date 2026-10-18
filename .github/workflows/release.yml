@@ -82,8 +82,8 @@ jobs:
           MELICUM_SIGN_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
           MELICUM_INSTALLER_IDENTITY: ${{ secrets.APPLE_INSTALLER_SIGNING_IDENTITY }}
         run: |
-          zsh scripts/build-system-volume.sh
-          zsh scripts/build.sh
+          ./scripts/build-system-volume.sh
+          ./scripts/build.sh
           codesign --verify --deep --strict --verbose=2 build/Melicum.app
 
       - name: Notarize app

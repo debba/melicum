@@ -33,9 +33,9 @@
 - Prefix every shell command with `rtk`; use `rtk proxy` when no dedicated wrapper applies.
 - Reach first for `rg` and `rg --files` when searching.
 - Run `rtk proxy swift test` after behavior changes.
-- Build the app with `rtk proxy zsh scripts/build.sh`.
-- Regenerate artwork with `rtk proxy zsh scripts/make-brand-icon.sh`.
-- Build the optional HAL component package with `rtk proxy zsh scripts/build-system-volume.sh` before packaging an app that needs an updated component.
+- Build the app with `rtk proxy ./scripts/build.sh`.
+- Regenerate artwork with `rtk proxy ./scripts/make-brand-icon.sh`.
+- Build the optional HAL component package with `rtk proxy ./scripts/build-system-volume.sh` before packaging an app that needs an updated component.
 - Close the running app before replacing its installed bundle. Preserve user settings.
 - Verify UI and audio routing on macOS when changing native controls; a successful build alone does not prove audio behavior.
 - Keep generated build artifacts out of source control, as specified in `.gitignore`.

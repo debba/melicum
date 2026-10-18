@@ -12,6 +12,7 @@
     <key>CFBundleVersion</key><string>4</string>
     <key>CFBundleIconFile</key><string>AppIcon</string>
     <key>LSMinimumSystemVersion</key><string>14.2</string>
+    <key>NSHumanReadableCopyright</key><string>© 2026 Andrea Debernardi</string>
     <key>NSHighResolutionCapable</key><true/>
     <key>NSPrincipalClass</key><string>NSApplication</string>
     <key>NSAudioCaptureUsageDescription</key><string>This app processes system audio locally to control HDMI volume, mute and equalization. No audio is recorded to disk or sent over the network.</string>

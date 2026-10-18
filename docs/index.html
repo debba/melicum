@@ -136,6 +136,7 @@ pre .c { color: var(--muted); }
 footer { padding-block: 48px; color: var(--muted); font-size: 14px; }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; }
 footer a { color: var(--cream); }
+footer .legal { display: grid; gap: 4px; }
 footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; }
 footer ul a { display: inline-block; padding: 6px 0; }
 .how { background: var(--bg-deep); color: var(--cream); border-block: 1px solid var(--line); }
@@ -392,7 +393,10 @@ open build/Melicum.app</pre>
 
 <footer>
   <div class="wrap">
-    <span>Melicum is free software under the <a href="https://github.com/debba/melicum/blob/main/LICENSE">GPL-3.0</a>. The system volume component includes <a href="https://github.com/ExistentialAudio/BlackHole">BlackHole</a>.</span>
+    <div class="legal">
+      <p>© 2026 <a href="https://debbaweb.it">Andrea Debernardi</a></p>
+      <p>Melicum is free software under the <a href="https://github.com/debba/melicum/blob/main/LICENSE">GPL-3.0</a>. The system volume component includes <a href="https://github.com/ExistentialAudio/BlackHole">BlackHole</a>.</p>
+    </div>
     <ul aria-label="Project links"><li><a href="https://github.com/debba/melicum">GitHub</a></li><li><a href="https://github.com/debba/melicum/releases">Releases</a></li><li><a href="https://github.com/debba/melicum/issues">Issues</a></li></ul>
   </div>
 </footer>

@@ -121,4 +121,6 @@ The original vector mark is a lyre drawn as an equalizer: the yoke is an EQ curv
 
 ## License
 
+Copyright © 2026 [Andrea Debernardi](https://debbaweb.it).
+
 Melicum and its modified BlackHole component are distributed under GPL-3.0. See `LICENSE`, `ThirdParty/BlackHole/LICENSE`, and `Driver/UPSTREAM.md`. Upstream source and license notices are preserved.

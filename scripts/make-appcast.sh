@@ -11,7 +11,7 @@ updates='build/updates'
 rm -rf "$updates"
 mkdir -p "$updates"
 cp "$archive" "$updates/"
-arguments=(--download-url-prefix "https://github.com/$repository/releases/download/$TAG/" --link "https://debba.github.io/melicum/" --maximum-deltas 0 --maximum-versions 1)
+arguments=(--download-url-prefix "https://github.com/$repository/releases/download/$TAG/" --link "https://melicum.app/" --maximum-deltas 0 --maximum-versions 1)
 if [[ -n ${SPARKLE_PRIVATE_KEY:-} ]]; then
     print -r -- "$SPARKLE_PRIVATE_KEY" | .build/artifacts/sparkle/Sparkle/bin/generate_appcast --ed-key-file - $arguments "$updates"
 else

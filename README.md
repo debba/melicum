@@ -4,7 +4,7 @@
 
 <h1 align="center">Melicum</h1>
 
-<p align="center"><b>HDMI and DisplayPort volume control for macOS.</b><br><a href="https://debba.github.io/melicum/">Website</a> · <a href="https://github.com/debba/melicum/releases">Download</a></p>
+<p align="center"><b>HDMI and DisplayPort volume control for macOS.</b><br><a href="https://melicum.app/">Website</a> · <a href="https://github.com/debba/melicum/releases">Download</a></p>
 
 A native macOS audio app focused on HDMI and DisplayPort volume control. Software gain works even when a digital output has no hardware volume control. The optional system volume component also enables the macOS volume slider and native volume keys.
 

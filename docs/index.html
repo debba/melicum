@@ -56,6 +56,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>document.documentElement.classList.add("js");</script>
 <style>
 /* Layout: single column story on graphite, like the app window; the VU red is the only accent. */
 :root {
@@ -64,10 +65,11 @@
   --display: "Fraunces", Georgia, serif;
   --body: "IBM Plex Sans", -apple-system, "Helvetica Neue", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --gutter: max(20px, 4vw);
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; scrollbar-gutter: stable; }
 body { margin: 0; background: var(--bg); color: var(--cream); font: 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
 a { color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
@@ -77,7 +79,7 @@ main:focus { outline: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 img { max-width: 100%; height: auto; display: block; }
 code { font-family: var(--mono); font-size: .88em; background: var(--panel); padding: 2px 6px; border-radius: 5px; }
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: max(20px, 4vw); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: var(--gutter); }
 .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
 h1, h2, h3 { margin: 0; text-wrap: balance; }
 h2 { font: 600 clamp(30px, 4.4vw, 46px)/1.08 var(--display); letter-spacing: -.01em; }
@@ -93,6 +95,10 @@ nav .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
 nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 0 auto; padding: 0; font-size: 14px; }
 nav ul a { color: var(--muted); text-decoration: none; display: inline-block; padding: 8px 6px; }
 nav ul a:hover { color: var(--cream); }
+.menu-toggle { display: none; margin-left: auto; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--cream); cursor: pointer; }
+.menu-toggle svg { grid-area: 1 / 1; width: 22px; height: 22px; }
+.menu-toggle .close, .menu-toggle[aria-expanded="true"] .open { display: none; }
+.menu-toggle[aria-expanded="true"] .close { display: block; }
 
 /* Hero */
 .hero { position: relative; overflow: hidden; padding-block: 88px 40px; }
@@ -104,9 +110,11 @@ nav ul a:hover { color: var(--cream); }
 .hero .lede b { color: var(--cream); font-weight: 500; }
 .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px; }
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border: 1px solid transparent; border-radius: 12px; font: 600 15px var(--body); text-decoration: none; transition: transform .15s ease, background .15s ease; }
-.btn:hover { transform: translateY(-1px); }
 .btn.primary { background: var(--cream); color: var(--bg-deep); }
-.btn.primary:hover { background: #FFFFFF; }
+@media (hover: hover) {
+  .btn:hover { transform: translateY(-1px); }
+  .btn.primary:hover { background: #FFFFFF; }
+}
 .btn.ghost { color: var(--cream); border-color: var(--line-strong); background: var(--panel); }
 .btn svg { width: 18px; height: 18px; }
 .facts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font: 400 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -154,9 +162,40 @@ section > .wrap { display: grid; gap: 40px; }
 /* Gallery */
 .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .gallery figure { margin: 0; display: grid; gap: 12px; align-content: start; }
-.gallery img { border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,.4); }
+.gallery a { position: relative; justify-self: start; border-radius: 12px; cursor: zoom-in; }
+.gallery a::after { content: ""; position: absolute; right: 10px; bottom: 10px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(243,237,226,.18); background: rgba(17,17,20,.8) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F3EDE2' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='m20 20-4.2-4.2M11 8.5v5M8.5 11h5'/%3E%3C/svg%3E") center / 18px no-repeat; transition: background-color .15s ease; }
+.gallery a:hover::after { background-color: var(--red-deep); }
+.gallery img { border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,.4); transition: border-color .15s ease; }
+.gallery a:hover img { border-color: var(--line-strong); }
 .gallery figcaption { font-size: 14px; color: var(--muted); }
 .gallery figcaption b { color: var(--cream); font-weight: 600; display: block; }
+
+/* Lightbox: a full-screen dialog; the image grows out of its thumbnail. */
+html:has(.lightbox[open]) { overflow: hidden; }
+.lightbox { position: fixed; inset: 0; width: auto; height: auto; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: none; color: var(--cream); overflow: hidden; }
+.lightbox::backdrop { background: transparent; }
+.lightbox[open] { display: grid; grid-template: "bar bar bar" auto "prev stage next" minmax(0, 1fr) "cap cap cap" auto / 76px minmax(0, 1fr) 76px; }
+.lightbox > :not(.lb-bg) { position: relative; }
+.lb-bg { position: absolute; inset: 0; background: rgba(17,17,20,.95); backdrop-filter: blur(12px); }
+.lb-bar { grid-area: bar; display: flex; align-items: center; gap: 10px; padding: 14px 16px; }
+.lb-count { margin-right: auto; padding-left: 4px; font: 500 12px var(--mono); letter-spacing: .14em; color: var(--muted); }
+.lb-stage { grid-area: stage; container-type: size; display: grid; place-items: center; overflow: hidden; touch-action: pan-y pinch-zoom; }
+.lb-img { width: min(100cqw, 100cqh * var(--ar), var(--w)); height: auto; aspect-ratio: var(--ar); border-radius: 10px; background: var(--panel); box-shadow: 0 30px 80px rgba(0,0,0,.6); cursor: zoom-in; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; }
+.lb-stage.zoomed { place-items: start; overflow: auto; overscroll-behavior: contain; touch-action: auto; }
+.lb-stage.zoomed .lb-img { width: var(--zw); max-width: none; margin: auto; border-radius: 0; cursor: zoom-out; }
+.lb-spinner { grid-area: stage; place-self: center; width: 36px; height: 36px; border: 2px solid var(--line-strong); border-top-color: var(--red); border-radius: 50%; opacity: 0; transition: opacity .2s ease; animation: spin .8s linear infinite; pointer-events: none; }
+.lightbox.loading .lb-spinner { opacity: 1; }
+@keyframes spin { to { transform: rotate(1turn); } }
+.lb-btn { width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line-strong); border-radius: 50%; background: rgba(36,36,42,.85); color: var(--cream); cursor: pointer; transition: border-color .15s ease, color .15s ease; }
+.lb-btn:hover { border-color: var(--red); color: var(--red); }
+.lb-btn svg { width: 20px; height: 20px; }
+.lb-zoom .out, .lb-zoom[aria-pressed="true"] .in { display: none; }
+.lb-zoom[aria-pressed="true"] .out { display: block; }
+.lb-prev, .lb-next { place-self: center; }
+.lb-prev { grid-area: prev; }
+.lb-next { grid-area: next; }
+.lb-caption { grid-area: cap; justify-self: center; max-width: 64ch; padding: 16px 20px 24px; text-align: center; font-size: 15px; color: var(--muted); }
+.lb-caption b { display: block; color: var(--cream); font-weight: 600; }
 
 /* Install */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
@@ -185,20 +224,65 @@ footer ul a { display: inline-block; padding: 6px 0; }
   .grid, .gallery, .notes { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .split, .name .split { grid-template-columns: minmax(0, 1fr); }
 }
+/* Compact header: the section links collapse behind a menu button (only when the script runs). */
+@media (max-width: 860px) {
+  .js nav .wrap { height: 56px; }
+  .js .menu-toggle { display: grid; }
+  .js nav ul { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 4px var(--gutter) 12px; background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: 0 24px 40px rgba(0,0,0,.45); font-size: 17px; }
+  .js nav.open ul { display: flex; animation: drop .18s ease-out; }
+  .js nav ul a { display: block; padding: 13px 0; color: var(--cream); border-bottom: 1px solid var(--line); }
+  .js nav ul li:last-child a { border-bottom: 0; }
+}
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } }
 @media (max-width: 720px) {
   .flow svg { display: none; }
   .flow { padding: 16px; }
 }
 @media (min-width: 721px) { .flow-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 @media (max-width: 620px) {
-  nav { position: static; }
-  nav .wrap { height: auto; flex-wrap: wrap; padding-block: 10px; gap: 6px; }
-  nav ul { margin-left: -6px; font-size: 15px; }
-  .grid, .gallery, .notes { grid-template-columns: minmax(0, 1fr); }
+  html:not(.js) nav { position: static; }
+  html:not(.js) nav .wrap { height: auto; flex-wrap: wrap; padding-block: 10px; gap: 6px; }
+  html:not(.js) nav ul { margin-left: -6px; font-size: 15px; }
+  .grid, .notes { grid-template-columns: minmax(0, 1fr); }
   section { padding-block: 64px; }
-  .hero { padding-top: 56px; }
+  .head p { font-size: 17px; }
+
+  .hero { padding-block: 40px 16px; }
+  .hero .wrap { gap: 18px; }
+  .hero .icon { width: 112px; height: 112px; }
+  .cta { flex-direction: column; width: 100%; max-width: 340px; }
+  .cta .btn { justify-content: center; }
+  .window { margin-top: 28px; border-radius: 12px; }
+
+  .vs div { grid-template-columns: minmax(0, 1fr); padding: 16px 18px; }
+  .vs .tag { grid-row: auto; justify-self: start; margin-bottom: 6px; }
+  .card { padding: 20px; }
+
+  /* Gallery becomes a swipeable strip that bleeds to the screen edges. */
+  .gallery { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%; gap: 14px; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) 8px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); overscroll-behavior-x: contain; scrollbar-width: none; }
+  .gallery::-webkit-scrollbar { display: none; }
+  .gallery figure { scroll-snap-align: start; }
+  .gallery img { box-shadow: 0 8px 20px rgba(0,0,0,.35); }
+
+  .steps li { grid-template-columns: 36px minmax(0, 1fr); gap: 14px; padding: 16px; }
+  .steps li::before { width: 36px; height: 36px; font-size: 19px; }
+  pre { padding: 16px 18px; font-size: 13px; }
+  .name img { max-width: 200px; }
+  .word small { display: block; margin: 12px 0 0; }
+  footer ul a { padding: 10px 0; }
+
+  .lightbox[open] { grid-template: "bar bar bar" auto "stage stage stage" minmax(0, 1fr) "prev cap next" auto / 68px minmax(0, 1fr) 68px; }
+  .lb-bar { padding: 10px 12px; }
+  .lb-stage { padding-inline: 10px; }
+  .lb-caption { padding: 14px 0 20px; font-size: 14px; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } .btn:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+  .js nav.open ul { animation: none; }
+  .lb-spinner { animation-duration: 2.4s; }
+}
 @media (prefers-contrast: more) {
   :root { --muted: #CFC9C0; --line: #6B6670; --line-strong: #A49FA6; }
   .hero::before { display: none; }
@@ -219,7 +303,12 @@ footer ul a { display: inline-block; padding: 6px 0; }
 <nav aria-label="Main">
   <div class="wrap">
     <a class="brand" href="#top"><img src="images/melicum-icon.png" alt="">Melicum</a>
-    <ul>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      <span class="sr-only">Menu</span>
+    </button>
+    <ul id="nav-links">
       <li><a href="#features">Features</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#screenshots">Screenshots</a></li>
@@ -476,6 +565,220 @@ open build/Melicum.app</pre>
     <ul aria-label="Project links"><li><a href="https://github.com/debba/melicum">GitHub</a></li><li><a href="https://github.com/debba/melicum/releases">Releases</a></li><li><a href="https://github.com/debba/melicum/issues">Issues</a></li></ul>
   </div>
 </footer>
+
+<dialog class="lightbox" aria-labelledby="lb-title">
+  <div class="lb-bg"></div>
+  <div class="lb-bar lb-ui">
+    <span class="lb-count"></span>
+    <button class="lb-btn lb-zoom" type="button" aria-pressed="false" aria-label="Zoom">
+      <svg class="in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M11 8.5v5M8.5 11h5"/></svg>
+      <svg class="out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M8.5 11h5"/></svg>
+    </button>
+    <button class="lb-btn lb-close" type="button" aria-label="Close" autofocus>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="lb-stage"><img class="lb-img" alt="" draggable="false"></div>
+  <div class="lb-spinner" aria-hidden="true"></div>
+  <button class="lb-btn lb-prev lb-ui" type="button" aria-label="Previous screenshot">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-btn lb-next lb-ui" type="button" aria-label="Next screenshot">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+  </button>
+  <p class="lb-caption lb-ui" aria-live="polite"><b id="lb-title"></b><span class="lb-text"></span></p>
+</dialog>
+
+<script type="module">
+// Mobile navigation: the section links collapse behind a disclosure button.
+const nav = document.querySelector("nav");
+const menu = nav.querySelector(".menu-toggle");
+const setMenu = open => { nav.classList.toggle("open", open); menu.setAttribute("aria-expanded", open); };
+menu.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+nav.querySelector("ul").addEventListener("click", event => { if (event.target.closest("a")) setMenu(false); });
+document.addEventListener("click", event => { if (!nav.contains(event.target)) setMenu(false); });
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && nav.classList.contains("open")) { setMenu(false); menu.focus(); }
+});
+matchMedia("(max-width: 860px)").addEventListener("change", () => setMenu(false));
+
+// Screenshot lightbox: grows from the thumbnail, browses with buttons, arrow keys and swipes, and zooms on tap.
+const box = document.querySelector(".lightbox");
+const stage = box.querySelector(".lb-stage");
+const view = box.querySelector(".lb-img");
+const zoomButton = box.querySelector(".lb-zoom");
+const backdrop = box.querySelector(".lb-bg");
+const chrome = [...box.querySelectorAll(".lb-ui")];
+const calm = matchMedia("(prefers-reduced-motion: reduce)");
+const ease = "cubic-bezier(.2, .8, .2, 1)";
+const slides = [...document.querySelectorAll(".gallery figure")].map(figure => {
+  const link = figure.querySelector("a"), thumb = figure.querySelector("img"), caption = figure.querySelector("figcaption");
+  return {
+    link, thumb, src: link.href, alt: thumb.alt,
+    width: +thumb.getAttribute("width"), height: +thumb.getAttribute("height"),
+    title: caption.querySelector("b").textContent, text: caption.lastChild.textContent.trim(),
+  };
+});
+let index = 0, busy = false, zoomed = false, swipedAt = 0, running = [];
+
+const wrap = i => (i + slides.length) % slides.length;
+const preload = i => {
+  const slide = slides[wrap(i)];
+  if (!slide.ready) { const image = new Image(); image.src = slide.src; slide.ready = image.decode().catch(() => {}); }
+  return slide.ready;
+};
+const play = (element, frames, options) => { const animation = element.animate(frames, options); running.push(animation); return animation.finished.catch(() => {}); };
+const fade = (to, duration, delay = 0) => Promise.all([
+  play(backdrop, [{ opacity: 1 - to }, { opacity: to }], { duration, easing: "ease", fill: "both" }),
+  ...chrome.map(element => play(element, [{ opacity: 1 - to }, { opacity: to }], { duration: duration * .6, delay, easing: "ease", fill: "both" })),
+]);
+// Transform that maps rectangle b onto rectangle a; both share the image's aspect ratio.
+const across = (a, b) => `translate(${a.left + a.width / 2 - b.left - b.width / 2}px, ${a.top + a.height / 2 - b.top - b.height / 2}px) scale(${a.width / b.width})`;
+const onScreen = rect => rect.width > 0 && rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
+
+function fill(i) {
+  index = wrap(i);
+  const slide = slides[index];
+  setZoom(false);
+  view.src = slide.src;
+  view.alt = slide.alt;
+  view.style.setProperty("--ar", slide.width / slide.height);
+  view.style.setProperty("--w", `${slide.width * 2}px`);
+  box.querySelector(".lb-count").textContent = `${index + 1} / ${slides.length}`;
+  box.querySelector("#lb-title").textContent = slide.title;
+  box.querySelector(".lb-text").textContent = slide.text;
+  box.classList.toggle("loading", !view.complete);
+  preload(index + 1);
+  preload(index - 1);
+}
+view.addEventListener("load", () => box.classList.remove("loading"));
+view.addEventListener("error", () => box.classList.remove("loading"));
+
+async function open(i) {
+  fill(i);
+  box.showModal();
+  if (calm.matches) return;
+  busy = true;
+  const thumb = slides[index].thumb;
+  thumb.style.visibility = "hidden";
+  await Promise.all([
+    play(view, [{ transform: across(thumb.getBoundingClientRect(), view.getBoundingClientRect()) }, { transform: "none" }], { duration: 420, easing: ease }),
+    fade(1, 320, 120),
+  ]);
+  thumb.style.visibility = "";
+  busy = false;
+}
+
+async function close() {
+  if (busy || !box.open) return;
+  setZoom(false);
+  const { thumb } = slides[index];
+  // Return to the current screenshot's thumbnail, sliding the mobile strip to it without moving the page.
+  const gallery = thumb.closest(".gallery");
+  const offset = thumb.getBoundingClientRect().left - gallery.getBoundingClientRect().left - parseFloat(getComputedStyle(gallery).scrollPaddingLeft || 0);
+  gallery.scrollLeft += offset;
+  if (!calm.matches) {
+    busy = true;
+    const target = thumb.getBoundingClientRect();
+    const home = onScreen(target);
+    if (home) thumb.style.visibility = "hidden";
+    await Promise.all([
+      home
+        ? play(view, [{ transform: "none" }, { transform: across(target, view.getBoundingClientRect()) }], { duration: 360, easing: ease, fill: "forwards" })
+        : play(view, [{ opacity: 1 }, { opacity: 0, transform: "scale(.96)" }], { duration: 220, easing: "ease-in", fill: "forwards" }),
+      fade(0, 300),
+    ]);
+  }
+  box.close();
+}
+
+async function go(step, from = 0) {
+  if (busy) return;
+  busy = true;
+  setZoom(false);
+  const late = setTimeout(() => box.classList.add("loading"), 150);
+  await preload(index + step);
+  clearTimeout(late);
+  const shift = Math.min(innerWidth * .25, 120);
+  if (!calm.matches) await play(view, [{ transform: `translateX(${from}px)`, opacity: 1 }, { transform: `translateX(${-step * shift}px)`, opacity: 0 }], { duration: 140, easing: "ease-in" });
+  fill(index + step);
+  if (!calm.matches) await play(view, [{ transform: `translateX(${step * shift}px)`, opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 260, easing: ease });
+  busy = false;
+}
+
+function setZoom(on, point) {
+  if (on === zoomed) return;
+  const fit = view.getBoundingClientRect();
+  zoomed = on;
+  stage.classList.toggle("zoomed", on);
+  zoomButton.setAttribute("aria-pressed", on);
+  if (!on) return;
+  // Enlarge up to the screenshot's own resolution, keeping the selected point in place.
+  const width = Math.min(fit.width * 2.5, Math.max(slides[index].width * 2, fit.width * 1.5));
+  const scale = width / fit.width, area = stage.getBoundingClientRect();
+  const x = point ? point.x : area.left + area.width / 2, y = point ? point.y : area.top + area.height / 2;
+  view.style.setProperty("--zw", `${width}px`);
+  stage.scrollLeft = (x - fit.left) * scale - (x - area.left);
+  stage.scrollTop = (y - fit.top) * scale - (y - area.top);
+}
+
+// Clear animations and hidden thumbnails however the dialog closes, including a forced Escape.
+box.addEventListener("close", () => {
+  running.forEach(animation => animation.cancel());
+  running = [];
+  slides.forEach(slide => slide.thumb.style.visibility = "");
+  setZoom(false);
+  busy = false;
+});
+box.addEventListener("cancel", event => { event.preventDefault(); close(); });
+box.addEventListener("keydown", event => {
+  if (event.key === "ArrowRight") go(1);
+  else if (event.key === "ArrowLeft") go(-1);
+});
+box.querySelector(".lb-close").addEventListener("click", close);
+box.querySelector(".lb-prev").addEventListener("click", () => go(-1));
+box.querySelector(".lb-next").addEventListener("click", () => go(1));
+zoomButton.addEventListener("click", () => setZoom(!zoomed));
+stage.addEventListener("click", event => {
+  if (busy || performance.now() - swipedAt < 400) return;
+  if (event.target === view) setZoom(!zoomed, { x: event.clientX, y: event.clientY });
+  else close();
+});
+
+// Horizontal swipes on touch screens; vertical pans and pinch zoom stay with the browser.
+let drag = null;
+stage.addEventListener("pointerdown", event => {
+  if (busy || zoomed || !event.isPrimary || event.pointerType === "mouse") return;
+  drag = { id: event.pointerId, x: event.clientX, y: event.clientY, dx: 0, active: false };
+});
+stage.addEventListener("pointermove", event => {
+  if (drag?.id !== event.pointerId) return;
+  drag.dx = event.clientX - drag.x;
+  if (!drag.active && Math.abs(drag.dx) > 10 && Math.abs(drag.dx) > Math.abs(event.clientY - drag.y)) {
+    drag.active = true;
+    stage.setPointerCapture(event.pointerId);
+  }
+  if (drag.active) view.style.transform = `translateX(${drag.dx}px)`;
+});
+const release = event => {
+  if (drag?.id !== event.pointerId) return;
+  const { dx, active } = drag;
+  drag = null;
+  if (!active) return;
+  swipedAt = performance.now();
+  view.style.transform = "";
+  if (event.type === "pointerup" && Math.abs(dx) > 60) go(dx < 0 ? 1 : -1, dx);
+  else play(view, [{ transform: `translateX(${dx}px)` }, { transform: "none" }], { duration: 200, easing: ease });
+};
+stage.addEventListener("pointerup", release);
+stage.addEventListener("pointercancel", release);
+
+slides.forEach((slide, i) => slide.link.addEventListener("click", event => {
+  if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  open(i);
+}));
+</script>
 
 </body>
 </html>

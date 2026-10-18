@@ -11,3 +11,4 @@ done
 iconutil -c icns build/BrandIcon.iconset -o Resources/AppIcon.icns
 mkdir -p docs/images
 sips -z 512 512 Resources/BrandIcon.png --out docs/images/melicum-icon.png >/dev/null
+cp Resources/brand/melicum-mark-dark.svg docs/images/melicum-mark.svg

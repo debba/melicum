@@ -4,7 +4,7 @@
 
 <h1 align="center">Melicum</h1>
 
-<p align="center"><b>HDMI and DisplayPort volume control for macOS.</b></p>
+<p align="center"><b>HDMI and DisplayPort volume control for macOS.</b><br><a href="https://debba.github.io/melicum/">Website</a> · <a href="https://github.com/debba/melicum/releases">Download</a></p>
 
 A native macOS audio app focused on HDMI and DisplayPort volume control. Software gain works even when a digital output has no hardware volume control. The optional system volume component also enables the macOS volume slider and native volume keys.
 
@@ -12,14 +12,10 @@ Melicum uses an independent SwiftUI interface, Core Audio routing, and C DSP. It
 
 ## Screenshots
 
-<p align="center">
-  <img src="docs/images/main-window.png" width="720" alt="Melicum main window with output selection, volume, balance, boost, spectrum and equalizer">
-</p>
-
-<p align="center">
-  <img src="docs/images/spatial-audio.png" width="420" alt="Spatial audio tab with room presets, reverb mix and stereo width">
-  <img src="docs/images/presets.png" width="420" alt="Presets tab with super presets, AutoEQ import and language selection">
-</p>
+| Main window | Spatial audio | Presets |
+| :---: | :---: | :---: |
+| <img src="docs/images/main-window.png" width="280" alt="Melicum main window with output selection, volume, balance, boost, spectrum and equalizer"> | <img src="docs/images/spatial-audio.png" width="280" alt="Spatial audio tab with room presets, reverb mix and stereo width"> | <img src="docs/images/presets.png" width="280" alt="Presets tab with super presets, AutoEQ import and language selection"> |
+| Output, volume, spectrum and EQ | Room presets, reverb and stereo width | Super presets, AutoEQ import and language |
 
 ## Getting started
 
@@ -50,7 +46,7 @@ Settings are stored in `~/Library/Application Support/Melicum/settings.json`. Me
 | Audio Units | Chain of up to 12 installed effects compatible with stereo float PCM; generic parameter editor |
 | AutoEQ import | Local ParametricEQ `.txt` files in Equalizer APO / REW format |
 | Super presets | Complete settings snapshots, JSON import/export, output associations, and app-triggered recall |
-| Interface | Dark theme, three accent colors, menu bar panel, launch at login, five languages |
+| Interface | Fixed graphite, cream and red palette from the logo, menu bar panel, launch at login, five languages |
 
 This version supports **mono/stereo PCM**. Configure multichannel HDMI devices for two channels in **Audio MIDI Setup**. Dolby/DTS passthrough and protected streams unavailable to macOS process taps are unsupported. The online AutoEQ database and proprietary plugin interfaces are not included. Incompatible Audio Units cancel startup with an error; effects that fail during rendering are bypassed. Peak protection operates per stream, so the sum of multiple mixer streams can still exceed full scale.
 

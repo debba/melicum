@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melicum · HDMI and DisplayPort volume for macOS</title>
+<meta name="description" content="Melicum controls the volume of HDMI and DisplayPort displays on macOS, with native volume keys, a parametric equalizer, a per-app mixer and Audio Units. Free and open source.">
+<meta property="og:title" content="Melicum">
+<meta property="og:description" content="HDMI and DisplayPort volume control for macOS, with native volume keys, EQ, per-app mixer and Audio Units.">
+<meta property="og:image" content="https://debba.github.io/melicum/images/main-window.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#18181C">
+<link rel="icon" type="image/png" href="images/melicum-icon.png">
+<link rel="apple-touch-icon" href="images/melicum-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single column story on graphite, like the app window; the VU red is the only accent. */
+:root {
+  --bg: #18181C; --bg-deep: #111114; --panel: #24242A; --line: #34343C;
+  --cream: #F3EDE2; --muted: #9C968D; --red: #FF5A47; --red-deep: #DE3B29;
+  --display: "Fraunces", Georgia, serif;
+  --body: "IBM Plex Sans", -apple-system, "Helvetica Neue", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--cream); font: 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+img { max-width: 100%; display: block; }
+code { font-family: var(--mono); font-size: .88em; background: var(--panel); padding: 2px 6px; border-radius: 5px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: max(20px, 4vw); }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h2 { font: 600 clamp(30px, 4.4vw, 46px)/1.08 var(--display); letter-spacing: -.01em; }
+h3 { font: 600 17px/1.3 var(--body); }
+p { margin: 0; }
+.muted { color: var(--muted); }
+
+/* Navigation */
+nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--cream); text-decoration: none; font: 600 19px var(--display); }
+.brand img { width: 28px; height: 28px; }
+nav ul { list-style: none; display: flex; gap: 22px; margin: 0 0 0 auto; padding: 0; font-size: 14px; }
+nav ul a { color: var(--muted); text-decoration: none; }
+nav ul a:hover { color: var(--cream); }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; padding-block: 88px 40px; }
+.hero::before { content: ""; position: absolute; inset: -20% -10% auto; height: 620px; background: radial-gradient(60% 60% at 50% 30%, rgba(255,90,71,.14), transparent 70%); pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; gap: 22px; }
+.hero .icon { width: 148px; height: 148px; filter: drop-shadow(0 24px 40px rgba(0,0,0,.5)); }
+.hero h1 { font: 600 clamp(52px, 9vw, 104px)/.95 var(--display); letter-spacing: -.02em; }
+.hero .lede { font-size: clamp(18px, 2.2vw, 22px); color: var(--muted); max-width: 40ch; }
+.hero .lede b { color: var(--cream); font-weight: 500; }
+.cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 12px; font: 600 15px var(--body); text-decoration: none; transition: transform .15s ease, background .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn.primary { background: var(--red); color: var(--bg-deep); }
+.btn.primary:hover { background: #FF6E5D; }
+.btn.ghost { color: var(--cream); border: 1px solid var(--line); background: var(--panel); }
+.btn svg { width: 18px; height: 18px; }
+.facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font: 400 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.facts span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 8px; vertical-align: 1px; }
+
+.window { margin-top: 56px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.03); max-width: 900px; width: 100%; }
+
+section { padding-block: 96px; }
+section > .wrap { display: grid; gap: 40px; }
+.head { display: grid; gap: 14px; max-width: 62ch; }
+.head p { color: var(--muted); font-size: 18px; }
+
+/* Problem */
+.problem { border-top: 1px solid var(--line); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.vs { display: grid; gap: 14px; }
+.vs div { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; }
+.vs .tag { grid-row: span 2; font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; border-radius: 6px; }
+.vs .before .tag { color: var(--muted); background: rgba(156,150,141,.12); }
+.vs .after { border-color: rgba(255,90,71,.45); }
+.vs .after .tag { color: var(--red); background: rgba(255,90,71,.12); }
+.vs b { font-weight: 600; }
+.vs span.d { color: var(--muted); font-size: 14px; }
+
+/* Features */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: grid; gap: 10px; align-content: start; }
+.card svg { width: 26px; height: 26px; color: var(--red); }
+.card p { color: var(--muted); font-size: 15px; }
+.card .spec { font: 400 12px var(--mono); color: var(--cream); opacity: .75; }
+
+/* Routing diagram */
+.flow { overflow-x: auto; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+.flow svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.notes p { color: var(--muted); font-size: 15px; }
+.notes h3 { margin-bottom: 6px; }
+
+/* Gallery */
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.gallery figure { margin: 0; display: grid; gap: 12px; }
+.gallery img { border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,.4); }
+.gallery figcaption { font-size: 14px; color: var(--muted); }
+.gallery figcaption b { color: var(--cream); font-weight: 600; display: block; }
+
+/* Install */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+.steps li::before { content: counter(step); font: 600 22px/1 var(--display); color: var(--red); width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--red); display: grid; place-items: center; }
+.steps p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+pre { margin: 0; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; overflow-x: auto; font: 400 14px/1.7 var(--mono); color: var(--cream); }
+pre .c { color: var(--muted); }
+
+/* Name */
+.name { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-deep); }
+.name .split { grid-template-columns: minmax(0, 280px) minmax(0, 1fr); }
+.name img { width: 100%; max-width: 280px; margin-inline: auto; }
+.word { font: 500 clamp(38px, 5vw, 60px)/1 var(--display); font-style: italic; }
+.word small { font: 400 14px var(--mono); font-style: normal; color: var(--muted); margin-left: 12px; letter-spacing: .04em; }
+
+footer { padding-block: 48px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; }
+footer a { color: var(--cream); }
+
+@media (max-width: 900px) {
+  .grid, .gallery, .notes { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .split, .name .split { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 620px) {
+  nav ul { display: none; }
+  .grid, .gallery, .notes { grid-template-columns: minmax(0, 1fr); }
+  section { padding-block: 64px; }
+  .hero { padding-top: 56px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="images/melicum-icon.png" alt="">Melicum</a>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="https://github.com/debba/melicum">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <img class="icon" src="images/melicum-icon.png" alt="Melicum icon: a lyre whose yoke is an equalizer curve and whose sound box is an HDMI receptacle">
+    <h1>Melicum</h1>
+    <p class="lede">Turn up your <b>HDMI and DisplayPort</b> display from the keyboard, like the built-in speakers. Then shape the sound.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/debba/melicum/releases/latest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+        Download for macOS
+      </a>
+      <a class="btn ghost" href="https://github.com/debba/melicum">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        Source on GitHub
+      </a>
+    </div>
+    <div class="facts"><span>macOS 14.2+</span><span>Apple silicon &amp; Intel</span><span>Free · GPL-3.0</span><span>Audio stays on your Mac</span></div>
+    <img class="window" src="images/main-window.png" width="900" height="900" alt="Melicum main window: audio output set to a Dell monitor over HDMI, volume at 62 percent, balance, boost, output spectrum and the equalizer">
+  </div>
+</header>
+
+<section class="problem">
+  <div class="wrap split">
+    <div class="head">
+      <div class="eyebrow">The problem</div>
+      <h2>macOS greys out the volume for most displays.</h2>
+      <p>HDMI and DisplayPort outputs usually have no hardware volume control, so the slider is disabled and the volume keys show a crossed-out speaker. You end up reaching for the monitor's buttons.</p>
+    </div>
+    <div class="vs">
+      <div class="before"><span class="tag">Before</span><b>Volume slider disabled</b><span class="d">Keys do nothing on an HDMI display. Volume lives in the monitor's on-screen menu.</span></div>
+      <div class="after"><span class="tag">With Melicum</span><b>Native slider and volume keys</b><span class="d">Software gain on the digital stream, kept in sync with the macOS volume and mute controls.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Features</div>
+      <h2>A volume knob first. A full audio desk when you want one.</h2>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <h3>HDMI &amp; DisplayPort volume</h3>
+        <p>Volume, mute, balance and up to 12 dB of boost for any output, even when the display has no volume of its own.</p>
+        <span class="spec">0–100% · ±balance · 0–12 dB boost</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+        <h3>Native volume keys</h3>
+        <p>An optional system component enables the macOS volume slider and keys, with volume and mute synchronized both ways.</p>
+        <span class="spec">Optional HAL component</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c3 0 4-7 7-7s3 9 6 9 4-5 7-5"/><circle cx="9" cy="8" r="1.6"/><circle cx="15" cy="17" r="1.6"/></svg>
+        <h3>Parametric equalizer</h3>
+        <p>Basic tone controls, ten fixed bands, or an expert mode with bell, shelf, pass, notch and band-pass filters.</p>
+        <span class="spec">Up to 64 filters · AutoEQ import</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V14M4 10V3M12 21V12M12 8V3M20 21V16M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>
+        <h3>Per-app mixer</h3>
+        <p>Give each application its own level, grouped by bundle, so a video call and music no longer fight.</p>
+        <span class="spec">Separate tap per app</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 20V10l7-6 7 6v10"/><path d="M9 20v-5h6v5"/></svg>
+        <h3>Spatial audio</h3>
+        <p>An original stereo reverb with five spaces, from a small room to a cathedral, plus soundstage width.</p>
+        <span class="spec">5 rooms · mid/side width</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg>
+        <h3>Audio Units &amp; presets</h3>
+        <p>Chain installed effects, then save everything as a super preset that follows an output or an app.</p>
+        <span class="spec">12 effects · JSON import/export</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background: var(--bg-deep); border-block: 1px solid var(--line);">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">How it works</div>
+      <h2>One tap, one callback, one clock.</h2>
+      <p>Melicum captures system audio with Core Audio process taps, processes it in a realtime C engine and plays it on the display, sharing the display's clock to avoid drift.</p>
+    </div>
+    <div class="flow" role="img" aria-label="Diagram: applications play to the Melicum virtual output; a Core Audio process tap excluding Melicum captures them; the C DSP applies volume, EQ, mixer, reverb and Audio Units; the aggregate device plays the result on the HDMI or DisplayPort display using the display's clock. The macOS volume slider and keys control the virtual output and stay in sync with Melicum.">
+      <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
+        <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#FF5A47"/></marker></defs>
+        <g fill="#24242A" stroke="#34343C" stroke-width="1.5">
+          <rect x="10" y="90" width="170" height="110" rx="14"/>
+          <rect x="250" y="90" width="190" height="110" rx="14"/>
+          <rect x="510" y="70" width="210" height="150" rx="14" stroke="#FF5A47"/>
+          <rect x="790" y="90" width="160" height="110" rx="14"/>
+          <rect x="250" y="236" width="190" height="52" rx="12"/>
+        </g>
+        <g fill="none" stroke="#FF5A47" stroke-width="2" marker-end="url(#arrow)">
+          <path d="M180 145H244"/><path d="M440 145H504"/><path d="M720 145H784"/>
+        </g>
+        <path d="M345 236V206" stroke="#9C968D" stroke-width="1.5" stroke-dasharray="4 5" fill="none"/>
+        <g fill="#F3EDE2" font-weight="600" font-size="16" text-anchor="middle">
+          <text x="95" y="135">Your apps</text>
+          <text x="345" y="135">Process tap</text>
+          <text x="615" y="112">Melicum engine</text>
+          <text x="870" y="135">Display</text>
+          <text x="345" y="267" font-size="14">macOS slider &amp; keys</text>
+        </g>
+        <g fill="#9C968D" font-size="13" text-anchor="middle">
+          <text x="95" y="158">Music, video, calls</text>
+          <text x="345" y="158">Excludes Melicum</text>
+          <text x="345" y="176">to prevent feedback</text>
+          <text x="615" y="138">Volume · EQ · mixer</text>
+          <text x="615" y="157">Reverb · Audio Units</text>
+          <text x="615" y="176">Peak protection</text>
+          <text x="870" y="158">HDMI or DisplayPort</text>
+          <text x="870" y="176">clock source</text>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#FF5A47" text-anchor="middle" letter-spacing="1">
+          <text x="615" y="205">REALTIME C · NO ALLOCATIONS</text>
+          <text x="95" y="60">01</text><text x="345" y="60">02</text><text x="615" y="40">03</text><text x="870" y="60">04</text>
+        </g>
+      </svg>
+    </div>
+    <div class="notes">
+      <div><h3>Gain applied once</h3><p>The optional virtual output exposes standard volume and mute to macOS. Its loopback is unused; Melicum applies the gain in its own engine, never twice.</p></div>
+      <div><h3>Safe to stop</h3><p>Disabling or quitting closes the taps and restores the previous output. If Melicum exits unexpectedly, the virtual output disappears within five seconds.</p></div>
+      <div><h3>Local only</h3><p>Audio is processed in memory on your Mac. Nothing is recorded to disk or sent over the network.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Screenshots</div>
+      <h2>Graphite, cream and one red needle.</h2>
+      <p>The interface takes its colors from the icon: a dark hi-fi panel with a VU-meter red for everything you can touch.</p>
+    </div>
+    <div class="gallery">
+      <figure><img src="images/main-window.png" width="900" height="900" loading="lazy" alt="Main window with output selection, volume, spectrum and equalizer"><figcaption><b>Main window</b>Output, volume, balance, boost, spectrum and EQ.</figcaption></figure>
+      <figure><img src="images/spatial-audio.png" width="900" height="900" loading="lazy" alt="Spatial audio tab with room presets, reverb mix and stereo width"><figcaption><b>Spatial audio</b>Five rooms, reverb mix and stereo width.</figcaption></figure>
+      <figure><img src="images/presets.png" width="900" height="900" loading="lazy" alt="Presets tab with super presets, AutoEQ import and language selection"><figcaption><b>Presets</b>Super presets, AutoEQ import and five languages.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="install" style="padding-top: 0;">
+  <div class="wrap split" style="align-items: start;">
+    <div style="display: grid; gap: 24px;">
+      <div class="head">
+        <div class="eyebrow">Install</div>
+        <h2>Four steps to a working volume key.</h2>
+      </div>
+      <ol class="steps">
+        <li><div><h3>Download and open</h3><p>Get the latest <code>.dmg</code> from <a href="https://github.com/debba/melicum/releases/latest">Releases</a> and drag Melicum to Applications. Builds are signed and notarized by Apple.</p></div></li>
+        <li><div><h3>Pick your display</h3><p>Choose the monitor or audio device under <b>Audio output</b>.</p></div></li>
+        <li><div><h3>Enable audio</h3><p>Click <b>Enable audio</b> and allow system audio recording when macOS asks.</p></div></li>
+        <li><div><h3>Unlock the volume keys</h3><p>Click <b>Enable system volume…</b> and authorize the installer. The macOS slider and keys now control your display.</p></div></li>
+      </ol>
+    </div>
+    <div style="display: grid; gap: 24px;">
+      <div class="head">
+        <div class="eyebrow">Build from source</div>
+        <h2>Swift, Core Audio and C.</h2>
+        <p>Requires Xcode. The system volume component builds on BlackHole, included as a submodule.</p>
+      </div>
+<pre><span class="c"># clone with the BlackHole submodule</span>
+git clone --recurse-submodules \
+  https://github.com/debba/melicum.git
+cd melicum
+
+<span class="c"># test, then build the driver and the app</span>
+swift test
+zsh scripts/build-system-volume.sh
+zsh scripts/build.sh
+open build/Melicum.app</pre>
+    </div>
+  </div>
+</section>
+
+<section class="name">
+  <div class="wrap split">
+    <img src="images/melicum-mark.svg" width="280" height="308" alt="The Melicum lyre mark in cream and red">
+    <div class="head">
+      <div class="eyebrow">The name</div>
+      <p class="word">melicus<small>Latin · "lyrical, for singing"</small></p>
+      <p>Melic poetry was sung to the lyre. The icon draws one as an equalizer: the yoke is an EQ curve with three hollow nodes, each string ends on that curve like a frequency band, and the sound box has the profile of an HDMI receptacle.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Melicum is free software under the <a href="https://github.com/debba/melicum/blob/main/LICENSE">GPL-3.0</a>. The system volume component includes <a href="https://github.com/ExistentialAudio/BlackHole">BlackHole</a>.</span>
+    <span><a href="https://github.com/debba/melicum">GitHub</a> · <a href="https://github.com/debba/melicum/releases">Releases</a> · <a href="https://github.com/debba/melicum/issues">Issues</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

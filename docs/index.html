@@ -10,6 +10,7 @@
 <meta property="og:image" content="https://debba.github.io/melicum/images/main-window.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#18181C">
+<meta name="color-scheme" content="dark">
 <link rel="icon" type="image/png" href="images/melicum-icon.png">
 <link rel="apple-touch-icon" href="images/melicum-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +19,7 @@
 <style>
 /* Layout: single column story on graphite, like the app window; the VU red is the only accent. */
 :root {
-  --bg: #18181C; --bg-deep: #111114; --panel: #24242A; --line: #34343C;
+  --bg: #18181C; --bg-deep: #111114; --panel: #24242A; --line: #34343C; --line-strong: #77727A;
   --cream: #F3EDE2; --muted: #9C968D; --red: #FF5A47; --red-deep: #DE3B29;
   --display: "Fraunces", Georgia, serif;
   --body: "IBM Plex Sans", -apple-system, "Helvetica Neue", sans-serif;
@@ -26,11 +27,15 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 body { margin: 0; background: var(--bg); color: var(--cream); font: 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
 a { color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
-img { max-width: 100%; display: block; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 20; padding: 10px 16px; border-radius: 10px; background: var(--cream); color: var(--bg-deep); font-weight: 600; text-decoration: none; }
+.skip:focus { top: 12px; }
+main:focus { outline: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+img { max-width: 100%; height: auto; display: block; }
 code { font-family: var(--mono); font-size: .88em; background: var(--panel); padding: 2px 6px; border-radius: 5px; }
 .wrap { max-width: 1120px; margin: 0 auto; padding-inline: max(20px, 4vw); }
 .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
@@ -45,8 +50,8 @@ nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(
 nav .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--cream); text-decoration: none; font: 600 19px var(--display); }
 .brand img { width: 28px; height: 28px; }
-nav ul { list-style: none; display: flex; gap: 22px; margin: 0 0 0 auto; padding: 0; font-size: 14px; }
-nav ul a { color: var(--muted); text-decoration: none; }
+nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 0 auto; padding: 0; font-size: 14px; }
+nav ul a { color: var(--muted); text-decoration: none; display: inline-block; padding: 8px 6px; }
 nav ul a:hover { color: var(--cream); }
 
 /* Hero */
@@ -58,14 +63,14 @@ nav ul a:hover { color: var(--cream); }
 .hero .lede { font-size: clamp(18px, 2.2vw, 22px); color: var(--muted); max-width: 40ch; }
 .hero .lede b { color: var(--cream); font-weight: 500; }
 .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px; }
-.btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 12px; font: 600 15px var(--body); text-decoration: none; transition: transform .15s ease, background .15s ease; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border: 1px solid transparent; border-radius: 12px; font: 600 15px var(--body); text-decoration: none; transition: transform .15s ease, background .15s ease; }
 .btn:hover { transform: translateY(-1px); }
 .btn.primary { background: var(--red); color: var(--bg-deep); }
 .btn.primary:hover { background: #FF6E5D; }
-.btn.ghost { color: var(--cream); border: 1px solid var(--line); background: var(--panel); }
+.btn.ghost { color: var(--cream); border-color: var(--line-strong); background: var(--panel); }
 .btn svg { width: 18px; height: 18px; }
-.facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font: 400 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.facts span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 8px; vertical-align: 1px; }
+.facts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font: 400 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.facts li::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 8px; vertical-align: 1px; }
 
 .window { margin-top: 56px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.03); max-width: 900px; width: 100%; }
 
@@ -80,9 +85,9 @@ section > .wrap { display: grid; gap: 40px; }
 .vs { display: grid; gap: 14px; }
 .vs div { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; }
 .vs .tag { grid-row: span 2; font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; border-radius: 6px; }
-.vs .before .tag { color: var(--muted); background: rgba(156,150,141,.12); }
+.vs .before .tag { color: #C4BEB5; background: rgba(156,150,141,.12); }
 .vs .after { border-color: rgba(255,90,71,.45); }
-.vs .after .tag { color: var(--red); background: rgba(255,90,71,.12); }
+.vs .after .tag { color: #FF8070; background: rgba(255,90,71,.12); }
 .vs b { font-weight: 600; }
 .vs span.d { color: var(--muted); font-size: 14px; }
 
@@ -94,8 +99,14 @@ section > .wrap { display: grid; gap: 40px; }
 .card .spec { font: 400 12px var(--mono); color: var(--cream); opacity: .75; }
 
 /* Routing diagram */
-.flow { overflow-x: auto; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
-.flow svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.flow { background: var(--bg-deep); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+.flow svg { width: 100%; height: auto; display: block; }
+.flow-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: flow; }
+.flow-list li { counter-increment: flow; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; }
+.flow-list li::before { content: "0" counter(flow); font: 500 11px var(--mono); letter-spacing: .1em; color: var(--red); }
+.flow-list li.engine { border-color: var(--red); }
+.flow-list b { font-weight: 600; }
+.flow-list span { color: var(--muted); font-size: 14px; }
 .notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .notes p { color: var(--muted); font-size: 15px; }
 .notes h3 { margin-bottom: 6px; }
@@ -112,36 +123,59 @@ section > .wrap { display: grid; gap: 40px; }
 .steps li { counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
 .steps li::before { content: counter(step); font: 600 22px/1 var(--display); color: var(--red); width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--red); display: grid; place-items: center; }
 .steps p { color: var(--muted); font-size: 15px; margin-top: 4px; }
-pre { margin: 0; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; overflow-x: auto; font: 400 14px/1.7 var(--mono); color: var(--cream); }
+pre { margin: 0; background: var(--bg-deep); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; white-space: pre-wrap; overflow-wrap: anywhere; font: 400 14px/1.7 var(--mono); color: var(--cream); }
 pre .c { color: var(--muted); }
 
 /* Name */
 .name { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-deep); }
 .name .split { grid-template-columns: minmax(0, 280px) minmax(0, 1fr); }
 .name img { width: 100%; max-width: 280px; margin-inline: auto; }
-.word { font: 500 clamp(38px, 5vw, 60px)/1 var(--display); font-style: italic; }
+.word { font: 500 clamp(38px, 5vw, 60px)/1 var(--display); font-style: italic; letter-spacing: 0; }
 .word small { font: 400 14px var(--mono); font-style: normal; color: var(--muted); margin-left: 12px; letter-spacing: .04em; }
 
 footer { padding-block: 48px; color: var(--muted); font-size: 14px; }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; }
 footer a { color: var(--cream); }
+footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+footer ul a { display: inline-block; padding: 6px 0; }
+.how { background: var(--bg-deep); color: var(--cream); border-block: 1px solid var(--line); }
 
 @media (max-width: 900px) {
   .grid, .gallery, .notes { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .split, .name .split { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 720px) {
+  .flow svg { display: none; }
+  .flow { padding: 16px; }
+}
+@media (min-width: 721px) { .flow-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 @media (max-width: 620px) {
-  nav ul { display: none; }
+  nav { position: static; }
+  nav .wrap { height: auto; flex-wrap: wrap; padding-block: 10px; gap: 6px; }
+  nav ul { margin-left: -6px; font-size: 15px; }
   .grid, .gallery, .notes { grid-template-columns: minmax(0, 1fr); }
   section { padding-block: 64px; }
   .hero { padding-top: 56px; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } .btn:hover { transform: none; } }
+@media (prefers-contrast: more) {
+  :root { --muted: #CFC9C0; --line: #6B6670; --line-strong: #A49FA6; }
+  .hero::before { display: none; }
+  .card p, .notes p, .steps p { color: var(--cream); }
+}
+@media (forced-colors: active) {
+  .btn, .card, .steps li, .vs div, .flow, pre { border: 1px solid CanvasText; }
+  .steps li::before { border-color: CanvasText; color: CanvasText; }
+  .facts li::before { background: CanvasText; }
+}
 </style>
 </head>
 <body>
 
-<nav>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+<nav aria-label="Main">
   <div class="wrap">
     <a class="brand" href="#top"><img src="images/melicum-icon.png" alt="">Melicum</a>
     <ul>
@@ -153,11 +187,13 @@ footer a { color: var(--cream); }
     </ul>
   </div>
 </nav>
+</header>
 
-<header class="hero" id="top">
+<main id="main" tabindex="-1">
+<section class="hero" id="top" aria-labelledby="title">
   <div class="wrap">
     <img class="icon" src="images/melicum-icon.png" alt="Melicum icon: a lyre whose yoke is an equalizer curve and whose sound box is an HDMI receptacle">
-    <h1>Melicum</h1>
+    <h1 id="title">Melicum</h1>
     <p class="lede">Turn up your <b>HDMI and DisplayPort</b> display from the keyboard, like the built-in speakers. Then shape the sound.</p>
     <div class="cta">
       <a class="btn primary" href="https://github.com/debba/melicum/releases/latest">
@@ -169,16 +205,16 @@ footer a { color: var(--cream); }
         Source on GitHub
       </a>
     </div>
-    <div class="facts"><span>macOS 14.2+</span><span>Apple silicon &amp; Intel</span><span>Free · GPL-3.0</span><span>Audio stays on your Mac</span></div>
+    <ul class="facts" role="list" aria-label="At a glance"><li>macOS 14.2+</li><li>Apple silicon &amp; Intel</li><li>Free · GPL-3.0</li><li>Audio stays on your Mac</li></ul>
     <img class="window" src="images/main-window.png" width="900" height="900" alt="Melicum main window: audio output set to a Dell monitor over HDMI, volume at 62 percent, balance, boost, output spectrum and the equalizer">
   </div>
-</header>
+</section>
 
-<section class="problem">
+<section class="problem" aria-labelledby="problem-title">
   <div class="wrap split">
     <div class="head">
       <div class="eyebrow">The problem</div>
-      <h2>macOS greys out the volume for most displays.</h2>
+      <h2 id="problem-title">macOS greys out the volume for most displays.</h2>
       <p>HDMI and DisplayPort outputs usually have no hardware volume control, so the slider is disabled and the volume keys show a crossed-out speaker. You end up reaching for the monitor's buttons.</p>
     </div>
     <div class="vs">
@@ -188,11 +224,11 @@ footer a { color: var(--cream); }
   </div>
 </section>
 
-<section id="features">
+<section id="features" aria-labelledby="features-title">
   <div class="wrap">
     <div class="head">
       <div class="eyebrow">Features</div>
-      <h2>A volume knob first. A full audio desk when you want one.</h2>
+      <h2 id="features-title">A volume knob first. A full audio desk when you want one.</h2>
     </div>
     <div class="grid">
       <article class="card">
@@ -235,15 +271,15 @@ footer a { color: var(--cream); }
   </div>
 </section>
 
-<section id="how" style="background: var(--bg-deep); border-block: 1px solid var(--line);">
+<section id="how" class="how" aria-labelledby="how-title">
   <div class="wrap">
     <div class="head">
       <div class="eyebrow">How it works</div>
-      <h2>One tap, one callback, one clock.</h2>
+      <h2 id="how-title">One tap, one callback, one clock.</h2>
       <p>Melicum captures system audio with Core Audio process taps, processes it in a realtime C engine and plays it on the display, sharing the display's clock to avoid drift.</p>
     </div>
-    <div class="flow" role="img" aria-label="Diagram: applications play to the Melicum virtual output; a Core Audio process tap excluding Melicum captures them; the C DSP applies volume, EQ, mixer, reverb and Audio Units; the aggregate device plays the result on the HDMI or DisplayPort display using the display's clock. The macOS volume slider and keys control the virtual output and stay in sync with Melicum.">
-      <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
+    <div class="flow">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
         <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#FF5A47"/></marker></defs>
         <g fill="#24242A" stroke="#34343C" stroke-width="1.5">
           <rect x="10" y="90" width="170" height="110" rx="14"/>
@@ -278,6 +314,12 @@ footer a { color: var(--cream); }
           <text x="95" y="60">01</text><text x="345" y="60">02</text><text x="615" y="40">03</text><text x="870" y="60">04</text>
         </g>
       </svg>
+      <ol class="flow-list" role="list" aria-label="Audio path">
+        <li><b>Your apps</b><span>Music, video and calls play to the Melicum output.</span></li>
+        <li><b>Process tap</b><span>Core Audio captures them, excluding Melicum itself to prevent feedback. The macOS slider and volume keys control this output.</span></li>
+        <li class="engine"><b>Melicum engine</b><span>Realtime C with no allocations: volume, EQ, mixer, reverb, Audio Units and peak protection.</span></li>
+        <li><b>Display</b><span>The HDMI or DisplayPort output plays the result and provides the clock.</span></li>
+      </ol>
     </div>
     <div class="notes">
       <div><h3>Gain applied once</h3><p>The optional virtual output exposes standard volume and mute to macOS. Its loopback is unused; Melicum applies the gain in its own engine, never twice.</p></div>
@@ -287,11 +329,11 @@ footer a { color: var(--cream); }
   </div>
 </section>
 
-<section id="screenshots">
+<section id="screenshots" aria-labelledby="shots-title">
   <div class="wrap">
     <div class="head">
       <div class="eyebrow">Screenshots</div>
-      <h2>Graphite, cream and one red needle.</h2>
+      <h2 id="shots-title">Graphite, cream and one red needle.</h2>
       <p>The interface takes its colors from the icon: a dark hi-fi panel with a VU-meter red for everything you can touch.</p>
     </div>
     <div class="gallery">
@@ -302,14 +344,14 @@ footer a { color: var(--cream); }
   </div>
 </section>
 
-<section id="install" style="padding-top: 0;">
+<section id="install" style="padding-top: 0;" aria-labelledby="install-title">
   <div class="wrap split" style="align-items: start;">
     <div style="display: grid; gap: 24px;">
       <div class="head">
         <div class="eyebrow">Install</div>
-        <h2>Four steps to a working volume key.</h2>
+        <h2 id="install-title">Four steps to a working volume key.</h2>
       </div>
-      <ol class="steps">
+      <ol class="steps" role="list">
         <li><div><h3>Download and open</h3><p>Get the latest <code>.dmg</code> from <a href="https://github.com/debba/melicum/releases/latest">Releases</a> and drag Melicum to Applications. Builds are signed and notarized by Apple.</p></div></li>
         <li><div><h3>Pick your display</h3><p>Choose the monitor or audio device under <b>Audio output</b>.</p></div></li>
         <li><div><h3>Enable audio</h3><p>Click <b>Enable audio</b> and allow system audio recording when macOS asks.</p></div></li>
@@ -336,21 +378,22 @@ open build/Melicum.app</pre>
   </div>
 </section>
 
-<section class="name">
+<section class="name" aria-labelledby="name-title">
   <div class="wrap split">
     <img src="images/melicum-mark.svg" width="280" height="308" alt="The Melicum lyre mark in cream and red">
     <div class="head">
       <div class="eyebrow">The name</div>
-      <p class="word">melicus<small>Latin · "lyrical, for singing"</small></p>
+      <h2 class="word" id="name-title"><span lang="la">melicus</span><small>Latin · "lyrical, for singing"</small></h2>
       <p>Melic poetry was sung to the lyre. The icon draws one as an equalizer: the yoke is an EQ curve with three hollow nodes, each string ends on that curve like a frequency band, and the sound box has the profile of an HDMI receptacle.</p>
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
     <span>Melicum is free software under the <a href="https://github.com/debba/melicum/blob/main/LICENSE">GPL-3.0</a>. The system volume component includes <a href="https://github.com/ExistentialAudio/BlackHole">BlackHole</a>.</span>
-    <span><a href="https://github.com/debba/melicum">GitHub</a> · <a href="https://github.com/debba/melicum/releases">Releases</a> · <a href="https://github.com/debba/melicum/issues">Issues</a></span>
+    <ul aria-label="Project links"><li><a href="https://github.com/debba/melicum">GitHub</a></li><li><a href="https://github.com/debba/melicum/releases">Releases</a></li><li><a href="https://github.com/debba/melicum/issues">Issues</a></li></ul>
   </div>
 </footer>
 

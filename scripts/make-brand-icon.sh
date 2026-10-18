@@ -12,3 +12,7 @@ iconutil -c icns build/BrandIcon.iconset -o Resources/AppIcon.icns
 mkdir -p docs/images
 sips -z 512 512 Resources/BrandIcon.png --out docs/images/melicum-icon.png >/dev/null
 cp Resources/brand/melicum-mark-dark.svg docs/images/melicum-mark.svg
+sed 's/viewBox="0 0 1024 1024"/viewBox="100 100 824 824"/' Resources/brand/melicum-icon.svg > docs/favicon.svg
+sips -c 824 824 Resources/BrandIcon.png --out build/favicon-tile.png >/dev/null
+sips -z 180 180 build/favicon-tile.png --out docs/apple-touch-icon.png >/dev/null
+sips -s format ico -z 32 32 build/favicon-tile.png --out docs/favicon.ico >/dev/null

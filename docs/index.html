@@ -65,8 +65,8 @@ nav ul a:hover { color: var(--cream); }
 .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px; }
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border: 1px solid transparent; border-radius: 12px; font: 600 15px var(--body); text-decoration: none; transition: transform .15s ease, background .15s ease; }
 .btn:hover { transform: translateY(-1px); }
-.btn.primary { background: var(--red); color: var(--bg-deep); }
-.btn.primary:hover { background: #FF6E5D; }
+.btn.primary { background: var(--cream); color: var(--bg-deep); }
+.btn.primary:hover { background: #FFFFFF; }
 .btn.ghost { color: var(--cream); border-color: var(--line-strong); background: var(--panel); }
 .btn svg { width: 18px; height: 18px; }
 .facts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; font: 400 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -113,7 +113,7 @@ section > .wrap { display: grid; gap: 40px; }
 
 /* Gallery */
 .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.gallery figure { margin: 0; display: grid; gap: 12px; }
+.gallery figure { margin: 0; display: grid; gap: 12px; align-content: start; }
 .gallery img { border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,.4); }
 .gallery figcaption { font-size: 14px; color: var(--muted); }
 .gallery figcaption b { color: var(--cream); font-weight: 600; display: block; }
@@ -183,6 +183,8 @@ footer ul a { display: inline-block; padding: 6px 0; }
       <li><a href="#features">Features</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#updates">Updates</a></li>
       <li><a href="#install">Install</a></li>
       <li><a href="https://github.com/debba/melicum">GitHub</a></li>
     </ul>
@@ -207,7 +209,7 @@ footer ul a { display: inline-block; padding: 6px 0; }
       </a>
     </div>
     <ul class="facts" role="list" aria-label="At a glance"><li>macOS 14.2+</li><li>Apple silicon &amp; Intel</li><li>Free · GPL-3.0</li><li>Audio stays on your Mac</li></ul>
-    <img class="window" src="images/main-window.png" width="900" height="900" alt="Melicum main window: audio output set to a Dell monitor over HDMI, volume at 62 percent, balance, boost, output spectrum and the equalizer">
+    <img class="window" src="images/main-window.png" width="1000" height="960" alt="Melicum main window: audio output set to a Dell monitor over HDMI, volume at 42 percent, balance, boost, output spectrum and the equalizer">
   </div>
 </section>
 
@@ -335,12 +337,46 @@ footer ul a { display: inline-block; padding: 6px 0; }
     <div class="head">
       <div class="eyebrow">Screenshots</div>
       <h2 id="shots-title">Graphite, cream and one red needle.</h2>
-      <p>The interface takes its colors from the icon: a dark hi-fi panel with a VU-meter red for everything you can touch.</p>
+      <p>The interface takes its colors from the icon: a graphite audio console, cream controls and restrained red indicators. Master controls stay visible as you move between panels. The original logo is unchanged.</p>
     </div>
+    <p class="muted">Native SwiftUI views shown with example device, meter and preset data. Select an image to view it at full size.</p>
     <div class="gallery">
-      <figure><img src="images/main-window.png" width="900" height="900" loading="lazy" alt="Main window with output selection, volume, spectrum and equalizer"><figcaption><b>Main window</b>Output, volume, balance, boost, spectrum and EQ.</figcaption></figure>
-      <figure><img src="images/spatial-audio.png" width="900" height="900" loading="lazy" alt="Spatial audio tab with room presets, reverb mix and stereo width"><figcaption><b>Spatial audio</b>Five rooms, reverb mix and stereo width.</figcaption></figure>
-      <figure><img src="images/presets.png" width="900" height="900" loading="lazy" alt="Presets tab with super presets, AutoEQ import and language selection"><figcaption><b>Presets</b>Super presets, AutoEQ import and five languages.</figcaption></figure>
+      <figure><a href="images/main-window.png"><img src="images/main-window.png" width="1000" height="960" loading="lazy" alt="Redesigned master console and expert equalizer"></a><figcaption><b>Main window</b>Persistent output, volume, balance, boost and spectrum above the EQ editor.</figcaption></figure>
+      <figure><a href="images/app-mixer.png"><img src="images/app-mixer.png" width="1000" height="820" loading="lazy" alt="Independent application volume and mute controls"></a><figcaption><b>App mixer</b>Keep music, a browser and calls at independent levels.</figcaption></figure>
+      <figure><a href="images/spatial-audio.png"><img src="images/spatial-audio.png" width="1000" height="820" loading="lazy" alt="Spatial audio switch, room selector, reverb mix and stereo width"></a><figcaption><b>Spatial audio</b>Five rooms, a reverb mix and stereo width.</figcaption></figure>
+      <figure><a href="images/audio-units.png"><img src="images/audio-units.png" width="1000" height="820" loading="lazy" alt="Audio Unit effects panel with Add effect action"></a><figcaption><b>Audio Units</b>Add compatible installed effects and edit their parameters.</figcaption></figure>
+      <figure><a href="images/presets.png"><img src="images/presets.png" width="1000" height="1080" loading="lazy" alt="Saved presets, language, startup and automatic update preferences"></a><figcaption><b>Presets and settings</b>Save setups and configure language, startup and update checks.</figcaption></figure>
+      <figure><a href="images/menu-bar.png"><img src="images/menu-bar.png" width="280" height="288" loading="lazy" alt="Compact menu bar panel with master volume and Open panel action"></a><figcaption><b>Quick menu</b>Volume, mute, power and update checks from the menu bar.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="settings" class="how" aria-labelledby="settings-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Settings</div>
+      <h2 id="settings-title">Your setup, ready when you need it.</h2>
+      <p>Audio presets and application preferences are independent, so recalling an EQ setup does not change your language or startup choices.</p>
+    </div>
+    <div class="notes">
+      <div><h3>Save the whole sound</h3><p>Super presets include volume, EQ, app levels, reverb and Audio Unit parameters. Link one to an output or an application, or import and export settings as JSON.</p></div>
+      <div><h3>Choose how it starts</h3><p><b>Launch at login</b> opens Melicum when you sign in. <b>Enable audio on launch</b> separately activates the saved output; it is off by default. If that output is unavailable, processing stays off.</p></div>
+      <div><h3>Five languages</h3><p>Switch immediately between English, Italian, French, German and Spanish under Presets. <a href="https://github.com/debba/melicum/blob/main/docs/user-guide.md">Read the full guide</a> for every control and preset setting.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="updates" aria-labelledby="updates-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Signed updates</div>
+      <h2 id="updates-title">Automatic checks. Installation with your approval.</h2>
+      <p>Melicum checks for stable releases approximately once a day by default. Turn automatic checks on or off under Presets → Updates, or check manually from the app or quick menu.</p>
+    </div>
+    <div class="notes">
+      <div><h3>A verified download</h3><p>Sparkle verifies the signed feed, archive signature and Apple code signing. Drafts and prereleases are excluded from the stable update feed.</p></div>
+      <div><h3>Your settings stay</h3><p>The app asks before downloading and installing. It restores the physical output before quitting, retains presets and preferences, and follows your startup choice after relaunch.</p></div>
+      <div><h3>The audio component</h3><p>App updates do not silently replace the optional HAL component. When a release includes a component update, run its included <b>Enable system volume…</b> installer separately.</p></div>
     </div>
   </div>
 </section>

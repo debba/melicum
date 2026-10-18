@@ -12,10 +12,17 @@ Melicum uses an independent SwiftUI interface, Core Audio routing, and C DSP. It
 
 ## Screenshots
 
-| Main window | Spatial audio | Presets |
+| Main window | App mixer | Spatial audio |
 | :---: | :---: | :---: |
-| <img src="docs/images/main-window.png" width="280" alt="Melicum main window with output selection, volume, balance, boost, spectrum and equalizer"> | <img src="docs/images/spatial-audio.png" width="280" alt="Spatial audio tab with room presets, reverb mix and stereo width"> | <img src="docs/images/presets.png" width="280" alt="Presets tab with super presets, AutoEQ import and language selection"> |
-| Output, volume, spectrum and EQ | Room presets, reverb and stereo width | Super presets, AutoEQ import and language |
+| <img src="docs/images/main-window.png" width="280" alt="Redesigned Melicum console with output selection, master volume, spectrum and expert EQ"> | <img src="docs/images/app-mixer.png" width="280" alt="Per-app volume sliders and mute controls"> | <img src="docs/images/spatial-audio.png" width="280" alt="Spatial audio with five room settings, reverb mix and stereo width"> |
+| Output, master controls and EQ | Independent application levels | Reverb and stereo width |
+
+| Audio Units | Presets and settings | Quick menu |
+| :---: | :---: | :---: |
+| <img src="docs/images/audio-units.png" width="280" alt="Audio Unit effects panel and Add effect menu"> | <img src="docs/images/presets.png" width="280" alt="Preset management, language, startup preferences and automatic update checks"> | <img src="docs/images/menu-bar.png" width="220" alt="Melicum menu bar panel with volume, mute, power, Open panel and update check"> |
+| Installed effect chains | Presets, startup, language and updates | Everyday volume controls |
+
+Screenshots show the native SwiftUI interface with example devices, levels and presets. The original lyre logo and its graphite, cream and red palette are preserved. See the [user guide](docs/user-guide.md) for every control.
 
 ## Getting started
 
@@ -26,9 +33,23 @@ Melicum uses an independent SwiftUI interface, Core Audio routing, and C DSP. It
 5. To use native macOS volume controls, click **Enable system volume…** and complete the installer using an administrator account. It installs `MelicumSystemVolume.driver` in `/Library/Audio/Plug-Ins/HAL` and restarts the audio service. Enable audio again after installation. The virtual output uses the selected physical output's name followed by **(Melicum)**, for example **DELL U2414H (Melicum)**, while playback continues on that physical output. Switching outputs updates the virtual device's name. Volume and mute stay synchronized between Melicum and macOS. Accessibility permission is unnecessary in this mode.
 6. Without the optional component, **Volume keys** offers a keyboard shortcut fallback. Enable Melicum under **System Settings → Privacy & Security → Accessibility**, then click the button again. This fallback controls keyboard volume keys while audio processing runs; the native HDMI volume slider remains unavailable.
 
-Audio settings are stored in `~/Library/Application Support/Melicum/settings.json`. Melicum starts with audio processing disabled by default. Under **Presets**, turn on **Enable audio on launch** to activate the saved output automatically when the app opens. If that output is disconnected, audio stays off until you select an output and enable it manually. This startup preference is stored separately from audio presets. **Launch at login** opens the app and follows the audio startup preference.
+## Settings and everyday use
 
-Under **Presets → Updates**, automatic checks for new stable GitHub releases are enabled by default and run approximately once a day. **Check for Updates…** is also available in the Melicum menu and menu bar panel. Melicum asks before downloading and installing an update, preserves settings, and restores the physical output before quitting for installation. Updates are verified using Sparkle's signed feed, EdDSA archive signatures, and Apple code signing. Updates replace the app; an updated optional audio component still uses the included system volume installer.
+The main console keeps output selection, master volume, mute, balance, boost and the live spectrum visible while you switch between EQ, app mixer, spatial audio, Audio Units and presets. Cream controls and small red indicators follow the original logo palette.
+
+Under **Presets**, save or export your audio setup, associate a preset with an output or application, select one of five languages, and configure startup behavior:
+
+- **Launch at login** opens Melicum when you sign in.
+- **Enable audio on launch** separately enables the saved output. It is off by default; if the saved output is disconnected, processing stays off.
+- **Language** changes the interface immediately. English is the source language; Italian, French, German and Spanish are included.
+
+Audio settings and presets are stored in `~/Library/Application Support/Melicum/settings.json`. Language, startup and updater preferences are stored separately from audio presets. The [user guide](docs/user-guide.md) explains volume, EQ modes, app levels, effects, preset recall and all preferences.
+
+## Automatic update checks
+
+Melicum checks for new stable GitHub releases automatically, approximately once a day by default. Configure this under **Presets → Updates → Automatically check for updates**. You can also select **Check for Updates…** in that panel, the Melicum menu or the menu bar panel.
+
+Automatic checks do **not** silently install updates. Melicum asks before downloading and installing, preserves settings, and restores the physical output before quitting for installation. Sparkle verifies the signed feed, EdDSA archive signature and Apple code signing. Draft and prerelease versions are excluded from the stable update feed. Updating the app does not automatically replace the optional HAL component; when a release includes a component update, run its included **Enable system volume…** installer separately.
 
 **Disable** and **Quit** close the taps and aggregate devices, restoring the previous output when available. Processing stops if the physical device disconnects, its sample rate changes, or macOS selects another output. Choose the desired output and enable audio again.
 
@@ -69,6 +90,14 @@ swift test
 ./scripts/build.sh
 .build/release/Melicum --list-devices
 ```
+
+To regenerate the documentation screenshots from the native views with isolated example data, run:
+
+```sh
+./scripts/make-screenshots.sh
+```
+
+The capture script uses a temporary test harness, starts no audio session and leaves personal audio settings untouched.
 
 The system volume driver has its own C tests:
 

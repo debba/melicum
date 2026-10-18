@@ -13,6 +13,8 @@ mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 cp "$bin/Melicum" "$app/Contents/MacOS/"
 cp Resources/Info.plist "$app/Contents/"
 for resource in "$bin"/*.bundle(N); do ditto "$resource" "$app/Contents/Resources/${resource:t}"; done
+# Compile the layered icon so modern macOS does not wrap the legacy tile in a second frame.
+xcrun actool --compile "$app/Contents/Resources" --platform macosx --minimum-deployment-target 14.2 --app-icon AppIcon --output-partial-info-plist build/icon-info.plist --output-format human-readable-text --warnings --errors Resources/AppIcon.icon
 if [[ -f Resources/AppIcon.icns ]]; then cp Resources/AppIcon.icns "$app/Contents/Resources/"; fi
 cp Resources/BrandMark.png "$app/Contents/Resources/"
 if [[ -f build/MelicumSystemVolume.pkg ]]; then cp build/MelicumSystemVolume.pkg "$app/Contents/Resources/"; fi

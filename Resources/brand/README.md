@@ -25,7 +25,9 @@ construction of the user's `../gitdeck-ios/ios/Assets/brand` reference.
 
 ## Files
 
-- `melicum-icon.svg`: macOS icon master. The tile follows the macOS grid: 824 px, inset 100 px, corner radius 185 px.
+- `../AppIcon.icon`: native Icon Composer document. Its full-canvas graphite background and transparent lyre layer let modern macOS apply the outer shape without adding a second frame. Glass, shadows, and translucency on the lyre are disabled to preserve the flat cream and red artwork.
+- `../AppIcon.icon/Assets/Lyre.png`: generated foreground layer, using the same geometry and proportions as the legacy icon.
+- `melicum-icon.svg`: legacy macOS icon master. The tile follows the older macOS grid: 824 px, inset 100 px, corner radius 185 px.
 - `melicum-mark.svg`: transparent mark for light backgrounds.
 - `melicum-mark-dark.svg`: transparent mark for dark backgrounds.
 - `../BrandIcon.png`: 1024 px icon with alpha outside the tile.
@@ -33,11 +35,13 @@ construction of the user's `../gitdeck-ios/ios/Assets/brand` reference.
 - `../../docs/images/melicum-icon.png`: 512 px icon shown in the repository README.
 
 The artwork is drawn from shared vector geometry in `scripts/make-icon.swift`.
-Rebuild the SVG, PNG and ICNS assets from the project root:
+Rebuild the SVG, PNG, native foreground, and legacy ICNS assets from the project root:
 
 ```sh
 ./scripts/make-brand-icon.sh
 ```
+
+`scripts/build.sh` compiles the native document into `Assets.car` with Xcode's `actool` and bundles the legacy ICNS for earlier macOS releases. Packaging requires Xcode 26 or later. The editable `icon.json` is maintained in Icon Composer and is preserved when regenerating the artwork.
 
 This version is code-drawn vector artwork. It supersedes the earlier M-curve mark,
 the previous imagegen concept, and its prompt; none of them are used by the app.

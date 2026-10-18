@@ -9,8 +9,9 @@
     <key>CFBundleDevelopmentRegion</key><string>en</string>
     <key>CFBundleLocalizations</key><array><string>en</string><string>it</string><string>fr</string><string>de</string><string>es</string></array>
     <key>CFBundleShortVersionString</key><string>0.2.1</string>
-    <key>CFBundleVersion</key><string>4</string>
+    <key>CFBundleVersion</key><string>5</string>
     <key>CFBundleIconFile</key><string>AppIcon</string>
+    <key>CFBundleIconName</key><string>AppIcon</string>
     <key>LSMinimumSystemVersion</key><string>14.2</string>
     <key>NSHumanReadableCopyright</key><string>© 2026 Andrea Debernardi</string>
     <key>NSHighResolutionCapable</key><true/>

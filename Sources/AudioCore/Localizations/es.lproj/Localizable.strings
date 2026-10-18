@@ -72,6 +72,8 @@
 "Import JSON / AutoEQ…" = "Importar JSON / AutoEQ…";
 "Export settings…" = "Exportar ajustes…";
 "Launch at login" = "Abrir al iniciar sesión";
+"Enable audio on launch" = "Activar audio al abrir";
+"Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off." = "Activa automáticamente la salida guardada al abrir Melicum. Si no está disponible, el audio permanece desactivado.";
 "Launch at login opens the app. Enable audio starts the audio path." = "El inicio de sesión abre la app. Activar audio inicia el procesamiento.";
 "Volume keys" = "Teclas de volumen";
 "Volume keys enabled" = "Teclas de volumen activas";

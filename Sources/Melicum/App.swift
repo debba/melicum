@@ -13,7 +13,7 @@ struct MelicumApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @StateObject private var model = AppModel()
     var body: some Scene {
-        Window("Melicum",id: "main") { MainView().environmentObject(model).environment(\.locale,Locale(identifier: model.language)).onAppear { delegate.model = model } }
+        Window("Melicum",id: "main") { MainView().environmentObject(model).environment(\.locale,Locale(identifier: model.language)).onAppear { delegate.model = model; model.activateOnLaunch() } }
             .defaultSize(width: 900,height: 900)
             .commands { CommandGroup(replacing: .newItem) {} }
         MenuBarExtra("Melicum",systemImage: model.settings.muted ? "speaker.slash" : "slider.horizontal.3") { MenuView().environmentObject(model).environment(\.locale,Locale(identifier: model.language)) }.menuBarExtraStyle(.window)

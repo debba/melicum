@@ -31,6 +31,9 @@ final class AppModel: ObservableObject {
     @Published var systemVolumeActive = false
     @Published var driverInstalled = Hardware.virtualDevice != nil
     @Published var launchAtLogin = SMAppService.mainApp.status == .enabled
+    @Published var enableAudioOnLaunch = UserDefaults.standard.bool(forKey: "enableAudioOnLaunch") { didSet {
+        UserDefaults.standard.set(enableAudioOnLaunch,forKey: "enableAudioOnLaunch")
+    } }
     @Published var language = AppLanguage.current { didSet {
         UserDefaults.standard.set(language,forKey: "interfaceLanguage")
         UserDefaults.standard.set([language],forKey: "AppleLanguages")
@@ -43,6 +46,8 @@ final class AppModel: ObservableObject {
     private var lastAutoApp = ""
     private var saveTask: DispatchWorkItem?
     private var initialised = false
+    private var handledLaunch = false
+    private var launchOutputUID = ""
     private var syncingSystemVolume = false
     private var systemDeviceID: AudioObjectID = 0
     let mediaKeys = MediaKeys()
@@ -65,6 +70,7 @@ final class AppModel: ObservableObject {
             }
         } catch { self.error = F("Invalid saved settings: %@",error.localizedDescription) }
         message = T("Choose an output and enable audio.")
+        launchOutputUID = settings.outputUID
         devices = Hardware.devices; applications = Hardware.applications
         if !devices.contains(where: { $0.uid == settings.outputUID }) { settings.outputUID = devices.first(where: \.hdmi)?.uid ?? devices.first(where: { $0.id == Hardware.defaultOutput })?.uid ?? devices.first?.uid ?? "" }
         initialised = true
@@ -74,6 +80,12 @@ final class AppModel: ObservableObject {
         }
         timer = Timer.scheduledTimer(withTimeInterval: 0.1,repeats: true) { [weak self] _ in self?.poll() }
         scanEffects()
+    }
+    func activateOnLaunch() {
+        guard !handledLaunch else { return }
+        handledLaunch = true
+        guard enableAudioOnLaunch, !launchOutputUID.isEmpty, selectedDevice?.uid == launchOutputUID else { return }
+        start()
     }
     private func changed() {
         guard initialised else { return }

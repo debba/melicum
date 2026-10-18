@@ -5,7 +5,7 @@
     <key>CFBundleIdentifier</key><string>local.melicum.systemvolume</string>
     <key>CFBundleName</key><string>System Audio Volume Bridge</string>
     <key>CFBundlePackageType</key><string>BNDL</string>
-    <key>CFBundleVersion</key><string>2</string>
+    <key>CFBundleVersion</key><string>5</string>
     <key>CFBundleShortVersionString</key><string>0.2.1</string>
     <key>CFPlugInFactories</key><dict><key>71CB9D07-5B40-420E-A087-5A3DBDC84C84</key><string>Melicum_Create</string></dict>
     <key>CFPlugInTypes</key><dict><key>443ABAB8-E7B3-491A-B985-BEB9187030DB</key><array><string>71CB9D07-5B40-420E-A087-5A3DBDC84C84</string></array></dict>

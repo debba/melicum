@@ -8,7 +8,7 @@
 
 A native macOS audio app focused on HDMI and DisplayPort volume control. Software gain works even when a digital output has no hardware volume control. The optional system volume component also enables the macOS volume slider and native volume keys.
 
-Melicum uses an independent SwiftUI interface, Core Audio routing, and C DSP. It requires macOS 14.2 or later. Building from source additionally requires Xcode and Swift. English is the default language; Italian, French, German, and Spanish are available under **Presets → Language**.
+Melicum uses an independent SwiftUI interface, Core Audio routing, and C DSP. It requires macOS 14.2 or later. Building the app from source additionally requires Xcode 26 or later and Swift to compile the native layered icon. English is the default language; Italian, French, German, and Spanish are available under **Presets → Language**.
 
 ## Screenshots
 
@@ -23,10 +23,10 @@ Melicum uses an independent SwiftUI interface, Core Audio routing, and C DSP. It
 2. Choose a monitor or audio device under **Audio output**. Devices with identical names are numbered separately.
 3. Click **Enable audio** and approve system audio recording in the macOS permission dialog. Melicum processes audio locally without saving recordings or sending audio over the network.
 4. Adjust **Volume**, **Mute**, balance, and boost. The menu bar panel provides quick access to these controls.
-5. To use native macOS volume controls, click **Enable system volume…** and complete the installer using an administrator account. It installs `MelicumSystemVolume.driver` in `/Library/Audio/Plug-Ins/HAL` and restarts the audio service. Enable audio again after installation. The virtual output appears as **Melicum**, while playback continues on the physical output selected in the app. Volume and mute stay synchronized between Melicum and macOS. Accessibility permission is unnecessary in this mode.
+5. To use native macOS volume controls, click **Enable system volume…** and complete the installer using an administrator account. It installs `MelicumSystemVolume.driver` in `/Library/Audio/Plug-Ins/HAL` and restarts the audio service. Enable audio again after installation. The virtual output uses the selected physical output's name followed by **(Melicum)**, for example **DELL U2414H (Melicum)**, while playback continues on that physical output. Switching outputs updates the virtual device's name. Volume and mute stay synchronized between Melicum and macOS. Accessibility permission is unnecessary in this mode.
 6. Without the optional component, **Volume keys** offers a keyboard shortcut fallback. Enable Melicum under **System Settings → Privacy & Security → Accessibility**, then click the button again. This fallback controls keyboard volume keys while audio processing runs; the native HDMI volume slider remains unavailable.
 
-Settings are stored in `~/Library/Application Support/Melicum/settings.json`. Melicum starts with audio processing disabled. **Launch at login** opens the app without automatically capturing audio.
+Audio settings are stored in `~/Library/Application Support/Melicum/settings.json`. Melicum starts with audio processing disabled by default. Under **Presets**, turn on **Enable audio on launch** to activate the saved output automatically when the app opens. If that output is disconnected, audio stays off until you select an output and enable it manually. This startup preference is stored separately from audio presets. **Launch at login** opens the app and follows the audio startup preference.
 
 **Disable** and **Quit** close the taps and aggregate devices, restoring the previous output when available. Processing stops if the physical device disconnects, its sample rate changes, or macOS selects another output. Choose the desired output and enable audio again.
 
@@ -102,7 +102,7 @@ To reproduce a signed build locally, set `MELICUM_SIGN_IDENTITY` (and optionally
 
 An updated build may require macOS permissions to be approved again. Launch at login uses `SMAppService` and may require confirmation in System Settings.
 
-The Swift tests cover gain, mute, balance, filter response, FFT, peak protection, interleaved/planar buffers, tap input selection, Audio Units, AutoEQ parsing, preset round trips, and all five localizations. `Driver/Tests.c` covers initial availability, heartbeat, owner validation, volume round trips, and shutdown. Automated tests do not replace listening on the physical output or validating macOS permissions.
+The Swift tests cover gain, mute, balance, filter response, FFT, peak protection, interleaved/planar buffers, tap input selection, Audio Units, AutoEQ parsing, preset round trips, and all five localizations. `Driver/Tests.c` covers output names, stable device identity, property validation, hidden startup, visibility notifications, heartbeat, owner validation, volume round trips, shutdown, heartbeat timeout, and unexpected owner exit. Automated tests do not replace listening on the physical output or validating macOS permissions.
 
 On this Mac, manual checks verified actual audio through the virtual output to the selected DELL device, volume and mute synchronization in both directions, and restoration of the physical output when processing stops.
 
@@ -110,13 +110,13 @@ On this Mac, manual checks verified actual audio through the virtual output to t
 
 The optional component wraps BlackHole source pinned to commit `561d934c77a1fa64987e01ccabe890fed30e181f`. It exposes a stereo output with standard volume/mute properties. Melicum captures application audio targeted at that output and forwards the processed signal to the selected physical device. The loopback input is unused; gain is applied once in Melicum's DSP.
 
-The virtual device becomes available only while Melicum processes audio. Normal shutdown restores the previous physical output. If the owner process exits unexpectedly or its heartbeat is missing for five seconds, the driver becomes unavailable and macOS can choose another output.
+The virtual device appears in the macOS output list only while Melicum is open and processing audio. Disabling audio or quitting restores the previous physical output and hides the virtual device. If the owner process exits unexpectedly or its heartbeat is missing for five seconds, the driver hides and disables the device so macOS can choose another output. The component stays installed between launches; updating an older component requires running the system volume installer included in the new app.
 
 Routing follows Apple's [Capturing system audio with Core Audio taps](https://developer.apple.com/documentation/coreaudio/capturing-system-audio-with-core-audio-taps), local SDK headers, and the shared-clock aggregate model described by [CoreAudioTapKit](https://github.com/CJStanfield/CoreAudioTapKit). The tap and physical output share a callback. The C callback uses preallocated memory and atomic controls; audio lifecycle and Audio Unit configuration run on a separate serial queue.
 
 ## Visual identity
 
-The original vector mark is a lyre drawn as an equalizer: the yoke is an EQ curve with three hollow nodes, the strings end on that curve, and the sound box has the profile of an HDMI receptacle. The name comes from the Latin *melicus*, "lyrical". Its "Vinyl and VU" palette pairs a graphite tile with cream and VU-needle red. SVG masters are in `Resources/brand`; `Resources/BrandIcon.png` supplies the macOS icon, and `Resources/BrandMark.png` supplies the transparent header mark. Shared geometry in `scripts/make-icon.swift` generates the SVG and PNG artwork. See [the identity notes](Resources/brand/README.md).
+The original vector mark is a lyre drawn as an equalizer: the yoke is an EQ curve with three hollow nodes, the strings end on that curve, and the sound box has the profile of an HDMI receptacle. The name comes from the Latin *melicus*, "lyrical". Its "Vinyl and VU" palette pairs a graphite tile with cream and VU-needle red. SVG masters are in `Resources/brand`; `Resources/AppIcon.icon` supplies the native layered macOS icon, `Resources/BrandIcon.png` supplies the legacy icon, and `Resources/BrandMark.png` supplies the transparent header mark. Shared geometry in `scripts/make-icon.swift` generates the SVG and PNG artwork. See [the identity notes](Resources/brand/README.md).
 
 
 ## License

@@ -43,6 +43,7 @@ public final class AudioSession {
         outputID = device.id; sourceID = virtual ?? device.id; usesSystemVolume = virtual != nil
         do {
             if let virtual {
+                try Hardware.check(Hardware.setVirtualDeviceName(virtual,outputName: device.name),"System volume bridge; install the latest component")
                 try Hardware.check(Hardware.heartbeat(virtual,active: true),"System volume bridge; install the latest component")
                 let timer = DispatchSource.makeTimerSource(queue: heartbeatQueue)
                 timer.schedule(deadline: .now(),repeating: 1)

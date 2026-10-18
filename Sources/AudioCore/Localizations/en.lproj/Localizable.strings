@@ -72,6 +72,8 @@
 "Import JSON / AutoEQ…" = "Import JSON / AutoEQ…";
 "Export settings…" = "Export settings…";
 "Launch at login" = "Launch at login";
+"Enable audio on launch" = "Enable audio on launch";
+"Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off." = "Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off.";
 "Launch at login opens the app. Enable audio starts the audio path." = "Launch at login opens the app. Enable audio starts the audio path.";
 "Volume keys" = "Volume keys";
 "Volume keys enabled" = "Volume keys enabled";

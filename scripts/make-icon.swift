@@ -186,6 +186,23 @@ func renderIcon() throws {
     try rep.representation(using: .png, properties: [:])!.write(to: root.appendingPathComponent("BrandIcon.png"))
 }
 
+// Modern icons use a full canvas foreground and let macOS supply the outer shape.
+func renderIconLayer() throws {
+    let assets = root.appendingPathComponent("AppIcon.icon/Assets", isDirectory: true)
+    try FileManager.default.createDirectory(at: assets, withIntermediateDirectories: true)
+    let (rep, context) = bitmap(width: 1024, height: 1024)
+    NSGraphicsContext.saveGraphicsState()
+    NSGraphicsContext.current = context
+    let cg = context.cgContext
+    let scale = 1024 / tile.size
+    cg.translateBy(x: 512, y: 512 + 4 * scale)
+    cg.scaleBy(x: 0.86 * scale, y: 0.86 * scale)
+    cg.translateBy(x: -512, y: -503)
+    drawMark(in: context, ink: color(ink), accent: color(red))
+    NSGraphicsContext.restoreGraphicsState()
+    try rep.representation(using: .png, properties: [:])!.write(to: assets.appendingPathComponent("Lyre.png"))
+}
+
 // The header mark sits on the app's dark window background.
 func renderMark() throws {
     let width = 1024, height = Int((CGFloat(width) * markBox.height / markBox.width).rounded())
@@ -201,5 +218,6 @@ func renderMark() throws {
 }
 
 try renderIcon()
+try renderIconLayer()
 try renderMark()
-print("Melicum SVG masters, BrandIcon.png and BrandMark.png generated.")
+print("Melicum SVG masters, legacy icon, native icon foreground and header mark generated.")

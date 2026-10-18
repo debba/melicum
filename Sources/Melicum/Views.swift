@@ -219,7 +219,8 @@ struct MainView: View {
             Divider()
             HStack { Text(T("Language")).font(.system(size: 12)); Spacer(); Picker(T("Language"),selection: $model.language) { Text("English").tag("en"); Text("Italiano").tag("it"); Text("Français").tag("fr"); Text("Deutsch").tag("de"); Text("Español").tag("es") }.labelsHidden().frame(width: 150) }
             Toggle(T("Launch at login"),isOn: $model.launchAtLogin).onChange(of: model.launchAtLogin) { model.loginChanged() }.font(.system(size: 12))
-            Text(T("Launch at login opens the app. Enable audio starts the audio path.")).font(.system(size: 10)).foregroundStyle(secondary)
+            Toggle(T("Enable audio on launch"),isOn: $model.enableAudioOnLaunch).font(.system(size: 12))
+            Text(T("Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off.")).font(.system(size: 10)).foregroundStyle(secondary)
         }.padding(20).background(panel,in: RoundedRectangle(cornerRadius: 12))
     }
     private var footer: some View {

@@ -109,6 +109,11 @@ final class SettingsTests: XCTestCase {
         XCTAssertEqual(AppLanguage.translate("Enable audio",language: "fr"),"Activer l’audio")
         XCTAssertEqual(AppLanguage.translate("Enable audio",language: "es"),"Activar audio")
         XCTAssertEqual(AppLanguage.translate("unknown-key",language: "en"),"unknown-key")
+        for language in AppLanguage.codes where language != "en" {
+            for key in ["Enable audio on launch","Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off."] {
+                XCTAssertNotEqual(AppLanguage.translate(key,language: language),key)
+            }
+        }
     }
     func testAutoEQImport() throws {
         let s = try AutoEQImporter.parse("Preamp: -6.4 dB\nFilter 1: ON PK Fc 1000 Hz Gain -3.2 dB Q 1.41\nFilter 2: ON LSC Fc 105 Hz Gain 5.5 dB Q 0.71\nFilter 3: OFF PK Fc 500 Hz Gain 3 dB Q 1")

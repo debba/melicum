@@ -4,7 +4,13 @@ import CoreAudio
 public enum Hardware {
     public static let virtualUID = "HDMIAudioSystem_UID"
     public static var virtualDevice: AudioObjectID? {
-        objects(AudioObjectID(kAudioObjectSystemObject),kAudioHardwarePropertyDevices).first { string($0,kAudioDevicePropertyDeviceUID) == virtualUID }
+        // Hidden devices are discoverable by UID even when omitted from the public device list.
+        var a = address(kAudioHardwarePropertyTranslateUIDToDevice)
+        let uid = virtualUID as CFString
+        var reference = Unmanaged.passUnretained(uid), device: AudioObjectID = 0
+        var size = UInt32(MemoryLayout<AudioObjectID>.size)
+        let status = withExtendedLifetime(uid) { AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject),&a,UInt32(MemoryLayout.size(ofValue: reference)),&reference,&size,&device) }
+        return status == noErr && device != kAudioObjectUnknown ? device : nil
     }
     public static func systemVolume(_ device: AudioObjectID) -> (volume: Double, muted: Bool) {
         (Double(read(device,kAudioDevicePropertyVolumeScalar,initial: Float32(1),scope: kAudioObjectPropertyScopeOutput)), read(device,kAudioDevicePropertyMute,initial: UInt32(0),scope: kAudioObjectPropertyScopeOutput) != 0)
@@ -21,6 +27,14 @@ public enum Hardware {
         let value = CFNumberCreate(kCFAllocatorDefault,.sInt32Type,&pid)!
         var reference = Unmanaged.passUnretained(value)
         return withExtendedLifetime(value) { withUnsafePointer(to: &reference) { AudioObjectSetPropertyData(device,&a,0,nil,UInt32(MemoryLayout<CFNumber>.size),$0) } }
+    }
+    @discardableResult public static func setVirtualDeviceName(_ device: AudioObjectID, outputName: String) -> OSStatus {
+        var a = address(0x6d6e616d)
+        // Older components can still route audio until the bundled driver update is installed.
+        guard AudioObjectHasProperty(device,&a) else { return noErr }
+        let name = "\(outputName) (Melicum)" as CFString
+        var reference = Unmanaged.passUnretained(name)
+        return withExtendedLifetime(name) { AudioObjectSetPropertyData(device,&a,0,nil,UInt32(MemoryLayout.size(ofValue: reference)),&reference) }
     }
     public static func setSampleRate(_ device: AudioObjectID, _ rate: Double) throws {
         var a = address(kAudioDevicePropertyNominalSampleRate), value = rate

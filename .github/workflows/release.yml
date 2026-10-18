@@ -110,6 +110,7 @@ jobs:
           codesign --force --timestamp --sign "$MELICUM_SIGN_IDENTITY" "$dmg"
           xcrun notarytool submit "$dmg" --key "$APPLE_API_KEY_PATH" --key-id "$APPLE_API_KEY" --issuer "$APPLE_API_ISSUER" --wait
           xcrun stapler staple "$dmg"
+          cp "$dmg" dist/Melicum.dmg
           ditto -c -k --keepParent build/Melicum.app "dist/Melicum-$VERSION.zip"
           (cd dist && shasum -a 256 * > SHA256SUMS.txt)
 

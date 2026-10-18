@@ -84,7 +84,7 @@ The app bundle is written to `build/Melicum.app` and signed locally with an ad h
 
 ## Releases
 
-Pushing a `v*` tag, or running the **Release** workflow manually with a tag name, builds a universal `Melicum.app` on GitHub Actions. The workflow runs the tests, signs the app and the system volume driver with a Developer ID and the hardened runtime, notarizes and staples the app and the disk image, and attaches `Melicum-<version>.dmg`, `Melicum-<version>.zip`, and `SHA256SUMS.txt` to a draft release. Tags with a `-` suffix are marked as prereleases.
+Pushing a `v*` tag, or running the **Release** workflow manually with a tag name, builds a universal `Melicum.app` on GitHub Actions. The workflow runs the tests, signs the app and the system volume driver with a Developer ID and the hardened runtime, notarizes and staples the app and the disk image, and attaches `Melicum-<version>.dmg`, `Melicum-<version>.zip`, and `SHA256SUMS.txt` to a draft release. An identical copy named `Melicum.dmg` provides the website's [direct download of the latest stable release](https://github.com/debba/melicum/releases/latest/download/Melicum.dmg). Tags with a `-` suffix are marked as prereleases.
 
 The workflow requires these repository secrets:
 

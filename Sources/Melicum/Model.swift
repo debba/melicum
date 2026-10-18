@@ -18,10 +18,7 @@ final class AppModel: ObservableObject {
     @Published var busy = false
     @Published var error: String?
     @Published var message = "Choose an output and enable audio."
-    @Published var left: Float = 0
-    @Published var right: Float = 0
-    @Published var spectrum = [Float](repeating: -100,count: 64)
-    @Published var frames: UInt64 = 0
+    let meters = AudioMeters()
     @Published var sampleRate = 48000.0
     @Published var eqMode = "Expert"
     @Published var tab = "Equalizer"
@@ -51,7 +48,7 @@ final class AppModel: ObservableObject {
     private var syncingSystemVolume = false
     private var systemDeviceID: AudioObjectID = 0
     let mediaKeys = MediaKeys()
-    private let folder = FileManager.default.urls(for: .applicationSupportDirectory,in: .userDomainMask)[0].appendingPathComponent("Melicum",isDirectory: true)
+    private let folder: URL
     struct Saved: Codable { var settings: AudioSettings; var presets: [Preset] }
     var selectedDevice: OutputDevice? { devices.first { $0.uid == settings.outputUID } }
     func deviceName(_ device: OutputDevice) -> String {
@@ -59,7 +56,8 @@ final class AppModel: ObservableObject {
         guard matching.count > 1, let index = matching.firstIndex(where: { $0.uid == device.uid }) else { return device.name }
         return "\(device.name) · \(index+1)"
     }
-    init() {
+    init(monitoring: Bool = true, storageFolder: URL? = nil) {
+        folder = storageFolder ?? FileManager.default.urls(for: .applicationSupportDirectory,in: .userDomainMask)[0].appendingPathComponent("Melicum",isDirectory: true)
         do {
             let legacy = folder.deletingLastPathComponent().appendingPathComponent("HDMI Audio",isDirectory: true)
             if !FileManager.default.fileExists(atPath: folder.path), FileManager.default.fileExists(atPath: legacy.path) { try FileManager.default.copyItem(at: legacy,to: folder) }
@@ -78,8 +76,10 @@ final class AppModel: ObservableObject {
             guard let self, self.running else { return }
             if key == 7 { self.settings.muted.toggle() } else { self.settings.muted = false; self.settings.volume = min(1,max(0,self.settings.volume + (key == 0 ? 0.0625 : -0.0625))) }
         }
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1,repeats: true) { [weak self] _ in self?.poll() }
-        scanEffects()
+        if monitoring {
+            timer = Timer.scheduledTimer(withTimeInterval: 0.1,repeats: true) { [weak self] _ in self?.poll() }
+            scanEffects()
+        }
     }
     func activateOnLaunch() {
         guard !handledLaunch else { return }
@@ -127,7 +127,7 @@ final class AppModel: ObservableObject {
     func stop() {
         guard !busy else { return }; busy = true; mediaKeys.stop(); mediaKeysEnabled = false
         systemVolumeActive = false
-        queue.async { self.session.stop(); DispatchQueue.main.async { self.running = false; self.busy = false; self.left = 0; self.right = 0; self.spectrum = .init(repeating: -100,count: 64); self.message = T("Audio control is off") } }
+        queue.async { self.session.stop(); DispatchQueue.main.async { self.running = false; self.busy = false; self.meters.reset(); self.message = T("Audio control is off") } }
     }
     func restart() {
         guard running, !busy else { return }
@@ -151,11 +151,13 @@ final class AppModel: ObservableObject {
             }
         }
         if tick % 20 == 0 {
-            driverInstalled = Hardware.virtualDevice != nil
+            let installed = Hardware.virtualDevice != nil
+            if driverInstalled != installed { driverInstalled = installed }
             let fresh = Hardware.devices, apps = Hardware.applications
             let processChange = applications.map { "\($0.id):\($0.processes)" } != apps.map { "\($0.id):\($0.processes)" }
             let old = selectedDevice
-            devices = fresh; applications = apps
+            if devices != fresh { devices = fresh }
+            if applications != apps { applications = apps }
             let sourceRateChanged = systemVolumeActive && abs(Hardware.read(systemDeviceID,kAudioDevicePropertyNominalSampleRate,initial: sampleRate)-sampleRate)>1
             if running, selectedDevice == nil || old?.rate != selectedDevice?.rate || old?.channels != selectedDevice?.channels || Hardware.defaultOutput != systemDeviceID || sourceRateChanged {
                 stop(); error = "The output was disconnected or the audio configuration changed. Select an output and enable audio again."
@@ -172,7 +174,7 @@ final class AppModel: ObservableObject {
             let m = self.session.meter()
             DispatchQueue.main.async {
                 guard self.running else { return }
-                self.left = m.left; self.right = m.right; self.spectrum = m.spectrum; self.frames = m.frames
+                self.meters.update(left: m.left,right: m.right,spectrum: m.spectrum)
                 if m.error != 0 { self.error = F("Audio Unit render error %d; its signal was bypassed.",m.error) }
             }
         }

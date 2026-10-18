@@ -32,6 +32,7 @@ construction of the user's `../gitdeck-ios/ios/Assets/brand` reference.
 - `melicum-mark-dark.svg`: transparent mark for dark backgrounds.
 - `../BrandIcon.png`: 1024 px icon with alpha outside the tile.
 - `../BrandMark.png`: transparent cream and red header mark for the dark app window.
+- `../MenuBarIcon.tiff`: monochrome template derived from the lyre, with three heavier strings for clarity at 18 by 20 points and native 1x, 2x and 3x representations. macOS supplies the menu bar color.
 - `../../docs/images/melicum-icon.png`: 512 px icon shown in the repository README.
 
 The artwork is drawn from shared vector geometry in `scripts/make-icon.swift`.

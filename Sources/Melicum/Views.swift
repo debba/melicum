@@ -13,6 +13,7 @@ private let accent = Color(red: 1,green: 0.353,blue: 0.278)
 @available(macOS 14.2, *)
 struct MainView: View {
     @EnvironmentObject var model: AppModel
+    @EnvironmentObject var updater: AppUpdater
     private let tabs = ["Equalizer","App mixer","Spatial audio","Audio Units","Presets"]
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +29,7 @@ struct MainView: View {
                             Spacer(); Button { model.error = nil } label: { Image(systemName: "xmark") }.buttonStyle(.plain)
                         }.padding(14).background(Color.orange.opacity(0.1),in: RoundedRectangle(cornerRadius: 12))
                     }
-                    spectrum
+                    AudioSpectrum(meters: model.meters,running: model.running)
                     HStack(spacing: 4) {
                         ForEach(tabs,id: \.self) { tab in
                             Button { model.tab = tab } label: {
@@ -106,23 +107,6 @@ struct MainView: View {
             }.frame(width: 230)
         }.padding(20).background(panel,in: RoundedRectangle(cornerRadius: 12))
     }
-    private var spectrum: some View {
-        VStack(alignment: .leading,spacing: 8) {
-            HStack { Label(T("OUTPUT SPECTRUM"),systemImage: "waveform.path").font(.system(size: 9,weight: .semibold)).tracking(1).foregroundStyle(secondary); Spacer(); Circle().fill(model.running && max(model.left,model.right) > 0.0001 ? accent : secondary.opacity(0.4)).frame(width: 5,height: 5); Text(T(model.running ? (max(model.left,model.right) > 0.0001 ? "SIGNAL" : "WAITING FOR AUDIO") : "OFF")).font(.system(size: 8,design: .monospaced)).foregroundStyle(secondary) }
-            GeometryReader { geo in
-                Canvas { ctx,size in
-                    let step = size.width/64
-                    for i in 0..<64 {
-                        let value = model.running ? max(0,min(1,(Double(model.spectrum[i])+90)/90)) : 0
-                        let h = max(2,value*size.height)
-                        let rect = CGRect(x: Double(i)*step,y: size.height-h,width: max(1,step-3),height: h)
-                        ctx.fill(Path(roundedRect: rect,cornerRadius: 1.5),with: .color(accent.opacity(value > 0.03 ? 0.7 : 0.13)))
-                    }
-                }
-            }.frame(height: 64).accessibilityLabel(T("Live audio spectrum analyzer"))
-            HStack { Text(T("20 Hz")); Spacer(); Text(T("100")); Spacer(); Text(T("1k")); Spacer(); Text(T("10k")); Spacer(); Text(T("20k Hz")) }.font(.system(size: 8,design: .monospaced)).foregroundStyle(secondary)
-        }.padding(16).background(panel,in: RoundedRectangle(cornerRadius: 12))
-    }
     private var equalizer: some View {
         VStack(spacing: 16) {
             HStack {
@@ -131,7 +115,7 @@ struct MainView: View {
                 Picker(T("EQ mode"),selection: Binding(get: { model.eqMode },set: { model.chooseMode($0) })) { Text(T("Basic")).tag("Basic"); Text(T("Advanced")).tag("Advanced"); Text(T("Expert")).tag("Expert") }.pickerStyle(.segmented).frame(width: 270)
                 Button(T("Reset")) { for i in model.settings.bands.indices { model.settings.bands[i].gain = 0 }; model.settings.preamp = 0 }
             }
-            EQCurve(bands: model.settings.eqEnabled ? model.settings.bands : [],rate: model.sampleRate,accent: accent).frame(height: 130)
+            EQCurve(bands: model.settings.eqEnabled ? model.settings.bands : [],rate: model.sampleRate,accent: accent).equatable().frame(height: 130).accessibilityLabel(T("Equalizer frequency response"))
             HStack(spacing: 24) {
                 sliderRow("Preamp",value: $model.settings.preamp,range: -24...12,valueText: String(format: "%.1f dB",model.settings.preamp))
                 Toggle(T("Peak protection"),isOn: $model.settings.limiter).font(.system(size: 11)).help(T("Clamps output samples to ±0.98. This is not a true-peak limiter."))
@@ -221,6 +205,14 @@ struct MainView: View {
             Toggle(T("Launch at login"),isOn: $model.launchAtLogin).onChange(of: model.launchAtLogin) { model.loginChanged() }.font(.system(size: 12))
             Toggle(T("Enable audio on launch"),isOn: $model.enableAudioOnLaunch).font(.system(size: 12))
             Text(T("Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off.")).font(.system(size: 10)).foregroundStyle(secondary)
+            Divider()
+            HStack {
+                Text(T("Updates")).font(.system(size: 12,weight: .semibold))
+                Spacer()
+                Button(T("Check for Updates…")) { updater.checkForUpdates() }.disabled(!updater.canCheckForUpdates)
+            }
+            Toggle(T("Automatically check for updates"),isOn: Binding(get: { updater.automaticallyChecksForUpdates },set: { updater.setAutomaticChecks($0) })).font(.system(size: 12))
+            Text(T("Checks GitHub for new releases and asks before downloading and installing.")).font(.system(size: 10)).foregroundStyle(secondary)
         }.padding(20).background(panel,in: RoundedRectangle(cornerRadius: 12))
     }
     private var footer: some View {
@@ -237,7 +229,34 @@ struct MainView: View {
     private func bounded(_ source: Binding<Double>,_ range: ClosedRange<Double>) -> Binding<Double> { Binding(get: { source.wrappedValue },set: { if $0.isFinite { source.wrappedValue = min(range.upperBound,max(range.lowerBound,$0)) } }) }
 }
 
-struct EQCurve: View {
+private struct AudioSpectrum: View {
+    @ObservedObject var meters: AudioMeters
+    var running: Bool
+    private var signal: Bool { running && max(meters.levels.left,meters.levels.right) > 0.0001 }
+
+    var body: some View {
+        VStack(alignment: .leading,spacing: 8) {
+            HStack {
+                Label(T("OUTPUT SPECTRUM"),systemImage: "waveform.path").font(.system(size: 9,weight: .semibold)).tracking(1).foregroundStyle(secondary)
+                Spacer()
+                Circle().fill(signal ? accent : secondary.opacity(0.4)).frame(width: 5,height: 5)
+                Text(T(running ? (signal ? "SIGNAL" : "WAITING FOR AUDIO") : "OFF")).font(.system(size: 8,design: .monospaced)).foregroundStyle(secondary).lineLimit(1)
+            }
+            Canvas { ctx,size in
+                let step = size.width/64
+                for i in 0..<64 {
+                    let value = running ? max(0,min(1,(Double(meters.levels.spectrum[i])+90)/90)) : 0
+                    let height = max(2,value*size.height)
+                    let rect = CGRect(x: Double(i)*step,y: size.height-height,width: max(1,step-3),height: height)
+                    ctx.fill(Path(roundedRect: rect,cornerRadius: 1.5),with: .color(accent.opacity(value > 0.03 ? 0.7 : 0.13)))
+                }
+            }.frame(height: 64).accessibilityLabel(T("Live audio spectrum analyzer"))
+            HStack { Text(T("20 Hz")); Spacer(); Text(T("100")); Spacer(); Text(T("1k")); Spacer(); Text(T("10k")); Spacer(); Text(T("20k Hz")) }.font(.system(size: 8,design: .monospaced)).foregroundStyle(secondary)
+        }.padding(16).background(panel,in: RoundedRectangle(cornerRadius: 12))
+    }
+}
+
+struct EQCurve: View, Equatable {
     var bands: [EQBand]
     var rate: Double
     var accent: Color
@@ -252,10 +271,11 @@ struct EQCurve: View {
                 let x = log(hz/20)/log(1000)*size.width
                 var line = Path();line.move(to: CGPoint(x: x,y: 0));line.addLine(to: CGPoint(x: x,y: size.height));ctx.stroke(line,with: .color(.white.opacity(0.05)),lineWidth: 1)
             }
+            let active = bands.filter(\.enabled)
             var path = Path()
             for i in 0...240 {
                 let hz = 20*pow(1000,Double(i)/240)
-                let db = bands.filter(\.enabled).reduce(0.0) { $0 + eq_response(Int32($1.type.rawValue),$1.frequency,$1.gain,$1.q,rate,hz) }
+                let db = active.reduce(0.0) { $0 + eq_response(Int32($1.type.rawValue),$1.frequency,$1.gain,$1.q,rate,hz) }
                 let p = CGPoint(x: size.width*Double(i)/240,y: size.height*(0.5-max(-24,min(24,db))/48))
                 if i == 0 { path.move(to: p) } else { path.addLine(to: p) }
             }
@@ -264,13 +284,14 @@ struct EQCurve: View {
                 let x = log(band.frequency/20)/log(1000)*size.width,y = size.height*(0.5-max(-24,min(24,band.gain))/48)
                 ctx.fill(Path(ellipseIn: CGRect(x: x-3,y: y-3,width: 6,height: 6)),with: .color(accent))
             }
-        }.padding(10).background(Color.black.opacity(0.18),in: RoundedRectangle(cornerRadius: 8)).accessibilityLabel(T("Equalizer frequency response"))
+        }.padding(10).background(Color.black.opacity(0.18),in: RoundedRectangle(cornerRadius: 8))
     }
 }
 
 @available(macOS 14.2, *)
 struct MenuView: View {
     @EnvironmentObject var model: AppModel
+    @EnvironmentObject var updater: AppUpdater
     @Environment(\.openWindow) var openWindow
     var body: some View {
         VStack(alignment: .leading,spacing: 14) {
@@ -278,7 +299,9 @@ struct MenuView: View {
             Text(model.selectedDevice?.name ?? T("No output")).font(.caption).foregroundStyle(.secondary).lineLimit(1)
             HStack { Button { model.settings.muted.toggle() } label: { Image(systemName: model.settings.muted ? "speaker.slash.fill" : "speaker.wave.2.fill") }.buttonStyle(.plain); Slider(value: $model.settings.volume,in: 0...1); Text("\(Int(model.settings.volume*100))%").monospacedDigit().frame(width: 36) }
             HStack { Button(T(model.running ? "Disable" : "Enable audio")) { model.toggle() }.disabled(model.busy); Spacer(); Button(T("Open panel")) { openWindow(id: "main"); NSApp.activate(ignoringOtherApps: true) } }
-            Divider(); Button(T("Quit")) { NSApplication.shared.terminate(nil) }.keyboardShortcut("q")
+            Divider()
+            Button(T("Check for Updates…")) { updater.checkForUpdates() }.disabled(!updater.canCheckForUpdates)
+            Button(T("Quit")) { NSApplication.shared.terminate(nil) }.keyboardShortcut("q")
         }.padding(18).frame(width: 310).tint(accent)
     }
 }

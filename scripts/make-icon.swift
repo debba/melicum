@@ -64,18 +64,21 @@ let fills = [
     Fill(path: VectorPath(data: mirrored(leftArm)), accent: true),
     Fill(path: VectorPath(data: "M 348 740 L 676 740 L 676 784 L 630 834 L 394 834 L 348 784 Z"), accent: false),
 ]
-let strings = [444.0, 478.0].flatMap { x -> [Stroke] in
-    let y = yokeY(atX: x)
-    return [Stroke(path: VectorPath(data: "M \(x) \(y) L \(x) 712"), width: 11),
-            Stroke(path: VectorPath(data: "M \(1024 - x) \(y) L \(1024 - x) 712"), width: 11)]
+func markStrokes(stringXs: [Double], lineWidth: CGFloat, stringWidth: CGFloat, slotWidth: CGFloat) -> [Stroke] {
+    let strings = stringXs.flatMap { x -> [Stroke] in
+        let y = yokeY(atX: x)
+        return [Stroke(path: VectorPath(data: "M \(x) \(y) L \(x) 712"), width: stringWidth),
+                Stroke(path: VectorPath(data: "M \(1024 - x) \(y) L \(1024 - x) 712"), width: stringWidth)]
+    }
+    return [
+        Stroke(path: VectorPath(data: "M 300 262 C 400 230 450 300 512 300 C 574 300 624 230 724 262"), width: lineWidth),
+        Stroke(path: VectorPath(data: "M 300 712 L 724 712"), width: lineWidth),
+    ] + strings + [
+        Stroke(path: VectorPath(data: "M 512 300 L 512 712"), width: stringWidth),
+        Stroke(path: VectorPath(data: "M 430 788 L 594 788"), width: slotWidth),
+    ]
 }
-let strokes = [
-    Stroke(path: VectorPath(data: "M 300 262 C 400 230 450 300 512 300 C 574 300 624 230 724 262"), width: 18),
-    Stroke(path: VectorPath(data: "M 300 712 L 724 712"), width: 18),
-] + strings + [
-    Stroke(path: VectorPath(data: "M 512 300 L 512 712"), width: 11),
-    Stroke(path: VectorPath(data: "M 430 788 L 594 788"), width: 9),
-]
+let strokes = markStrokes(stringXs: [444, 478], lineWidth: 18, stringWidth: 11, slotWidth: 9)
 let nodes: [(CGFloat, CGFloat)] = [(300, 262), (512, 300), (724, 262)]
 let gap: CGFloat = 13, nodeRadius: CGFloat = 30, nodeWidth: CGFloat = 15
 
@@ -138,27 +141,28 @@ func bitmap(width: Int, height: Int) -> (NSBitmapImageRep, NSGraphicsContext) {
 
 // Draws the mark in artwork coordinates. Clear space is erased with the clear blend mode,
 // so the mark must be drawn into its own transparent layer before compositing.
-func drawMark(in context: NSGraphicsContext, ink: NSColor, accent: NSColor) {
+func drawMark(in context: NSGraphicsContext, ink: NSColor, accent: NSColor,
+              lineStrokes: [Stroke] = strokes, clearance: CGFloat = gap, ringWidth: CGFloat = nodeWidth) {
     let cg = context.cgContext
     cg.beginTransparencyLayer(auxiliaryInfo: nil)
     for fill in fills { (fill.accent ? accent : ink).setFill(); fill.path.bezier().fill() }
     cg.setBlendMode(.clear)
-    for stroke in strokes {
-        let halo = stroke.path.bezier(); halo.lineWidth = stroke.width + gap * 2; halo.lineCapStyle = .round; halo.lineJoinStyle = .round; halo.stroke()
+    for stroke in lineStrokes {
+        let halo = stroke.path.bezier(); halo.lineWidth = stroke.width + clearance * 2; halo.lineCapStyle = .round; halo.lineJoinStyle = .round; halo.stroke()
     }
-    let outer = nodeRadius + nodeWidth / 2 + gap
+    let outer = nodeRadius + ringWidth / 2 + clearance
     for (x, y) in nodes { NSBezierPath(ovalIn: NSRect(x: x - outer, y: y - outer, width: outer * 2, height: outer * 2)).fill() }
     cg.setBlendMode(.normal)
     ink.setStroke()
-    for stroke in strokes {
+    for stroke in lineStrokes {
         let line = stroke.path.bezier(); line.lineWidth = stroke.width; line.lineCapStyle = .round; line.lineJoinStyle = .round; line.stroke()
     }
     cg.setBlendMode(.clear)
-    let inner = nodeRadius - nodeWidth / 2
+    let inner = nodeRadius - ringWidth / 2
     for (x, y) in nodes { NSBezierPath(ovalIn: NSRect(x: x - inner, y: y - inner, width: inner * 2, height: inner * 2)).fill() }
     cg.setBlendMode(.normal)
     for (x, y) in nodes {
-        let ring = NSBezierPath(ovalIn: NSRect(x: x - nodeRadius, y: y - nodeRadius, width: nodeRadius * 2, height: nodeRadius * 2)); ring.lineWidth = nodeWidth; ring.stroke()
+        let ring = NSBezierPath(ovalIn: NSRect(x: x - nodeRadius, y: y - nodeRadius, width: nodeRadius * 2, height: nodeRadius * 2)); ring.lineWidth = ringWidth; ring.stroke()
     }
     cg.endTransparencyLayer()
 }
@@ -217,7 +221,30 @@ func renderMark() throws {
     try rep.representation(using: .png, properties: [:])!.write(to: root.appendingPathComponent("BrandMark.png"))
 }
 
+// A template image supplies native 1x, 2x and 3x representations for the menu bar.
+// Three heavier strings retain the logo's silhouette at its 18-by-20-point size.
+func renderMenuBarIcon() throws {
+    let size = NSSize(width: 18, height: 20)
+    let image = NSImage(size: size)
+    for resolution in 1...3 {
+        let (rep, context) = bitmap(width: 18 * resolution, height: 20 * resolution)
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = context
+        let scale = CGFloat(20 * resolution) / markBox.height
+        context.cgContext.scaleBy(x: scale, y: scale)
+        context.cgContext.translateBy(x: -markBox.x, y: -markBox.y)
+        drawMark(in: context, ink: .black, accent: .black,
+                 lineStrokes: markStrokes(stringXs: [444], lineWidth: 26, stringWidth: 26, slotWidth: 26),
+                 clearance: 10, ringWidth: 22)
+        NSGraphicsContext.restoreGraphicsState()
+        rep.size = size
+        image.addRepresentation(rep)
+    }
+    try image.tiffRepresentation!.write(to: root.appendingPathComponent("MenuBarIcon.tiff"))
+}
+
 try renderIcon()
 try renderIconLayer()
 try renderMark()
-print("Melicum SVG masters, legacy icon, native icon foreground and header mark generated.")
+try renderMenuBarIcon()
+print("Melicum SVG masters, legacy icon, native icon foreground, header mark and menu bar icon generated.")

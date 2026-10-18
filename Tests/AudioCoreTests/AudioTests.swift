@@ -110,7 +110,7 @@ final class SettingsTests: XCTestCase {
         XCTAssertEqual(AppLanguage.translate("Enable audio",language: "es"),"Activar audio")
         XCTAssertEqual(AppLanguage.translate("unknown-key",language: "en"),"unknown-key")
         for language in AppLanguage.codes where language != "en" {
-            for key in ["Enable audio on launch","Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off."] {
+            for key in ["Enable audio on launch","Automatically enable the saved output when Melicum opens. If it is unavailable, audio stays off.","Check for Updates…","Automatically check for updates","Checks GitHub for new releases and asks before downloading and installing."] {
                 XCTAssertNotEqual(AppLanguage.translate(key,language: language),key)
             }
         }

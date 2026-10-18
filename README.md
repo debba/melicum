@@ -28,6 +28,8 @@ Melicum uses an independent SwiftUI interface, Core Audio routing, and C DSP. It
 
 Audio settings are stored in `~/Library/Application Support/Melicum/settings.json`. Melicum starts with audio processing disabled by default. Under **Presets**, turn on **Enable audio on launch** to activate the saved output automatically when the app opens. If that output is disconnected, audio stays off until you select an output and enable it manually. This startup preference is stored separately from audio presets. **Launch at login** opens the app and follows the audio startup preference.
 
+Under **Presets → Updates**, automatic checks for new stable GitHub releases are enabled by default and run approximately once a day. **Check for Updates…** is also available in the Melicum menu and menu bar panel. Melicum asks before downloading and installing an update, preserves settings, and restores the physical output before quitting for installation. Updates are verified using Sparkle's signed feed, EdDSA archive signatures, and Apple code signing. Updates replace the app; an updated optional audio component still uses the included system volume installer.
+
 **Disable** and **Quit** close the taps and aggregate devices, restoring the previous output when available. Processing stops if the physical device disconnects, its sample rate changes, or macOS selects another output. Choose the desired output and enable audio again.
 
 ## Features
@@ -46,7 +48,7 @@ Audio settings are stored in `~/Library/Application Support/Melicum/settings.jso
 | Audio Units | Chain of up to 12 installed effects compatible with stereo float PCM; generic parameter editor |
 | AutoEQ import | Local ParametricEQ `.txt` files in Equalizer APO / REW format |
 | Super presets | Complete settings snapshots, JSON import/export, output associations, and app-triggered recall |
-| Interface | Fixed graphite, cream and red palette from the logo, menu bar panel, launch at login, five languages |
+| Interface | Fixed graphite, cream and red palette from the logo, lyre menu bar icon and quick controls, launch at login, five languages |
 
 This version supports **mono/stereo PCM**. Configure multichannel HDMI devices for two channels in **Audio MIDI Setup**. Dolby/DTS passthrough and protected streams unavailable to macOS process taps are unsupported. The online AutoEQ database and proprietary plugin interfaces are not included. Incompatible Audio Units cancel startup with an error; effects that fail during rendering are bypassed. Peak protection operates per stream, so the sum of multiple mixer streams can still exceed full scale.
 
@@ -84,7 +86,7 @@ The app bundle is written to `build/Melicum.app` and signed locally with an ad h
 
 ## Releases
 
-Pushing a `v*` tag, or running the **Release** workflow manually with a tag name, builds a universal `Melicum.app` on GitHub Actions. The workflow runs the tests, signs the app and the system volume driver with a Developer ID and the hardened runtime, notarizes and staples the app and the disk image, and attaches `Melicum-<version>.dmg`, `Melicum-<version>.zip`, and `SHA256SUMS.txt` to a draft release. An identical copy named `Melicum.dmg` provides the website's [direct download of the latest stable release](https://github.com/debba/melicum/releases/latest/download/Melicum.dmg). Tags with a `-` suffix are marked as prereleases.
+Pushing a `v*` tag, or running the **Release** workflow manually with a tag name, builds a universal `Melicum.app` on GitHub Actions. The workflow runs the tests, signs the app and the system volume driver with a Developer ID and the hardened runtime, notarizes and staples the app and the disk image, and attaches `Melicum-<version>.dmg`, `Melicum-<version>.zip`, `appcast.xml`, and `SHA256SUMS.txt` to a draft release. An identical copy named `Melicum.dmg` provides the website's [direct download of the latest stable release](https://github.com/debba/melicum/releases/latest/download/Melicum.dmg). Tags with a `-` suffix are marked as prereleases. Publishing a stable release makes its signed `appcast.xml` available at the updater's latest-release URL; drafts and prereleases are not offered through that feed. CI build numbers use `1000 + github.run_number` so they increase monotonically and remain above local development builds.
 
 The workflow requires these repository secrets:
 
@@ -97,12 +99,13 @@ The workflow requires these repository secrets:
 | `APPLE_API_KEY` | App Store Connect API key ID |
 | `APPLE_API_KEY_CONTENT` | Base64-encoded `.p8` API key |
 | `APPLE_INSTALLER_SIGNING_IDENTITY` | Optional. `Developer ID Installer: Name (TEAMID)` to sign the driver package; its certificate must be in the same `.p12` |
+| `SPARKLE_PRIVATE_KEY` | Base64 EdDSA private key exported by Sparkle's `generate_keys` tool. It must match `SUPublicEDKey` in `Resources/Info.plist`. |
 
 To reproduce a signed build locally, set `MELICUM_SIGN_IDENTITY` (and optionally `MELICUM_INSTALLER_IDENTITY`) before running the build scripts. `MELICUM_ARCHS="arm64 x86_64"` produces a universal binary.
 
 An updated build may require macOS permissions to be approved again. Launch at login uses `SMAppService` and may require confirmation in System Settings.
 
-The Swift tests cover gain, mute, balance, filter response, FFT, peak protection, interleaved/planar buffers, tap input selection, Audio Units, AutoEQ parsing, preset round trips, and all five localizations. `Driver/Tests.c` covers output names, stable device identity, property validation, hidden startup, visibility notifications, heartbeat, owner validation, volume round trips, shutdown, heartbeat timeout, and unexpected owner exit. Automated tests do not replace listening on the physical output or validating macOS permissions.
+The Swift tests cover gain, mute, balance, filter response, FFT, peak protection, interleaved/planar buffers, tap input selection, Audio Units, AutoEQ parsing, preset round trips, all five localizations, and isolation of live spectrum updates from editable controls. `Driver/Tests.c` covers output names, stable device identity, property validation, hidden startup, visibility notifications, heartbeat, owner validation, volume round trips, shutdown, heartbeat timeout, and unexpected owner exit. Automated tests do not replace listening on the physical output or validating macOS permissions.
 
 On this Mac, manual checks verified actual audio through the virtual output to the selected DELL device, volume and mute synchronization in both directions, and restoration of the physical output when processing stops.
 

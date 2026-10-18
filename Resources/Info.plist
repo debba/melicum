@@ -8,13 +8,21 @@
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleDevelopmentRegion</key><string>en</string>
     <key>CFBundleLocalizations</key><array><string>en</string><string>it</string><string>fr</string><string>de</string><string>es</string></array>
-    <key>CFBundleShortVersionString</key><string>0.2.1</string>
-    <key>CFBundleVersion</key><string>5</string>
+    <key>CFBundleShortVersionString</key><string>0.2.2</string>
+    <key>CFBundleVersion</key><string>6</string>
     <key>CFBundleIconFile</key><string>AppIcon</string>
     <key>CFBundleIconName</key><string>AppIcon</string>
     <key>LSMinimumSystemVersion</key><string>14.2</string>
     <key>NSHumanReadableCopyright</key><string>© 2026 Andrea Debernardi</string>
     <key>NSHighResolutionCapable</key><true/>
     <key>NSPrincipalClass</key><string>NSApplication</string>
+    <key>SUFeedURL</key><string>https://github.com/debba/melicum/releases/latest/download/appcast.xml</string>
+    <key>SUPublicEDKey</key><string>bZx1lwcwUMULv7NXNN/uGNHo9ZB0TpgqlWY7oR0Cal8=</string>
+    <key>SUEnableAutomaticChecks</key><true/>
+    <key>SUAutomaticallyUpdate</key><false/>
+    <key>SUAllowsAutomaticUpdates</key><false/>
+    <key>SUEnableSystemProfiling</key><false/>
+    <key>SUVerifyUpdateBeforeExtraction</key><true/>
+    <key>SURequireSignedFeed</key><true/>
     <key>NSAudioCaptureUsageDescription</key><string>This app processes system audio locally to control HDMI volume, mute and equalization. No audio is recorded to disk or sent over the network.</string>
 </dict></plist>

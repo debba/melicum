@@ -32,10 +32,10 @@ jobs:
       # would fail half-way, so refuse early with a clear message instead.
       - name: Check signing secrets
         env:
-          HAS_SECRETS: ${{ secrets.APPLE_CERTIFICATE != '' && secrets.APPLE_CERTIFICATE_PASSWORD != '' && secrets.APPLE_SIGNING_IDENTITY != '' && secrets.APPLE_API_ISSUER != '' && secrets.APPLE_API_KEY != '' && secrets.APPLE_API_KEY_CONTENT != '' }}
+          HAS_SECRETS: ${{ secrets.APPLE_CERTIFICATE != '' && secrets.APPLE_CERTIFICATE_PASSWORD != '' && secrets.APPLE_SIGNING_IDENTITY != '' && secrets.APPLE_API_ISSUER != '' && secrets.APPLE_API_KEY != '' && secrets.APPLE_API_KEY_CONTENT != '' && secrets.SPARKLE_PRIVATE_KEY != '' }}
         run: |
           if [ "$HAS_SECRETS" != "true" ]; then
-            echo "::error::Release builds require APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD, APPLE_SIGNING_IDENTITY, APPLE_API_ISSUER, APPLE_API_KEY and APPLE_API_KEY_CONTENT."
+            echo "::error::Release builds require APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD, APPLE_SIGNING_IDENTITY, APPLE_API_ISSUER, APPLE_API_KEY, APPLE_API_KEY_CONTENT and SPARKLE_PRIVATE_KEY."
             exit 1
           fi
 
@@ -43,7 +43,7 @@ jobs:
         run: |
           version="${TAG#v}"
           plutil -replace CFBundleShortVersionString -string "$version" Resources/Info.plist
-          plutil -replace CFBundleVersion -string "${{ github.run_number }}" Resources/Info.plist
+          plutil -replace CFBundleVersion -string "$((1000 + ${{ github.run_number }}))" Resources/Info.plist
           echo "VERSION=$version" >> "$GITHUB_ENV"
 
       - name: Test
@@ -101,6 +101,7 @@ jobs:
           MELICUM_SIGN_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
           APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
           mkdir -p dist build/dmg
           ditto build/Melicum.app build/dmg/Melicum.app
@@ -112,6 +113,7 @@ jobs:
           xcrun stapler staple "$dmg"
           cp "$dmg" dist/Melicum.dmg
           ditto -c -k --keepParent build/Melicum.app "dist/Melicum-$VERSION.zip"
+          ./scripts/make-appcast.sh
           (cd dist && shasum -a 256 * > SHA256SUMS.txt)
 
       - name: Publish draft release

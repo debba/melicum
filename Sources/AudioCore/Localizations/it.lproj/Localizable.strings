@@ -130,3 +130,8 @@
 "Missing gain or Q: %@" = "Gain o Q mancante: %@";
 "Gain %d Hz" = "Guadagno %d Hz";
 "The virtual output did not accept the selected sample rate." = "L’uscita virtuale non ha accettato la frequenza di campionamento selezionata.";
+
+"Updates" = "Aggiornamenti";
+"Check for Updates…" = "Cerca aggiornamenti…";
+"Automatically check for updates" = "Cerca automaticamente gli aggiornamenti";
+"Checks GitHub for new releases and asks before downloading and installing." = "Controlla le nuove versioni su GitHub e chiede conferma prima di scaricarle e installarle.";

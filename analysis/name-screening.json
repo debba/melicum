@@ -1,0 +1,14 @@
+{
+  "chosen_name": "Melicum",
+  "checked_on": "2026-10-18",
+  "verified_by": ["name_candidates", "name_audit"],
+  "meaning": "Neuter form of the Latin adjective melicus: musical, harmonious or lyrical.",
+  "dictionary": "https://dizionari.corriere.it/dizionario_latino/Latino/M/melicus_1.shtml",
+  "checks": {
+    "apple_search_api": {"countries": ["us", "it"], "entities": ["software", "macSoftware"], "limit": 200, "successful_queries": 4, "matching_titles": 0},
+    "google_play": {"country": "us", "returned_unrelated_titles": 30, "exact_title_matches": 0},
+    "github": {"exact_app_or_project_name_matches": 0},
+    "quoted_web_search": {"same_name_apps_found": 0}
+  },
+  "scope": "No same-name app was found in the public sources checked. This is not proof of worldwide uniqueness or trademark clearance."
+}

@@ -1,0 +1,6 @@
+#!/bin/sh
+# Earlier builds installed the same device under another bundle name; two copies would conflict.
+/bin/rm -rf /Library/Audio/Plug-Ins/HAL/HDMIAudioSystemVolume.driver
+# HAL plug-ins are discovered when coreaudiod restarts. No kernel extension is installed.
+/usr/bin/killall coreaudiod 2>/dev/null || true
+exit 0

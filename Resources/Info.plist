@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>CFBundleExecutable</key><string>Melicum</string>
+    <key>CFBundleIdentifier</key><string>local.hdmiaudio.app</string>
+    <key>CFBundleName</key><string>Melicum</string>
+    <key>CFBundleDisplayName</key><string>Melicum</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleDevelopmentRegion</key><string>en</string>
+    <key>CFBundleLocalizations</key><array><string>en</string><string>it</string><string>fr</string><string>de</string><string>es</string></array>
+    <key>CFBundleShortVersionString</key><string>0.2.1</string>
+    <key>CFBundleVersion</key><string>4</string>
+    <key>CFBundleIconFile</key><string>AppIcon</string>
+    <key>LSMinimumSystemVersion</key><string>14.2</string>
+    <key>NSHighResolutionCapable</key><true/>
+    <key>NSPrincipalClass</key><string>NSApplication</string>
+    <key>NSAudioCaptureUsageDescription</key><string>This app processes system audio locally to control HDMI volume, mute and equalization. No audio is recorded to disk or sent over the network.</string>
+</dict></plist>

@@ -1,0 +1,130 @@
+English|Italiano|Français|Deutsch|Español
+Enable audio|Attiva audio|Activer l’audio|Audio aktivieren|Activar audio
+Disable|Disattiva|Désactiver|Deaktivieren|Desactivar
+AUDIO OUTPUT|USCITA AUDIO|SORTIE AUDIO|AUDIOAUSGANG|SALIDA DE AUDIO
+Audio output|Uscita audio|Sortie audio|Audioausgang|Salida de audio
+No output connected|Nessuna uscita collegata|Aucune sortie connectée|Kein Ausgang verbunden|Ninguna salida conectada
+ · set to stereo| · configura stereo| · choisir stéréo| · Stereo einstellen| · configurar estéreo
+SOFTWARE VOLUME|VOLUME SOFTWARE|VOLUME LOGICIEL|SOFTWARELAUTSTÄRKE|VOLUMEN POR SOFTWARE
+MACOS VOLUME SYNCED|VOLUME MACOS SINCRONIZZATO|VOLUME MACOS SYNCHRONISÉ|MACOS-LAUTSTÄRKE SYNCHRON|VOLUMEN MACOS SINCRONIZADO
+Enable system volume…|Abilita il volume di sistema…|Activer le volume système…|Systemlautstärke aktivieren…|Activar volumen del sistema…
+macOS slider and system volume keys|Cursore macOS e tasti volume di sistema|Curseur macOS et touches de volume|macOS-Regler und Lautstärketasten|Control de macOS y teclas de volumen
+Install the virtual audio device to use the macOS slider and volume keys.|Installa il dispositivo audio virtuale per usare il cursore macOS e i tasti volume.|Installez le périphérique audio virtuel pour utiliser le curseur et les touches de volume macOS.|Installiere das virtuelle Audiogerät für den macOS-Regler und die Lautstärketasten.|Instala el dispositivo de audio virtual para usar el control y las teclas de volumen de macOS.
+Works with fixed-volume HDMI outputs|Funziona anche sulle uscite HDMI a volume fisso|Compatible avec les sorties HDMI à volume fixe|Für HDMI-Ausgänge mit fester Lautstärke|Compatible con salidas HDMI de volumen fijo
+Volume|Volume|Volume|Lautstärke|Volumen
+Master volume|Volume principale|Volume principal|Gesamtlautstärke|Volumen principal
+Balance|Bilanciamento|Balance|Balance|Balance
+Center|Centro|Centre|Mitte|Centro
+Boost|Amplificazione|Amplification|Verstärkung|Amplificación
+OUTPUT SPECTRUM|SPETTRO IN USCITA|SPECTRE DE SORTIE|AUSGANGSSPEKTRUM|ESPECTRO DE SALIDA
+SIGNAL|SEGNALE|SIGNAL|SIGNAL|SEÑAL
+WAITING FOR AUDIO|IN ATTESA DI AUDIO|EN ATTENTE D’AUDIO|WARTE AUF AUDIO|ESPERANDO AUDIO
+OFF|DISATTIVATO|DÉSACTIVÉ|AUS|DESACTIVADO
+Live audio spectrum analyzer|Analizzatore di spettro dell’audio reale|Analyseur de spectre audio en direct|Live-Audiospektrumanalysator|Analizador de espectro de audio en vivo
+Equalizer|Equalizzatore|Égaliseur|Equalizer|Ecualizador
+App mixer|Mixer app|Mixeur d’apps|App-Mixer|Mezclador de apps
+Spatial audio|Audio spaziale|Audio spatial|Räumliches Audio|Audio espacial
+Audio Units|Audio Unit|Audio Units|Audio Units|Audio Units
+Presets|Preset|Préréglages|Presets|Preajustes
+EQ mode|Modalità EQ|Mode EQ|EQ-Modus|Modo EQ
+Basic|Base|Simple|Einfach|Básico
+Advanced|Avanzato|Avancé|Erweitert|Avanzado
+Expert|Esperto|Expert|Experte|Experto
+Reset|Azzera|Réinitialiser|Zurücksetzen|Restablecer
+Equalizer frequency response|Curva della risposta dell’equalizzatore|Réponse en fréquence de l’égaliseur|Frequenzgang des Equalizers|Respuesta en frecuencia del ecualizador
+Preamp|Preamp|Préampli|Vorverstärkung|Preamplificador
+Peak protection|Protezione picchi|Protection des crêtes|Spitzenschutz|Protección de picos
+Clamps output samples to ±0.98. This is not a true-peak limiter.|Limita i campioni in uscita a ±0,98. Non è un limiter true peak.|Limite les échantillons à ±0,98. Ce n’est pas un limiteur true peak.|Begrenzt Ausgangssamples auf ±0,98. Kein True-Peak-Limiter.|Limita las muestras a ±0,98. No es un limitador true peak.
+Import AutoEQ|Importa AutoEQ|Importer AutoEQ|AutoEQ importieren|Importar AutoEQ
+FILTER|FILTRO|FILTRE|FILTER|FILTRO
+FREQUENCY|FREQUENZA|FRÉQUENCE|FREQUENZ|FRECUENCIA
+GAIN|GUADAGNO|GAIN|VERSTÄRKUNG|GANANCIA
+Filter type|Tipo filtro|Type de filtre|Filtertyp|Tipo de filtro
+Enabled|Attivo|Activé|Aktiv|Activo
+Remove filter|Rimuovi filtro|Supprimer le filtre|Filter entfernen|Eliminar filtro
+Add band|Aggiungi banda|Ajouter une bande|Band hinzufügen|Añadir banda
+Per-app mixer|Mixer per applicazione|Mixeur par application|Mixer pro App|Mezclador por aplicación
+Each app keeps its own level. Release the slider to update the audio path.|Ogni app mantiene il suo volume. Rilascia il cursore per aggiornare il percorso audio.|Chaque app garde son niveau. Relâchez le curseur pour actualiser le routage.|Jede App behält ihren Pegel. Regler loslassen, um den Audiopfad zu aktualisieren.|Cada app mantiene su nivel. Suelta el control para actualizar la ruta de audio.
+Open an app and play audio to see it here.|Apri un’app e avvia una riproduzione audio per vederla qui.|Ouvrez une app et lancez l’audio pour la voir ici.|Öffne eine App und spiele Audio ab, damit sie hier erscheint.|Abre una app y reproduce audio para verla aquí.
+Stereo reverb and soundstage width.|Riverbero stereo e ampiezza del campo sonoro.|Réverbération stéréo et largeur de la scène sonore.|Stereo-Hall und Breite der Klangbühne.|Reverberación estéreo y amplitud del campo sonoro.
+Space|Ambiente|Espace|Raum|Espacio
+Small room|Stanza piccola|Petite pièce|Kleiner Raum|Habitación pequeña
+Studio|Studio|Studio|Studio|Estudio
+Hall|Sala|Salle|Saal|Sala
+Auditorium|Auditorium|Auditorium|Auditorium|Auditorio
+Cathedral|Cattedrale|Cathédrale|Kathedrale|Catedral
+Reverb mix|Mix riverbero|Mix de réverbération|Hall-Mix|Mezcla de reverberación
+Stereo width|Ampiezza stereo|Largeur stéréo|Stereobreite|Amplitud estéreo
+Audio Unit effects|Effetti Audio Unit|Effets Audio Unit|Audio-Unit-Effekte|Efectos Audio Unit
+Installed effects run after EQ and space, before master volume.|Gli effetti installati vengono elaborati dopo EQ e ambiente, prima del volume.|Les effets suivent l’EQ et l’espace, avant le volume principal.|Installierte Effekte folgen auf EQ und Raum, vor der Gesamtlautstärke.|Los efectos se procesan después del EQ y el espacio, antes del volumen principal.
+Add|Aggiungi|Ajouter|Hinzufügen|Añadir
+No effects in the chain|Nessun effetto nella catena|Aucun effet dans la chaîne|Keine Effekte in der Kette|Ningún efecto en la cadena
+Enable audio to load the effect and edit its parameters.|Attiva l’audio per caricare l’effetto e modificarne i parametri.|Activez l’audio pour charger l’effet et modifier ses paramètres.|Aktiviere Audio, um den Effekt zu laden und seine Parameter zu bearbeiten.|Activa el audio para cargar el efecto y editar sus parámetros.
+Super presets|Super preset|Super préréglages|Super-Presets|Superpreajustes
+Save EQ, volume, mixer, space and Audio Unit parameters together.|Salva EQ, volume, mixer, ambiente e parametri Audio Unit insieme.|Enregistrez ensemble l’EQ, le volume, le mixeur, l’espace et les paramètres Audio Unit.|Speichere EQ, Lautstärke, Mixer, Raum und Audio-Unit-Parameter zusammen.|Guarda juntos el EQ, volumen, mezclador, espacio y parámetros Audio Unit.
+Preset name|Nome del preset|Nom du préréglage|Preset-Name|Nombre del preajuste
+Save|Salva|Enregistrer|Speichern|Guardar
+Link to output|Associa all’uscita|Associer à la sortie|Mit Ausgang verknüpfen|Vincular a la salida
+App for automatic recall|App per richiamo automatico|App pour le rappel automatique|App für automatischen Abruf|App para activación automática
+None|Nessuna|Aucune|Keine|Ninguna
+AUTO · OUTPUT|AUTO · USCITA|AUTO · SORTIE|AUTO · AUSGANG|AUTO · SALIDA
+Apply|Applica|Appliquer|Anwenden|Aplicar
+Import JSON / AutoEQ…|Importa JSON / AutoEQ…|Importer JSON / AutoEQ…|JSON / AutoEQ importieren…|Importar JSON / AutoEQ…
+Export settings…|Esporta configurazione…|Exporter les réglages…|Einstellungen exportieren…|Exportar ajustes…
+Launch at login|Avvia al login|Ouvrir à la connexion|Bei Anmeldung starten|Abrir al iniciar sesión
+Launch at login opens the app. Enable audio starts the audio path.|L’avvio al login apre l’app. Il percorso audio si attiva dal pulsante Attiva audio.|L’ouverture à la connexion lance l’app. Activer l’audio démarre le traitement.|Der Anmeldestart öffnet die App. Audio aktivieren startet den Audiopfad.|El inicio de sesión abre la app. Activar audio inicia el procesamiento.
+Volume keys|Tasti volume|Touches de volume|Lautstärketasten|Teclas de volumen
+Volume keys enabled|Tasti volume attivi|Touches de volume actives|Lautstärketasten aktiv|Teclas de volumen activas
+macOS volume|Volume macOS|Volume macOS|macOS-Lautstärke|Volumen de macOS
+Open panel|Apri pannello|Ouvrir le panneau|Panel öffnen|Abrir panel
+Quit|Esci|Quitter|Beenden|Salir
+No output|Nessuna uscita|Aucune sortie|Kein Ausgang|Ninguna salida
+YOUR SOUND. YOUR CONTROL.|IL TUO AUDIO. IL TUO CONTROLLO.|VOTRE SON. VOTRE CONTRÔLE.|DEIN KLANG. DEINE KONTROLLE.|TU SONIDO. TU CONTROL.
+MACOS · LOCAL|MACOS · LOCALE|MACOS · LOCAL|MACOS · LOKAL|MACOS · LOCAL
+Bell|Campana|Cloche|Glocke|Campana
+Low shelf|Low shelf|Plateau grave|Tiefen-Shelf|Estante de graves
+High shelf|High shelf|Plateau aigu|Höhen-Shelf|Estante de agudos
+Low pass|Passa basso|Passe-bas|Tiefpass|Paso bajo
+High pass|Passa alto|Passe-haut|Hochpass|Paso alto
+Notch|Notch|Coupe-bande|Kerbfilter|Rechazo de banda
+Band pass|Passa banda|Passe-bande|Bandpass|Paso de banda
+Choose an output and enable audio.|Scegli un’uscita e attiva il controllo audio.|Choisissez une sortie et activez l’audio.|Wähle einen Ausgang und aktiviere Audio.|Elige una salida y activa el audio.
+Audio control is off|Controllo audio disattivato|Contrôle audio désactivé|Audiosteuerung ist aus|Control de audio desactivado
+Starting the audio path…|Attivazione del percorso audio…|Démarrage du traitement…|Audiopfad wird gestartet…|Iniciando la ruta de audio…
+Connect and select an audio output.|Collega e seleziona un’uscita audio.|Connectez et sélectionnez une sortie audio.|Verbinde und wähle einen Audioausgang.|Conecta y selecciona una salida de audio.
+Enable audio first.|Attiva prima il controllo audio.|Activez d’abord l’audio.|Aktiviere zuerst Audio.|Activa primero el audio.
+Volume follows the macOS slider and system keys.|Il volume segue il cursore macOS e i tasti di sistema.|Le volume suit le curseur macOS et les touches système.|Die Lautstärke folgt dem macOS-Regler und den Systemtasten.|El volumen sigue el control de macOS y las teclas del sistema.
+The output was disconnected or the audio configuration changed. Select an output and enable audio again.|L’uscita è stata scollegata o la configurazione audio è cambiata. Seleziona l’uscita e riattiva il controllo.|La sortie a été déconnectée ou la configuration a changé. Sélectionnez une sortie et réactivez l’audio.|Der Ausgang wurde getrennt oder die Audiokonfiguration geändert. Wähle einen Ausgang und aktiviere Audio erneut.|La salida se desconectó o cambió la configuración. Selecciona una salida y activa el audio de nuevo.
+The preset contains out-of-range values or too many filters/effects.|Il preset contiene valori fuori intervallo o troppi filtri/effetti.|Le préréglage contient des valeurs hors limites ou trop de filtres/effets.|Das Preset enthält ungültige Werte oder zu viele Filter/Effekte.|El preajuste contiene valores fuera de rango o demasiados filtros/efectos.
+Invalid preamp value.|Preamplificazione non valida.|Valeur de préampli invalide.|Ungültiger Vorverstärkungswert.|Valor de preamplificación no válido.
+No filters found. Use an AutoEQ ParametricEQ or Equalizer APO file.|Nessun filtro trovato. Usa un file AutoEQ ParametricEQ o Equalizer APO.|Aucun filtre trouvé. Utilisez un fichier AutoEQ ParametricEQ ou Equalizer APO.|Keine Filter gefunden. Verwende eine AutoEQ-ParametricEQ- oder Equalizer-APO-Datei.|No se encontraron filtros. Usa un archivo AutoEQ ParametricEQ o Equalizer APO.
+The audio device is not responding.|Il dispositivo audio non risponde.|Le périphérique audio ne répond pas.|Das Audiogerät reagiert nicht.|El dispositivo de audio no responde.
+Could not allocate the audio engine.|Impossibile allocare il motore audio.|Impossible d’allouer le moteur audio.|Audio-Engine konnte nicht zugewiesen werden.|No se pudo asignar el motor de audio.
+Could not exclude this app from the tap. Startup cancelled to prevent feedback.|Impossibile escludere il processo dell’app dal tap. Attivazione annullata per evitare feedback.|Impossible d’exclure cette app. Démarrage annulé pour éviter le larsen.|Diese App konnte nicht ausgeschlossen werden. Start zur Vermeidung von Rückkopplungen abgebrochen.|No se pudo excluir esta app. Inicio cancelado para evitar realimentación.
+This version processes mono/stereo PCM. Set HDMI to 2 channels in Audio MIDI Setup.|Questa versione elabora PCM mono/stereo. Imposta l’uscita HDMI su 2 canali in Configurazione MIDI Audio.|Cette version traite le PCM mono/stéréo. Réglez HDMI sur 2 canaux dans Configuration audio et MIDI.|Diese Version verarbeitet Mono/Stereo-PCM. Stelle HDMI in Audio-MIDI-Setup auf 2 Kanäle.|Esta versión procesa PCM mono/estéreo. Configura HDMI con 2 canales en Configuración de Audio MIDI.
+Unsupported HDMI format. Select stereo PCM at 44.1 or 48 kHz in Audio MIDI Setup.|Formato HDMI non supportato. Seleziona PCM stereo a 44,1 o 48 kHz in Configurazione MIDI Audio.|Format HDMI non pris en charge. Choisissez PCM stéréo à 44,1 ou 48 kHz dans Configuration audio et MIDI.|Nicht unterstütztes HDMI-Format. Wähle Stereo-PCM mit 44,1 oder 48 kHz in Audio-MIDI-Setup.|Formato HDMI no compatible. Selecciona PCM estéreo a 44,1 o 48 kHz en Configuración de Audio MIDI.
+Language|Language|Langue|Sprache|Idioma
+Audio active on %@|Audio active on %@|Audio actif sur %@|Audio aktiv auf %@|Audio activo en %@
+Enable this app in Privacy & Security → Accessibility, then try Volume keys again.|Enable this app in Privacy & Security → Accessibility, then try Volume keys again.|Activez cette app dans Confidentialité et sécurité → Accessibilité, puis réessayez les touches de volume.|Aktiviere diese App unter Datenschutz & Sicherheit → Bedienungshilfen und versuche die Lautstärketasten erneut.|Activa esta app en Privacidad y seguridad → Accesibilidad y vuelve a probar las teclas de volumen.
+%d / 64 bands|%d / 64 bande|%d / 64 bandes|%d / 64 Bänder|%d / 64 bandas
+Invalid saved settings: %@|Impostazioni salvate non valide: %@|Réglages enregistrés invalides : %@|Ungültige gespeicherte Einstellungen: %@|Ajustes guardados no válidos: %@
+Could not save settings: %@|Impossibile salvare le impostazioni: %@|Impossible d’enregistrer les réglages : %@|Einstellungen konnten nicht gespeichert werden: %@|No se pudieron guardar los ajustes: %@
+Audio Unit render error %d; its signal was bypassed.|Errore Audio Unit %d; il suo segnale è stato escluso.|Erreur Audio Unit %d ; son signal a été contourné.|Audio-Unit-Fehler %d; das Signal wurde umgangen.|Error Audio Unit %d; se omitió su señal.
+The system volume installer is missing. Rebuild the app with scripts/build-system-volume.sh.|Installer del volume di sistema mancante. Ricompila l’app con scripts/build-system-volume.sh.|L’installateur du volume système est absent. Recompilez l’app avec scripts/build-system-volume.sh.|Systemlautstärke-Installer fehlt. Erstelle die App mit scripts/build-system-volume.sh neu.|Falta el instalador del volumen del sistema. Compila la app con scripts/build-system-volume.sh.
+Launch at login: %@|Avvio al login: %@|Ouverture à la connexion : %@|Start bei Anmeldung: %@|Abrir al iniciar sesión: %@
+Exported preset|Preset esportato|Préréglage exporté|Exportiertes Preset|Preajuste exportado
+Select audio output|Seleziona uscita audio|Choisir la sortie audio|Audioausgang wählen|Seleccionar salida de audio
+%@: Core Audio %d. Check System Audio Recording permission in System Settings → Privacy & Security.|%@: Core Audio %d. Verifica il permesso Registrazione audio di sistema in Impostazioni di Sistema → Privacy e sicurezza.|%@ : Core Audio %d. Vérifiez l’autorisation d’enregistrement audio dans Réglages Système → Confidentialité et sécurité.|%@: Core Audio %d. Prüfe die Berechtigung zur Systemaudioaufnahme unter Systemeinstellungen → Datenschutz & Sicherheit.|%@: Core Audio %d. Comprueba el permiso de grabación de audio en Ajustes del Sistema → Privacidad y seguridad.
+Create tap|Crea tap|Créer le tap|Tap erstellen|Crear tap
+Create audio path|Crea percorso audio|Créer le routage audio|Audiopfad erstellen|Crear ruta de audio
+Audio Unit unavailable: %@|Audio Unit non disponibile: %@|Audio Unit indisponible : %@|Audio Unit nicht verfügbar: %@|Audio Unit no disponible: %@
+Load %@|Carica %@|Charger %@|%@ laden|Cargar %@
+Configure %@|Configura %@|Configurer %@|%@ konfigurieren|Configurar %@
+Connect audio|Collega audio|Connecter l’audio|Audio verbinden|Conectar audio
+Start audio|Avvia audio|Démarrer l’audio|Audio starten|Iniciar audio
+Parameter %d|Parametro %d|Paramètre %d|Parameter %d|Parámetro %d
+Unrecognized filter: %@|Filtro non riconosciuto: %@|Filtre non reconnu : %@|Unbekannter Filter: %@|Filtro no reconocido: %@
+Unsupported filter type: %@|Tipo di filtro non supportato: %@|Type de filtre non pris en charge : %@|Nicht unterstützter Filtertyp: %@|Tipo de filtro no compatible: %@
+Missing gain or Q: %@|Gain o Q mancante: %@|Gain ou Q manquant : %@|Gain oder Q fehlt: %@|Falta ganancia o Q: %@
+Gain %d Hz|Guadagno %d Hz|Gain %d Hz|Verstärkung %d Hz|Ganancia %d Hz
+The virtual output did not accept the selected sample rate.|L’uscita virtuale non ha accettato la frequenza di campionamento selezionata.|La sortie virtuelle n’a pas accepté la fréquence sélectionnée.|Der virtuelle Ausgang hat die gewählte Abtastrate nicht akzeptiert.|La salida virtual no aceptó la frecuencia seleccionada.

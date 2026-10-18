@@ -1,0 +1,3 @@
+[submodule "ThirdParty/BlackHole"]
+	path = ThirdParty/BlackHole
+	url = https://github.com/ExistentialAudio/BlackHole.git

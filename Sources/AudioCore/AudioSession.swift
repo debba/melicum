@@ -25,6 +25,7 @@ public final class AudioSession {
         deinit { stop() }
     }
     private var streams: [Stream] = []
+    private var outputVolume: OutputVolumeControl?
     private var previousOutput: AudioObjectID = 0
     private let heartbeatQueue = DispatchQueue(label: "local.melicum.driver-heartbeat")
     private var heartbeatTimer: DispatchSourceTimer?
@@ -41,6 +42,7 @@ public final class AudioSession {
         let virtual = Hardware.virtualDevice
         previousOutput = Hardware.defaultOutput == virtual ? device.id : Hardware.defaultOutput
         outputID = device.id; sourceID = virtual ?? device.id; usesSystemVolume = virtual != nil
+        outputVolume = virtual == nil ? nil : OutputVolumeControl(device: device)
         do {
             if let virtual {
                 try Hardware.check(Hardware.setVirtualDeviceName(virtual,outputName: device.name),"System volume bridge; install the latest component")
@@ -49,7 +51,6 @@ public final class AudioSession {
                 timer.schedule(deadline: .now(),repeating: 1)
                 timer.setEventHandler { Hardware.heartbeat(virtual,active: true) }; heartbeatTimer = timer; timer.resume()
                 try Hardware.setSampleRate(virtual,device.rate)
-                try Hardware.setSystemVolume(virtual,volume: settings.volume,muted: settings.muted)
             }
             let own = Hardware.processID(ProcessInfo.processInfo.processIdentifier)
             guard own != 0 else { throw SettingsError.invalid("Could not exclude this app from the tap. Startup cancelled to prevent feedback.") }
@@ -59,8 +60,10 @@ public final class AudioSession {
             let main = try makeStream(device: device, sourceUID: sourceUID, processes: exclusions, exclusive: true, key: "", settings: settings)
             streams.append(main)
             for app in custom { streams.append(try makeStream(device: device, sourceUID: sourceUID, processes: app.processes, exclusive: false, key: app.id, settings: settings)) }
-            apply(settings)
+            try apply(settings)
             try Hardware.setDefault(sourceID)
+            // macOS can restore a device's cached controls when it becomes the default.
+            if let virtual { try Hardware.setSystemVolume(virtual,volume: settings.volume,muted: settings.muted) }
         } catch { stop(); throw error }
     }
     private func makeStream(device: OutputDevice, sourceUID: String, processes: [AudioObjectID], exclusive: Bool, key: String, settings: AudioSettings) throws -> Stream {
@@ -122,14 +125,19 @@ public final class AudioSession {
         eq_set_band_count(d,Int32(settings.bands.count))
         for (i,b) in settings.bands.enumerated() { eq_set_band(d,Int32(i),Int32(b.type.rawValue),b.frequency,b.gain,b.q,settings.eqEnabled && b.enabled ? 1 : 0) }
         let appGain = s.key.isEmpty ? 1 : pow(settings.appVolumes[s.key] ?? 1,2)
-        eq_set_controls(d,settings.linearGain * appGain,settings.balance,0,settings.limiter ? 1 : 0,settings.spatialEnabled ? settings.wet : 0,settings.room,settings.spatialEnabled ? settings.width : 1)
+        let gain = settings.linearGain(applyingVolume: outputVolume?.usesHardwareVolume != true)
+        eq_set_controls(d,gain * appGain,settings.balance,0,settings.limiter ? 1 : 0,settings.spatialEnabled ? settings.wet : 0,settings.room,settings.spatialEnabled ? settings.width : 1)
     }
-    public func apply(_ settings: AudioSettings) { for s in streams { configure(s,settings) } }
+    public func apply(_ settings: AudioSettings) throws {
+        try outputVolume?.apply(settings)
+        for s in streams { configure(s,settings) }
+    }
     public func stop() {
         if sourceID != 0, Hardware.defaultOutput == sourceID, previousOutput != 0, Hardware.devices.contains(where: { $0.id == previousOutput }) { try? Hardware.setDefault(previousOutput) }
         streams.forEach { $0.stop() }; streams.removeAll()
         heartbeatTimer?.cancel(); heartbeatTimer = nil
         if usesSystemVolume, sourceID != 0 { let device = sourceID; _ = heartbeatQueue.sync { Hardware.heartbeat(device,active: false) } }
+        outputVolume = nil
         outputID = 0; sourceID = 0; previousOutput = 0; usesSystemVolume = false
     }
     public func meter() -> (left: Float, right: Float, spectrum: [Float], frames: UInt64, error: Int32) {

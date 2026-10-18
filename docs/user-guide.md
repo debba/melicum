@@ -16,7 +16,7 @@ Choose a monitor or device from **Audio output**, then click **Enable audio**. m
 | Output spectrum | Shows the processed signal across 64 logarithmic frequency bins. It displays OFF, WAITING FOR AUDIO or SIGNAL as appropriate. |
 | Disable | Stops processing and restores the previous physical output when it is available. |
 
-The optional system volume component enables the native macOS volume slider and volume keys. Select **Enable system volume…**, authorize its installer, then enable audio again. The virtual output appears as the chosen device followed by **(Melicum)** while processing runs. Volume and mute synchronize in both directions, and gain is applied once in Melicum.
+The optional system volume component enables the native macOS volume slider and volume keys. Select **Enable system volume…**, authorize its installer, then enable audio again. The virtual output appears as the chosen device followed by **(Melicum)** while processing runs. Volume and mute synchronize in both directions. On devices that already support volume control, the physical volume follows the virtual slider, so 100% reaches the device's maximum regardless of its previous volume. Master volume is applied once. Disabling audio leaves the physical volume and supported mute controls at the last requested setting.
 
 Without that component, **Volume keys** provides a keyboard fallback using Accessibility permission. It does not enable the native HDMI volume slider. The system volume component does not need Accessibility permission.
 

@@ -140,7 +140,7 @@ On this Mac, manual checks verified actual audio through the virtual output to t
 
 ## Audio routing and system volume
 
-The optional component wraps BlackHole source pinned to commit `561d934c77a1fa64987e01ccabe890fed30e181f`. It exposes a stereo output with standard volume/mute properties. Melicum captures application audio targeted at that output and forwards the processed signal to the selected physical device. The loopback input is unused; gain is applied once in Melicum's DSP.
+The optional component wraps BlackHole source pinned to commit `561d934c77a1fa64987e01ccabe890fed30e181f`. It exposes a stereo output with standard volume/mute properties. Melicum captures application audio targeted at that output and forwards the processed signal to the selected physical device. The loopback input is unused. For fixed-volume outputs, master volume is applied in Melicum's DSP. For outputs with writable master or channel volume controls, the physical volume follows the virtual slider and DSP omits master attenuation, preserving the device's full volume range. Writable physical mute controls follow the virtual mute state. Stopping leaves these controls at the last requested level, so fallback playback uses that level as well.
 
 The virtual device appears in the macOS output list only while Melicum is open and processing audio. Disabling audio or quitting restores the previous physical output and hides the virtual device. If the owner process exits unexpectedly or its heartbeat is missing for five seconds, the driver hides and disables the device so macOS can choose another output. The component stays installed between launches; updating an older component requires running the system volume installer included in the new app.
 

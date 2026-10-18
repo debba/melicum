@@ -49,7 +49,10 @@ public struct AudioSettings: Codable, Equatable {
     public var outputUID = ""
     public init() {}
     public static var flatBands: [EQBand] { [31,62,125,250,500,1000,2000,4000,8000,16000].map { EQBand(frequency: Double($0)) } }
-    public var linearGain: Double { muted ? 0 : pow(volume, 2) * pow(10, (boost + preamp) / 20) }
+    public var linearGain: Double { linearGain(applyingVolume: true) }
+    func linearGain(applyingVolume: Bool) -> Double {
+        muted ? 0 : (applyingVolume ? pow(volume,2) : 1) * pow(10,(boost + preamp) / 20)
+    }
     public mutating func validate() throws {
         let scalars = [volume,boost,preamp,balance,room,wet,width] + bands.flatMap { [$0.frequency,$0.gain,$0.q] } + Array(appVolumes.values)
         guard scalars.allSatisfy(\.isFinite), (0...1).contains(volume), (0...12).contains(boost), (-24...12).contains(preamp), (-1...1).contains(balance), (0...4).contains(room), (0...1).contains(wet), (0...2).contains(width), bands.count <= 64, effects.count <= 12,

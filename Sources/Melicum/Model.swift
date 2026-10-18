@@ -94,7 +94,18 @@ final class AppModel: ObservableObject {
             catch { self.error = error.localizedDescription }
         }
         let snapshot = settings
-        queue.async { self.session.apply(snapshot) }
+        queue.async {
+            do { try self.session.apply(snapshot) }
+            catch {
+                self.session.stop()
+                let message = error.localizedDescription
+                DispatchQueue.main.async {
+                    self.mediaKeys.stop(); self.mediaKeysEnabled = false
+                    self.running = false; self.systemVolumeActive = false
+                    self.meters.reset(); self.message = T("Audio control is off"); self.error = message
+                }
+            }
+        }
         saveTask?.cancel(); let task = DispatchWorkItem { [weak self] in self?.save() }; saveTask = task
         DispatchQueue.main.asyncAfter(deadline: .now()+0.35,execute: task)
     }

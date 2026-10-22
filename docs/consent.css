@@ -1,0 +1,35 @@
+/* Cookie banner: a small graphite card in the corner, cream controls, the VU red as the "on" state. */
+.consent { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: grid; justify-items: center; gap: 12px; width: min(330px, calc(100% - 32px)); padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); box-shadow: 0 24px 48px rgba(0,0,0,.5); color: var(--cream); text-align: center; }
+.consent[hidden] { display: none; }
+.consent-title { margin: 0; font: 600 20px/1.2 var(--display); }
+.consent-text { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.consent-text a { color: var(--cream); }
+.consent-prefs { display: none; justify-self: stretch; gap: 14px; margin-block: 6px; }
+.consent-row { display: flex; align-items: center; justify-content: space-between; font-size: 15px; }
+.consent-switch { position: relative; flex-shrink: 0; width: 38px; height: 22px; padding: 0; border: 0; border-radius: 999px; background: var(--line); cursor: pointer; transition: background-color .2s ease; }
+.consent-switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--cream); box-shadow: 0 1px 3px rgba(0,0,0,.4); transition: transform .2s ease; }
+.consent-switch[aria-checked="true"] { background: var(--red-deep); }
+.consent-switch[aria-checked="true"]::after { transform: translateX(16px); }
+.consent-switch.locked { cursor: not-allowed; opacity: .6; }
+.consent-actions { display: flex; justify-self: stretch; gap: 8px; }
+.consent-btn { flex: 1; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--bg); color: var(--cream); font: 600 14px var(--body); cursor: pointer; transition: border-color .15s ease; }
+.consent-btn:hover { border-color: var(--cream); }
+.consent-btn.save { display: none; border-color: transparent; background: var(--cream); color: var(--bg-deep); }
+.consent-btn.save:hover { background: #FFFFFF; }
+.consent.detailed .consent-text, .consent.detailed .no, .consent.detailed .yes { display: none; }
+.consent.detailed .consent-prefs { display: grid; }
+.consent.detailed .save { display: block; }
+.consent-link { padding: 4px; border: 0; background: none; color: var(--muted); font: 14px var(--body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.consent-link:hover { color: var(--cream); }
+.manage-cookies { padding: 6px 0; border: 0; background: none; color: var(--cream); font: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; cursor: pointer; }
+@media (max-width: 620px) {
+  .consent { right: 12px; bottom: 12px; width: calc(100% - 24px); padding: 20px; }
+  .manage-cookies { padding: 10px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .consent-switch, .consent-switch::after { transition: none; }
+}
+@media (forced-colors: active) {
+  .consent, .consent-switch { border: 1px solid CanvasText; }
+  .consent-switch[aria-checked="true"] { background: Highlight; }
+}

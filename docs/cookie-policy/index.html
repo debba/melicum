@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cookie Policy · Melicum</title>
+<meta name="description" content="Learn how melicum.app uses cookies and anonymous analytics, and how you can control them.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://melicum.app/cookie-policy/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Melicum">
+<meta property="og:url" content="https://melicum.app/cookie-policy/">
+<meta property="og:title" content="Cookie Policy · Melicum">
+<meta property="og:description" content="Learn how melicum.app uses cookies and anonymous analytics, and how you can control them.">
+<meta property="og:image" content="https://melicum.app/images/social-card.png">
+<meta name="theme-color" content="#18181C">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../consent.css">
+<script src="../consent.js" defer></script>
+<style>
+/* Same tokens as the home page; a single reading column. */
+:root {
+  --bg: #18181C; --bg-deep: #111114; --panel: #24242A; --line: #34343C; --line-strong: #77727A;
+  --cream: #F3EDE2; --muted: #9C968D; --red: #FF5A47; --red-deep: #DE3B29;
+  --display: "Fraunces", Georgia, serif;
+  --body: "IBM Plex Sans", -apple-system, "Helvetica Neue", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --gutter: max(16px, 4vw);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--cream); font: 16px/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+code { font-family: var(--mono); font-size: .88em; background: var(--panel); padding: 2px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+.wrap { max-width: 820px; margin: 0 auto; padding-inline: var(--gutter); }
+nav { border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; max-width: 1120px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--cream); text-decoration: none; font: 600 19px var(--display); }
+.brand img { width: 28px; height: 28px; }
+nav .back { color: var(--muted); font-size: 14px; text-decoration: none; }
+nav .back:hover { color: var(--cream); }
+main { padding-block: 64px 80px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
+h1 { margin: 14px 0 8px; font: 600 clamp(38px, 6vw, 56px)/1.05 var(--display); letter-spacing: -.01em; }
+.updated { color: var(--muted); font-size: 14px; }
+h2 { margin: 48px 0 12px; font: 600 26px/1.2 var(--display); }
+h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 32px 0 10px; font: 600 18px/1.3 var(--body); }
+p, ul { margin: 0 0 14px; color: var(--muted); }
+p strong, li strong { color: var(--cream); font-weight: 600; }
+.badge { padding: 3px 8px; border-radius: 6px; font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #C4BEB5; background: rgba(156,150,141,.12); }
+.badge.required { color: #FF8070; background: rgba(255,90,71,.12); }
+.table { margin: 16px 0 8px; overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+th { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--bg-deep); }
+td { color: var(--muted); }
+td:first-child { color: var(--cream); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+.manage { margin: 4px 0 14px; padding: 11px 18px; border: 0; border-radius: 12px; background: var(--cream); color: var(--bg-deep); font: 600 15px var(--body); cursor: pointer; }
+.manage:hover { background: #FFFFFF; }
+footer { padding-block: 32px 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer a { color: var(--cream); }
+@media (max-width: 620px) {
+  main { padding-block: 40px 64px; }
+  /* Tables become stacked cards so nothing scrolls sideways. */
+  .table { overflow: visible; border: 0; }
+  table, tbody, tr, td { display: block; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  tr { margin-bottom: 10px; padding: 6px 0; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+  td { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; padding: 6px 14px; border: 0; }
+  td::before { content: attr(data-label); font: 500 11px/2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  td:first-child { white-space: normal; }
+}
+@media (prefers-contrast: more) {
+  :root { --muted: #CFC9C0; --line: #6B6670; --line-strong: #A49FA6; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../images/melicum-icon.png" alt="">Melicum</a>
+    <a class="back" href="../">← Back to melicum.app</a>
+  </div>
+</nav>
+</header>
+
+<main class="wrap">
+  <div class="eyebrow">Legal</div>
+  <h1>Cookie Policy</h1>
+  <p class="updated">Last updated: October 2026</p>
+
+  <h2>What are cookies?</h2>
+  <p>Cookies are small text files stored in your browser when you visit a website. They allow the site to remember certain information across page visits and sessions. Similar technologies, such as your browser's local storage, work the same way and are covered by this policy.</p>
+
+  <h2>How we use cookies</h2>
+  <p>This website uses a minimal set of cookies, grouped into the categories below. You can manage your preferences at any time using the cookie banner.</p>
+  <p>This policy covers the melicum.app website only. The Melicum app itself sets no cookies and collects no analytics; audio is processed on your Mac and never sent over the network.</p>
+
+  <h2>Cookie categories</h2>
+
+  <h3>Necessary <span class="badge required">Always active</span></h3>
+  <p>These are required for the website to function correctly and cannot be disabled. This category also includes <strong>cookieless, anonymised page-view analytics</strong> via <a href="https://matomo.org">Matomo</a> (self-hosted). No cookies are set, the last two bytes of your IP address are removed before storage, and no data is shared with third parties. This processing is based on legitimate interest (aggregate, anonymous traffic statistics), and also counts downloads and outbound link clicks.</p>
+  <div class="table">
+    <table>
+      <thead><tr><th scope="col">Name</th><th scope="col">Provider</th><th scope="col">Purpose</th><th scope="col">Expiry</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Name"><code>melicum-cookie-consent</code></td><td data-label="Provider">melicum.app</td><td data-label="Purpose">Stores your cookie consent preferences</td><td data-label="Expiry">Persistent (localStorage)</td></tr>
+        <tr><td data-label="Name"><em>None (cookieless)</em></td><td data-label="Provider">analytics.debbaweb.it</td><td data-label="Purpose">Anonymised page-view, download and outbound link statistics without persistent identifiers</td><td data-label="Expiry">Session only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Measurement <span class="badge">Optional</span></h3>
+  <p>Enabling this category upgrades the base cookieless tracking to full cookie-based analytics via <a href="https://matomo.org">Matomo</a>. Persistent cookies allow us to recognise returning visitors and measure engagement over time. IP addresses are still anonymised and no data is shared with third parties.</p>
+  <div class="table">
+    <table>
+      <thead><tr><th scope="col">Name</th><th scope="col">Provider</th><th scope="col">Purpose</th><th scope="col">Expiry</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Name"><code>_pk_id.*</code></td><td data-label="Provider">analytics.debbaweb.it</td><td data-label="Purpose">Identifies a returning visitor across sessions</td><td data-label="Expiry">13 months</td></tr>
+        <tr><td data-label="Name"><code>_pk_ses.*</code></td><td data-label="Provider">analytics.debbaweb.it</td><td data-label="Purpose">Tracks a single visit session</td><td data-label="Expiry">30 minutes</td></tr>
+        <tr><td data-label="Name"><code>_pk_ref.*</code></td><td data-label="Provider">analytics.debbaweb.it</td><td data-label="Purpose">Stores referral source for the visit</td><td data-label="Expiry">6 months</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Third-party content</h2>
+  <p>Fonts are loaded from Google Fonts (<code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>). They set no cookies, but like any web request they reveal your IP address to Google. Downloads and source code are hosted on GitHub; following those links takes you to GitHub, which has its own cookie policy.</p>
+
+  <h2>Managing your preferences</h2>
+  <p>You can review and change your cookie preferences at any time. Your current consent is stored locally in your browser and is never sent to any server.</p>
+  <button class="manage" type="button" data-manage-cookies>Cookie Preferences</button>
+  <p>You can also withdraw consent by clearing the <code>melicum-cookie-consent</code> entry from your browser's local storage, or by clearing site data for melicum.app. The consent banner will reappear on your next visit.</p>
+
+  <h2>Contact</h2>
+  <p>If you have any questions about this cookie policy, please open an issue on <a href="https://github.com/debba/melicum/issues">GitHub</a>.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 <a href="https://debbaweb.it">Andrea Debernardi</a> · <a href="../">melicum.app</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

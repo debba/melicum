@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melicum · Volume HDMI e DisplayPort sul Mac</title>
+<meta name="description" content="Melicum regola il volume dei monitor HDMI e DisplayPort su macOS, con i tasti del volume nativi, un equalizzatore parametrico, un mixer per app e le Audio Unit. Gratuito e open source.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Andrea Debernardi">
+<link rel="canonical" href="https://melicum.app/it/">
+<link rel="alternate" hreflang="en" href="https://melicum.app/">
+<link rel="alternate" hreflang="it" href="https://melicum.app/it/">
+<link rel="alternate" hreflang="x-default" href="https://melicum.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Melicum">
+<meta property="og:url" content="https://melicum.app/it/">
+<meta property="og:title" content="Melicum · Volume HDMI e DisplayPort sul Mac">
+<meta property="og:description" content="Usa i tasti del volume del Mac anche con i monitor HDMI e DisplayPort, con equalizzatore, mixer per app e Audio Unit. Gratuito e open source.">
+<meta property="og:image" content="https://melicum.app/images/social-card.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Melicum: volume HDMI e DisplayPort per macOS, accanto alla finestra principale dell'app">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Melicum · Volume HDMI e DisplayPort sul Mac">
+<meta name="twitter:description" content="Usa i tasti del volume del Mac anche con i monitor HDMI e DisplayPort, con equalizzatore, mixer per app e Audio Unit.">
+<meta name="twitter:image" content="https://melicum.app/images/social-card.png">
+<meta name="twitter:image:alt" content="Melicum: volume HDMI e DisplayPort per macOS, accanto alla finestra principale dell'app">
+<meta name="theme-color" content="#18181C">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Melicum",
+  "alternateName": "Melicum, controllo del volume HDMI",
+  "description": "Controllo di volume e muto per monitor HDMI e DisplayPort su macOS, con i tasti del volume nativi, un equalizzatore parametrico, un mixer per app, l'audio spaziale e le Audio Unit.",
+  "url": "https://melicum.app/it/",
+  "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "Audio",
+  "operatingSystem": "macOS 14.2 o successivo",
+  "downloadUrl": "https://github.com/debba/melicum/releases/latest/download/Melicum.dmg",
+  "installUrl": "https://github.com/debba/melicum/releases/latest",
+  "softwareHelp": "https://github.com/debba/melicum/blob/main/docs/user-guide.md",
+  "codeRepository": "https://github.com/debba/melicum",
+  "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "isAccessibleForFree": true,
+  "inLanguage": ["en", "it", "fr", "de", "es"],
+  "image": "https://melicum.app/images/melicum-icon.png",
+  "screenshot": "https://melicum.app/images/main-window.png",
+  "featureList": ["Volume e muto per HDMI e DisplayPort", "Tasti del volume nativi di macOS", "Equalizzatore parametrico con importazione AutoEQ", "Mixer del volume per app", "Riverbero per l'audio spaziale", "Effetti Audio Unit", "Aggiornamenti automatici firmati"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": { "@type": "Person", "name": "Andrea Debernardi", "url": "https://github.com/debba" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../consent.css">
+<script>document.documentElement.classList.add("js");</script>
+<script src="../consent.js" defer></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Vai al contenuto</a>
+
+<header>
+<nav aria-label="Principale">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="../images/melicum-icon.png" alt="">Melicum</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      <span class="sr-only">Menu</span>
+    </button>
+    <ul id="nav-links">
+      <li><a href="#features">Funzioni</a></li>
+      <li><a href="#how">Come funziona</a></li>
+      <li><a href="#screenshots">Screenshot</a></li>
+      <li><a href="#settings">Impostazioni</a></li>
+      <li><a href="#updates">Aggiornamenti</a></li>
+      <li><a href="#install">Installazione</a></li>
+      <li><a href="https://github.com/debba/melicum">GitHub</a></li>
+    </ul>
+    <a class="lang" href="../" hreflang="en" lang="en" title="Read in English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-s"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="uk-t"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#uk-s)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="m0 0 60 30m0-30L0 30" stroke="#FFFFFF" stroke-width="6"/><path d="m0 0 60 30m0-30L0 30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#FFFFFF" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg><span class="sr-only">Read in </span><span class="name">English</span></a>
+  </div>
+</nav>
+</header>
+
+<main id="main" tabindex="-1">
+<section class="hero" id="top" aria-labelledby="title">
+  <div class="wrap">
+    <img class="icon" src="../images/melicum-icon.png" alt="Icona di Melicum: una lira con il giogo a forma di curva di equalizzazione e la cassa armonica a forma di presa HDMI">
+    <h1 id="title">Melicum</h1>
+    <p class="lede">Alza il volume del monitor <b>HDMI o DisplayPort</b> dalla tastiera, come faresti con gli altoparlanti del Mac. Poi dai forma al suono.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/debba/melicum/releases/latest/download/Melicum.dmg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+        Scarica per macOS
+      </a>
+      <a class="btn ghost" href="https://github.com/debba/melicum">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        Codice su GitHub
+      </a>
+    </div>
+    <ul class="facts" role="list" aria-label="In breve"><li>macOS 14.2+</li><li>Apple silicon e Intel</li><li>Gratuito · GPL-3.0</li><li>L'audio resta sul tuo Mac</li></ul>
+    <img class="window" src="../images/main-window.png" width="1000" height="960" fetchpriority="high" alt="Finestra principale di Melicum: uscita audio impostata su un monitor Dell collegato via HDMI, volume al 42 per cento, bilanciamento, amplificazione, spettro in uscita ed equalizzatore">
+  </div>
+</section>
+
+<section class="problem" aria-labelledby="problem-title">
+  <div class="wrap split">
+    <div class="head">
+      <div class="eyebrow">Il problema</div>
+      <h2 id="problem-title">Con quasi tutti i monitor, macOS disattiva il volume.</h2>
+      <p>Le uscite HDMI e DisplayPort di solito non hanno un controllo hardware del volume: il cursore resta grigio e i tasti del volume mostrano un altoparlante barrato. E così finisci a cercare i pulsanti sul monitor.</p>
+    </div>
+    <div class="vs">
+      <div class="before"><span class="tag">Prima</span><b>Cursore del volume disattivato</b><span class="d">Con un monitor HDMI i tasti non fanno nulla. Il volume si regola dal menu a schermo del monitor.</span></div>
+      <div class="after"><span class="tag">Con Melicum</span><b>Cursore e tasti del volume nativi</b><span class="d">Il guadagno viene applicato via software al flusso digitale, in sincronia con i controlli di volume e muto di macOS.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="features" aria-labelledby="features-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Funzioni</div>
+      <h2 id="features-title">Prima di tutto una manopola del volume. Un banco audio completo, quando ti serve.</h2>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <h3>Volume HDMI e DisplayPort</h3>
+        <p>Volume, muto, bilanciamento e fino a 12 dB di amplificazione per qualsiasi uscita, anche quando il monitor non ha un volume proprio.</p>
+        <span class="spec">0–100% · ±bilanciamento · 0–12 dB in più</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+        <h3>Tasti del volume nativi</h3>
+        <p>Un componente di sistema opzionale sblocca il cursore e i tasti del volume di macOS, con volume e muto sincronizzati in entrambe le direzioni.</p>
+        <span class="spec">Componente HAL opzionale</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c3 0 4-7 7-7s3 9 6 9 4-5 7-5"/><circle cx="9" cy="8" r="1.6"/><circle cx="15" cy="17" r="1.6"/></svg>
+        <h3>Equalizzatore parametrico</h3>
+        <p>Semplici controlli di tono, dieci bande fisse oppure una modalità esperta con filtri a campana, shelving, passa-alto e passa-basso, notch e passa-banda.</p>
+        <span class="spec">Fino a 64 filtri · importazione AutoEQ</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V14M4 10V3M12 21V12M12 8V3M20 21V16M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>
+        <h3>Mixer per app</h3>
+        <p>Dai a ogni applicazione il suo volume, con le app raggruppate per bundle: videochiamate e musica non si sovrappongono più.</p>
+        <span class="spec">Un tap separato per ogni app</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 20V10l7-6 7 6v10"/><path d="M9 20v-5h6v5"/></svg>
+        <h3>Audio spaziale</h3>
+        <p>Un riverbero stereo originale con cinque ambienti, da una piccola stanza a una cattedrale, e il controllo dell'ampiezza stereo.</p>
+        <span class="spec">5 ambienti · ampiezza mid/side</span>
+      </article>
+      <article class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg>
+        <h3>Audio Unit e preset</h3>
+        <p>Metti in catena gli effetti installati, poi salva tutto in un super preset che si attiva con un'uscita o con un'app.</p>
+        <span class="spec">12 effetti · import/export JSON</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Come funziona</div>
+      <h2 id="how-title">Un tap, una callback, un clock.</h2>
+      <p>Melicum cattura l'audio di sistema con i process tap di Core Audio, lo elabora con un motore in C in tempo reale e lo riproduce sul monitor, agganciandosi al suo clock per evitare derive.</p>
+    </div>
+    <div class="flow">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
+        <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#FF5A47"/></marker></defs>
+        <g fill="#24242A" stroke="#34343C" stroke-width="1.5">
+          <rect x="10" y="90" width="170" height="110" rx="14"/>
+          <rect x="250" y="90" width="190" height="110" rx="14"/>
+          <rect x="510" y="70" width="210" height="150" rx="14" stroke="#FF5A47"/>
+          <rect x="790" y="90" width="160" height="110" rx="14"/>
+          <rect x="250" y="236" width="190" height="52" rx="12"/>
+        </g>
+        <g fill="none" stroke="#FF5A47" stroke-width="2" marker-end="url(#arrow)">
+          <path d="M180 145H244"/><path d="M440 145H504"/><path d="M720 145H784"/>
+        </g>
+        <path d="M345 236V206" stroke="#9C968D" stroke-width="1.5" stroke-dasharray="4 5" fill="none"/>
+        <g fill="#F3EDE2" font-weight="600" font-size="16" text-anchor="middle">
+          <text x="95" y="135">Le tue app</text>
+          <text x="345" y="135">Process tap</text>
+          <text x="615" y="112">Motore Melicum</text>
+          <text x="870" y="135">Monitor</text>
+          <text x="345" y="267" font-size="14">Cursore e tasti di macOS</text>
+        </g>
+        <g fill="#9C968D" font-size="13" text-anchor="middle">
+          <text x="95" y="158">Musica, video,</text>
+          <text x="95" y="176">chiamate</text>
+          <text x="345" y="158">Esclude Melicum</text>
+          <text x="345" y="176">per evitare il feedback</text>
+          <text x="615" y="138">Volume · EQ · mixer</text>
+          <text x="615" y="157">Riverbero · Audio Unit</text>
+          <text x="615" y="176">Protezione dai picchi</text>
+          <text x="870" y="158">HDMI o DisplayPort</text>
+          <text x="870" y="176">sorgente del clock</text>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#FF5A47" text-anchor="middle" letter-spacing="1">
+          <text x="615" y="205" letter-spacing=".2">C REALTIME · ZERO ALLOCAZIONI</text>
+          <text x="95" y="60">01</text><text x="345" y="60">02</text><text x="615" y="40">03</text><text x="870" y="60">04</text>
+        </g>
+      </svg>
+      <ol class="flow-list" role="list" aria-label="Percorso dell'audio">
+        <li><b>Le tue app</b><span>Musica, video e chiamate vengono riprodotti sull'uscita Melicum.</span></li>
+        <li><b>Process tap</b><span>Core Audio li cattura, escludendo Melicum stesso per evitare il feedback. Il cursore e i tasti del volume di macOS controllano questa uscita.</span></li>
+        <li class="engine"><b>Motore Melicum</b><span>C in tempo reale, senza allocazioni di memoria: volume, equalizzatore, mixer, riverbero, Audio Unit e protezione dai picchi.</span></li>
+        <li><b>Monitor</b><span>L'uscita HDMI o DisplayPort riproduce il risultato e fornisce il clock.</span></li>
+      </ol>
+    </div>
+    <div class="notes">
+      <div><h3>Guadagno applicato una sola volta</h3><p>L'uscita virtuale opzionale offre a macOS i normali controlli di volume e muto. Il suo loopback non viene usato: Melicum applica il guadagno nel proprio motore, mai due volte.</p></div>
+      <div><h3>Si ferma in sicurezza</h3><p>Quando disattivi o chiudi Melicum, i tap vengono chiusi e torna l'uscita precedente. Se l'app si chiude in modo imprevisto, l'uscita virtuale sparisce entro cinque secondi.</p></div>
+      <div><h3>Tutto in locale</h3><p>L'audio viene elaborato in memoria sul tuo Mac. Niente viene registrato su disco né inviato in rete.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots" aria-labelledby="shots-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Screenshot</div>
+      <h2 id="shots-title">Grafite, crema e una lancetta rossa.</h2>
+      <p>L'interfaccia prende i colori dall'icona: una console audio color grafite, controlli color crema e qualche indicatore rosso, usato con misura. I comandi principali restano sempre visibili mentre passi da un pannello all'altro. Il logo originale non cambia.</p>
+    </div>
+    <p class="muted">Viste SwiftUI native, mostrate con dispositivi, indicatori e preset di esempio. Seleziona un'immagine per vederla a dimensione intera.</p>
+    <div class="gallery">
+      <figure><a href="../images/main-window.png"><img src="../images/main-window.png" width="1000" height="960" loading="lazy" alt="Console principale ridisegnata ed equalizzatore in modalità esperta"></a><figcaption><b>Finestra principale</b>Uscita, volume, bilanciamento, amplificazione e spettro sempre a portata di mano, sopra l'editor dell'equalizzatore.</figcaption></figure>
+      <figure><a href="../images/app-mixer.png"><img src="../images/app-mixer.png" width="1000" height="820" loading="lazy" alt="Controlli di volume e muto indipendenti per ogni applicazione"></a><figcaption><b>Mixer app</b>Musica, browser e chiamate, ognuno al suo volume.</figcaption></figure>
+      <figure><a href="../images/spatial-audio.png"><img src="../images/spatial-audio.png" width="1000" height="820" loading="lazy" alt="Interruttore dell'audio spaziale, selettore dell'ambiente, mix del riverbero e ampiezza stereo"></a><figcaption><b>Audio spaziale</b>Cinque ambienti, il mix del riverbero e l'ampiezza stereo.</figcaption></figure>
+      <figure><a href="../images/audio-units.png"><img src="../images/audio-units.png" width="1000" height="820" loading="lazy" alt="Pannello degli effetti Audio Unit con il comando per aggiungere un effetto"></a><figcaption><b>Audio Unit</b>Aggiungi gli effetti compatibili già installati e regolane i parametri.</figcaption></figure>
+      <figure><a href="../images/presets.png"><img src="../images/presets.png" width="1000" height="1080" loading="lazy" alt="Preset salvati, lingua, avvio e preferenze per gli aggiornamenti automatici"></a><figcaption><b>Preset e impostazioni</b>Salva le tue configurazioni e scegli lingua, avvio e controllo degli aggiornamenti.</figcaption></figure>
+      <figure><a href="../images/menu-bar.png"><img src="../images/menu-bar.png" width="280" height="288" loading="lazy" alt="Pannello compatto nella barra dei menu con il volume principale e il comando Apri pannello"></a><figcaption><b>Menu rapido</b>Volume, muto, accensione e aggiornamenti direttamente dalla barra dei menu.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="settings" class="how" aria-labelledby="settings-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Impostazioni</div>
+      <h2 id="settings-title">La tua configurazione, pronta quando ti serve.</h2>
+      <p>I preset audio e le preferenze dell'app sono indipendenti: se richiami un'equalizzazione, lingua e opzioni di avvio restano come sono.</p>
+    </div>
+    <div class="notes">
+      <div><h3>Salva tutto il suono</h3><p>I super preset includono volume, equalizzatore, livelli delle app, riverbero e parametri delle Audio Unit. Puoi collegarne uno a un'uscita o a un'applicazione, oppure importare ed esportare le impostazioni in JSON.</p></div>
+      <div><h3>Scegli come si avvia</h3><p><b>Avvia al login</b> apre Melicum quando accedi. <b>Abilita audio all'apertura</b> attiva anche l'uscita salvata ed è disattivata di default. Se quell'uscita non è disponibile, l'elaborazione resta spenta.</p></div>
+      <div><h3>Cinque lingue</h3><p>Passa al volo tra italiano, inglese, francese, tedesco e spagnolo nella sezione Preset. Nella <a href="https://github.com/debba/melicum/blob/main/docs/user-guide.md" hreflang="en">guida completa</a> (in inglese) trovi tutti i controlli e le impostazioni dei preset.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="updates" aria-labelledby="updates-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Aggiornamenti firmati</div>
+      <h2 id="updates-title">Controlli automatici. Installazione solo con il tuo ok.</h2>
+      <p>Di default Melicum cerca le nuove versioni stabili circa una volta al giorno. Puoi attivare o disattivare il controllo automatico in Preset → Aggiornamenti, oppure cercare aggiornamenti a mano dall'app o dal menu rapido.</p>
+    </div>
+    <div class="notes">
+      <div><h3>Download verificati</h3><p>Sparkle verifica la firma del feed, quella dell'archivio e la firma del codice Apple. Bozze e versioni preliminari restano fuori dal canale degli aggiornamenti stabili.</p></div>
+      <div><h3>Le tue impostazioni restano</h3><p>L'app chiede conferma prima di scaricare e installare. Prima di chiudersi ripristina l'uscita fisica, conserva preset e preferenze e, al riavvio, rispetta le tue scelte di avvio.</p></div>
+      <div><h3>Il componente audio</h3><p>Gli aggiornamenti dell'app non sostituiscono di nascosto il componente HAL opzionale. Se una versione include un aggiornamento del componente, avvia a parte l'installer incluso con <b>Abilita il volume di sistema…</b>.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="install" style="padding-top: 0;" aria-labelledby="install-title">
+  <div class="wrap split" style="align-items: start;">
+    <div style="display: grid; gap: 24px;">
+      <div class="head">
+        <div class="eyebrow">Installazione</div>
+        <h2 id="install-title">Quattro passi e i tasti del volume funzionano.</h2>
+      </div>
+      <ol class="steps" role="list">
+        <li><div><h3>Scarica e apri</h3><p>Scarica l'ultimo <code>.dmg</code> dalla pagina delle <a href="https://github.com/debba/melicum/releases/latest">release</a> e trascina Melicum in Applicazioni. Le build sono firmate e autenticate da Apple.</p></div></li>
+        <li><div><h3>Scegli il monitor</h3><p>Seleziona il monitor o il dispositivo audio in <b>Uscita audio</b>.</p></div></li>
+        <li><div><h3>Attiva l'audio</h3><p>Fai clic su <b>Attiva audio</b> e, quando macOS lo chiede, consenti la registrazione dell'audio di sistema.</p></div></li>
+        <li><div><h3>Sblocca i tasti del volume</h3><p>Fai clic su <b>Abilita il volume di sistema…</b> e autorizza l'installer. Da quel momento il cursore e i tasti di macOS controllano il tuo monitor.</p></div></li>
+      </ol>
+    </div>
+    <div style="display: grid; gap: 24px;">
+      <div class="head">
+        <div class="eyebrow">Compila dal sorgente</div>
+        <h2>Swift, Core Audio e C.</h2>
+        <p>Serve Xcode. Il componente per il volume di sistema si basa su BlackHole, incluso come submodule.</p>
+      </div>
+<pre><span class="c"># clona il progetto insieme al submodule BlackHole</span>
+git clone --recurse-submodules \
+  https://github.com/debba/melicum.git
+cd melicum
+
+<span class="c"># esegui i test, poi compila il driver e l'app</span>
+swift test
+./scripts/build-system-volume.sh
+./scripts/build.sh
+open build/Melicum.app</pre>
+    </div>
+  </div>
+</section>
+
+<section class="name" aria-labelledby="name-title">
+  <div class="wrap split">
+    <img src="../images/melicum-mark.svg" width="280" height="308" alt="Il simbolo di Melicum, una lira color crema e rosso">
+    <div class="head">
+      <div class="eyebrow">Il nome</div>
+      <h2 class="word" id="name-title"><span lang="la">melicus</span><small>latino · «lirico, da cantare»</small></h2>
+      <p>La poesia melica si cantava accompagnandosi con la lira. L'icona ne disegna una come un equalizzatore: il giogo è una curva di equalizzazione con tre nodi vuoti, ogni corda termina su quella curva come una banda di frequenza e la cassa armonica ha il profilo di una presa HDMI.</p>
+    </div>
+  </div>
+</section>
+
+<section id="more" aria-labelledby="more-title">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Altri prodotti</div>
+      <h2 id="more-title">Dallo stesso banco di lavoro.</h2>
+    </div>
+    <div class="products">
+      <article class="product">
+        <img src="../images/tabularis-icon.png" width="64" height="64" alt="">
+        <h3><a href="https://tabularis.dev">Tabularis</a></h3>
+        <p>Un ambiente SQL desktop open source per PostgreSQL, MySQL, MariaDB e SQLite, con plugin come DuckDB e ClickHouse e un server MCP integrato per gli assistenti AI.</p>
+        <span class="spec">macOS · Windows · Linux · Apache-2.0</span>
+        <p class="links"><a href="https://tabularis.dev">tabularis.dev</a><a href="https://github.com/TabularisDB/tabularis">GitHub</a></p>
+      </article>
+      <article class="product">
+        <img src="../images/gitdeck-icon.png" width="64" height="64" alt="">
+        <h3><a href="https://gitdeck.dev/">Gitdeck</a></h3>
+        <p>GitHub, GitLab e Forgejo sul web e in un'app nativa per iPhone e iPad: issue, pull request e priorità a colpo d'occhio. La dashboard web è open source.</p>
+        <span class="spec">Web · iPhone e iPad · iOS 17+ · Gratuito</span>
+        <p class="links"><a href="https://gitdeck.dev/">gitdeck.dev</a><a href="https://github.com/debba/gitdeck">GitHub</a></p>
+      </article>
+      <article class="product">
+        <img src="../images/discophile-icon.png" width="64" height="64" alt="">
+        <h3><a href="https://discophile.app">Discophile</a></h3>
+        <p>Un player nativo per iPhone per le librerie Navidrome, Subsonic e Jellyfin, con gli audiolibri di Audiobookshelf, le radio online e un assistente musicale che funziona sul tuo iPhone o con ChatGPT.</p>
+        <span class="spec">iPhone · iOS 17+ · Presto su App Store</span>
+        <p class="links"><a href="https://discophile.app">discophile.app</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="legal">
+      <p>© 2026 <a href="https://debbaweb.it">Andrea Debernardi</a></p>
+      <p>Melicum è software libero, distribuito con licenza <a href="https://github.com/debba/melicum/blob/main/LICENSE">GPL-3.0</a>. Il componente per il volume di sistema include <a href="https://github.com/ExistentialAudio/BlackHole">BlackHole</a>.</p>
+    </div>
+    <ul aria-label="Link del progetto"><li><a href="https://github.com/debba/melicum">GitHub</a></li><li><a href="https://github.com/debba/melicum/releases">Release</a></li><li><a href="https://github.com/debba/melicum/issues">Segnalazioni</a></li><li><a href="cookie-policy/">Cookie policy</a></li><li><button class="manage-cookies" type="button" data-manage-cookies>Preferenze cookie</button></li></ul>
+  </div>
+</footer>
+
+<dialog class="lightbox" aria-labelledby="lb-title">
+  <div class="lb-bg"></div>
+  <div class="lb-bar lb-ui">
+    <span class="lb-count"></span>
+    <button class="lb-btn lb-zoom" type="button" aria-pressed="false" aria-label="Ingrandisci">
+      <svg class="in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M11 8.5v5M8.5 11h5"/></svg>
+      <svg class="out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M8.5 11h5"/></svg>
+    </button>
+    <button class="lb-btn lb-close" type="button" aria-label="Chiudi" autofocus>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="lb-stage"><img class="lb-img" alt="" draggable="false"></div>
+  <div class="lb-spinner" aria-hidden="true"></div>
+  <button class="lb-btn lb-prev lb-ui" type="button" aria-label="Screenshot precedente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-btn lb-next lb-ui" type="button" aria-label="Screenshot successivo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+  </button>
+  <p class="lb-caption lb-ui" aria-live="polite"><b id="lb-title"></b><span class="lb-text"></span></p>
+</dialog>
+
+<script type="module" src="../site.js"></script>
+
+</body>
+</html>

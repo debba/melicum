@@ -4,7 +4,47 @@
   const STORAGE_KEY = "melicum-cookie-consent";
   const MATOMO_URL = "//analytics.debbaweb.it/";
   const MATOMO_SITE_ID = "8";
-  const POLICY_URL = "/cookie-policy/";
+
+  // Banner copy follows the page language; English is the default.
+  const STRINGS = {
+    en: {
+      policy: "/cookie-policy/",
+      question: "Can we use cookies?",
+      customizeTitle: "Customize your preferences",
+      text: "This site uses cookies for anonymous analytics.",
+      readPolicy: "Read our cookie policy",
+      moreDetails: "for more details.",
+      necessary: "Necessary",
+      necessaryLabel: "Necessary, always active",
+      necessaryTitle: "Necessary storage is always active",
+      measurement: "Measurement",
+      no: "No",
+      yes: "Yes",
+      save: "Save preferences",
+      customize: "Customize",
+      close: "Close",
+      back: "Back",
+    },
+    it: {
+      policy: "/it/cookie-policy/",
+      question: "Possiamo usare i cookie?",
+      customizeTitle: "Personalizza le tue preferenze",
+      text: "Questo sito usa i cookie per statistiche anonime.",
+      readPolicy: "Leggi la cookie policy",
+      moreDetails: "per saperne di più.",
+      necessary: "Necessari",
+      necessaryLabel: "Necessari, sempre attivi",
+      necessaryTitle: "I dati necessari sono sempre attivi",
+      measurement: "Statistiche",
+      no: "No",
+      yes: "Sì",
+      save: "Salva preferenze",
+      customize: "Personalizza",
+      close: "Chiudi",
+      back: "Indietro",
+    },
+  };
+  const t = STRINGS[document.documentElement.lang.slice(0, 2)] || STRINGS.en;
 
   const readPrefs = () => {
     try {
@@ -46,21 +86,21 @@
   banner.hidden = true;
   banner.innerHTML = `
     <h2 class="consent-title" id="consent-title"></h2>
-    <p class="consent-text">This site uses cookies for anonymous analytics. <a href="${POLICY_URL}">Read our cookie policy</a> for more details.</p>
+    <p class="consent-text">${t.text} <a href="${t.policy}">${t.readPolicy}</a> ${t.moreDetails}</p>
     <div class="consent-prefs">
       <div class="consent-row">
-        <span>Necessary</span>
-        <span class="consent-switch locked" aria-checked="true" role="switch" aria-disabled="true" aria-label="Necessary, always active" title="Necessary storage is always active"></span>
+        <span>${t.necessary}</span>
+        <span class="consent-switch locked" aria-checked="true" role="switch" aria-disabled="true" aria-label="${t.necessaryLabel}" title="${t.necessaryTitle}"></span>
       </div>
       <div class="consent-row">
-        <span id="consent-measurement">Measurement</span>
+        <span id="consent-measurement">${t.measurement}</span>
         <button class="consent-switch measurement" type="button" role="switch" aria-checked="false" aria-labelledby="consent-measurement"></button>
       </div>
     </div>
     <div class="consent-actions">
-      <button class="consent-btn no" type="button">No</button>
-      <button class="consent-btn yes" type="button">Yes</button>
-      <button class="consent-btn save" type="button">Save preferences</button>
+      <button class="consent-btn no" type="button">${t.no}</button>
+      <button class="consent-btn yes" type="button">${t.yes}</button>
+      <button class="consent-btn save" type="button">${t.save}</button>
     </div>
     <button class="consent-link" type="button"></button>`;
 
@@ -71,9 +111,9 @@
 
   function render() {
     banner.classList.toggle("detailed", detailed);
-    title.textContent = detailed ? "Customize your preferences" : "Can we use cookies?";
+    title.textContent = detailed ? t.customizeTitle : t.question;
     toggle.setAttribute("aria-checked", measurement);
-    textButton.textContent = !detailed ? "Customize" : hasChoice ? "Close" : "Back";
+    textButton.textContent = !detailed ? t.customize : hasChoice ? t.close : t.back;
   }
 
   function show() {

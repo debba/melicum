@@ -214,7 +214,7 @@ pre .c { color: var(--muted); }
 .word small { font: 400 14px var(--mono); font-style: normal; color: var(--muted); margin-left: 12px; letter-spacing: .04em; }
 
 /* Other products: whole cards are clickable through the title link. */
-.products { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.products { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
 .product { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px 20px; align-content: start; padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; transition: border-color .15s ease; }
 .product:hover { border-color: var(--line-strong); }
 .product > :not(img) { grid-column: 2; }
@@ -597,6 +597,13 @@ open build/Melicum.app</pre>
         <p>GitHub, GitLab and Forgejo on the web and in a native app for iPhone and iPad: issues, pull requests and priorities at a glance. The web dashboard is open source.</p>
         <span class="spec">Web · iPhone &amp; iPad · iOS 17+ · Free</span>
         <p class="links"><a href="https://gitdeck.debbaweb.it/en/">gitdeck.debbaweb.it</a><a href="https://github.com/debba/gitdeck">GitHub</a></p>
+      </article>
+      <article class="product">
+        <img src="images/discophile-icon.png" width="64" height="64" alt="">
+        <h3><a href="https://discophile.app">Discophile</a></h3>
+        <p>A native iPhone player for Navidrome, Subsonic and Jellyfin libraries, with Audiobookshelf audiobooks, internet radio and a music assistant that runs on your iPhone or with ChatGPT.</p>
+        <span class="spec">iPhone · iOS 17+ · Coming soon to the App Store</span>
+        <p class="links"><a href="https://discophile.app">discophile.app</a><a href="https://github.com/debba/discophile">GitHub</a></p>
       </article>
     </div>
   </div>

@@ -1,9 +1,16 @@
 // Mobile navigation: the section links collapse behind a disclosure button.
 const nav = document.querySelector("nav");
 const menu = nav.querySelector(".menu-toggle");
-const setMenu = open => { nav.classList.toggle("open", open); menu.setAttribute("aria-expanded", open); };
+const picker = nav.querySelector(".lang");
+const setMenu = open => {
+  nav.classList.toggle("open", open);
+  menu.setAttribute("aria-expanded", open);
+  if (open && picker) picker.open = false;
+};
 menu.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
-nav.querySelector("ul").addEventListener("click", event => { if (event.target.closest("a")) setMenu(false); });
+// Only one of the menu and the language list is open at a time.
+picker?.addEventListener("toggle", () => { if (picker.open) setMenu(false); });
+nav.querySelector(".nav-links").addEventListener("click", event => { if (event.target.closest("a")) setMenu(false); });
 document.addEventListener("click", event => { if (!nav.contains(event.target)) setMenu(false); });
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && nav.classList.contains("open")) { setMenu(false); menu.focus(); }

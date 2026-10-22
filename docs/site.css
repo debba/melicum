@@ -33,9 +33,9 @@ nav { position: relative; background: color-mix(in srgb, var(--bg) 86%, transpar
 nav .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--cream); text-decoration: none; font: 600 19px var(--display); }
 .brand img { width: 28px; height: 28px; }
-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 0 auto; padding: 0; font-size: 14px; }
-nav ul a { color: var(--muted); text-decoration: none; display: inline-block; padding: 8px 6px; }
-nav ul a:hover { color: var(--cream); }
+nav .nav-links { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 0 auto; padding: 0; font-size: 14px; }
+nav .nav-links a { color: var(--muted); text-decoration: none; display: inline-block; padding: 8px 6px; }
+nav .nav-links a:hover { color: var(--cream); }
 .menu-toggle { display: none; margin-left: auto; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--cream); cursor: pointer; }
 .menu-toggle svg { grid-area: 1 / 1; width: 22px; height: 22px; }
 .menu-toggle .close, .menu-toggle[aria-expanded="true"] .open { display: none; }
@@ -183,12 +183,12 @@ footer ul a { display: inline-block; padding: 6px 0; }
 }
 /* Compact header: the section links collapse behind a menu button (only when the script runs). */
 @media (max-width: 860px) {
-  .js nav .wrap { height: 56px; }
+  .js nav .wrap { height: 56px; gap: 10px; }
   .js .menu-toggle { display: grid; }
-  .js nav ul { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 4px var(--gutter) 12px; background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: 0 24px 40px rgba(0,0,0,.45); font-size: 17px; }
-  .js nav.open ul { display: flex; animation: drop .18s ease-out; }
-  .js nav ul a { display: block; padding: 13px 0; color: var(--cream); border-bottom: 1px solid var(--line); }
-  .js nav ul li:last-child a { border-bottom: 0; }
+  .js nav .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 4px var(--gutter) 12px; background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: 0 24px 40px rgba(0,0,0,.45); font-size: 17px; }
+  .js nav.open .nav-links { display: flex; animation: drop .18s ease-out; }
+  .js nav .nav-links a { display: block; padding: 13px 0; color: var(--cream); border-bottom: 1px solid var(--line); }
+  .js nav .nav-links li:last-child a { border-bottom: 0; }
 }
 @keyframes drop { from { opacity: 0; transform: translateY(-6px); } }
 @media (max-width: 720px) {
@@ -199,7 +199,7 @@ footer ul a { display: inline-block; padding: 6px 0; }
 @media (max-width: 620px) {
   html:not(.js) header { position: static; }
   html:not(.js) nav .wrap { height: auto; flex-wrap: wrap; padding-block: 10px; gap: 6px; }
-  html:not(.js) nav ul { margin-left: -6px; font-size: 15px; }
+  html:not(.js) nav .nav-links { margin-left: -6px; font-size: 15px; }
   .grid, .notes { grid-template-columns: minmax(0, 1fr); }
   section { padding-block: 64px; }
   .head p { font-size: 17px; }
@@ -242,7 +242,7 @@ footer ul a { display: inline-block; padding: 6px 0; }
   html { scroll-behavior: auto; }
   .btn { transition: none; }
   .btn:hover { transform: none; }
-  .js nav.open ul { animation: none; }
+  .js nav.open .nav-links { animation: none; }
   .lb-spinner { animation-duration: 2.4s; }
 }
 @media (prefers-contrast: more) {
@@ -254,16 +254,4 @@ footer ul a { display: inline-block; padding: 6px 0; }
   .btn, .card, .product, .steps li, .vs div, .flow, pre { border: 1px solid CanvasText; }
   .steps li::before { border-color: CanvasText; color: CanvasText; }
   .facts li::before { background: CanvasText; }
-}
-
-/* Language switch: the other language's flag and name, top right. */
-.lang { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); font-size: 14px; text-decoration: none; white-space: nowrap; transition: border-color .15s ease, color .15s ease; }
-.lang:hover { border-color: var(--line-strong); color: var(--cream); }
-.lang svg { width: 21px; height: 14px; flex-shrink: 0; border-radius: 2px; box-shadow: 0 0 0 1px rgba(243,237,226,.18); }
-@media (max-width: 860px) {
-  .js nav .wrap { gap: 10px; }
-  .js .lang { height: 44px; padding-inline: 12px; border-radius: 12px; background: var(--panel); }
-}
-@media (max-width: 400px) {
-  .lang .name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }

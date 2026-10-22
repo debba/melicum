@@ -1,0 +1,23 @@
+/* Language selector: a native disclosure with the current language's flag and code; the list opens below it. */
+.lang { position: relative; flex-shrink: 0; }
+.lang summary { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; color: var(--cream); font: 500 13px var(--mono); letter-spacing: .06em; list-style: none; cursor: pointer; user-select: none; -webkit-user-select: none; transition: border-color .15s ease; }
+.lang summary::-webkit-details-marker { display: none; }
+.lang summary:hover, .lang[open] summary { border-color: var(--line-strong); }
+.lang .chevron { width: 14px; height: 14px; color: var(--muted); transition: transform .15s ease; }
+.lang[open] .chevron { transform: rotate(180deg); }
+.flag { width: 21px; height: 14px; flex-shrink: 0; border-radius: 2px; box-shadow: 0 0 0 1px rgba(243,237,226,.18); }
+.lang-menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: 15; display: grid; gap: 2px; min-width: 190px; margin: 0; padding: 6px; list-style: none; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+.lang-menu a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 8px; color: var(--cream); font: 15px var(--body); text-decoration: none; }
+.lang-menu a:hover { background: var(--bg); }
+.lang-menu .check { width: 16px; height: 16px; margin-left: auto; color: var(--red); }
+.lang-menu a:not([aria-current]) .check { visibility: hidden; }
+@media (max-width: 860px) {
+  .js .lang summary { height: 44px; padding-inline: 12px; border-radius: 12px; background: var(--panel); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang .chevron { transition: none; }
+}
+@media (forced-colors: active) {
+  .lang summary, .lang-menu { border: 1px solid CanvasText; }
+  .lang-menu a[aria-current] { outline: 1px solid CanvasText; }
+}

@@ -61,11 +61,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lang.css">
 <link rel="stylesheet" href="../consent.css">
 <script>document.documentElement.classList.add("js");</script>
 <script src="../consent.js" defer></script>
+<script src="../lang.js" defer></script>
 </head>
 <body>
+<svg class="sprite" aria-hidden="true" style="display: none;"><symbol id="flag-en" viewBox="0 0 60 30"><clipPath id="uk-s"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="uk-t"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#uk-s)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="m0 0 60 30m0-30L0 30" stroke="#FFFFFF" stroke-width="6"/><path d="m0 0 60 30m0-30L0 30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#FFFFFF" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></symbol><symbol id="flag-it" viewBox="0 0 3 2"><path fill="#009246" d="M0 0h1v2H0z"/><path fill="#FFFFFF" d="M1 0h1v2H1z"/><path fill="#CE2B37" d="M2 0h1v2H2z"/></symbol></svg>
 
 <a class="skip" href="#main">Vai al contenuto</a>
 
@@ -78,16 +81,20 @@
       <svg class="close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
       <span class="sr-only">Menu</span>
     </button>
-    <ul id="nav-links">
+    <ul class="nav-links" id="nav-links">
       <li><a href="#features">Funzioni</a></li>
       <li><a href="#how">Come funziona</a></li>
       <li><a href="#screenshots">Screenshot</a></li>
-      <li><a href="#settings">Impostazioni</a></li>
-      <li><a href="#updates">Aggiornamenti</a></li>
       <li><a href="#install">Installazione</a></li>
       <li><a href="https://github.com/debba/melicum">GitHub</a></li>
     </ul>
-    <a class="lang" href="../" hreflang="en" lang="en" title="Read in English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-s"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="uk-t"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#uk-s)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="m0 0 60 30m0-30L0 30" stroke="#FFFFFF" stroke-width="6"/><path d="m0 0 60 30m0-30L0 30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#FFFFFF" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg><span class="sr-only">Read in </span><span class="name">English</span></a>
+    <details class="lang">
+      <summary><svg class="flag" aria-hidden="true"><use href="#flag-it"/></svg>IT<span class="sr-only">, lingua: Italiano</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <ul class="lang-menu">
+        <li><a href="../" hreflang="en" lang="en"><svg class="flag" aria-hidden="true"><use href="#flag-en"/></svg>English<svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></a></li>
+        <li><a href="./" hreflang="it" lang="it" aria-current="page"><svg class="flag" aria-hidden="true"><use href="#flag-it"/></svg>Italiano<svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></a></li>
+      </ul>
+    </details>
   </div>
 </nav>
 </header>
